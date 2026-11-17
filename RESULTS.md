@@ -300,6 +300,20 @@ La tête répond « aucun » dans 44 % des cas où le bon article est absent des
 - Sur PopQA, la tête fait passer de 33,2 % à 56,8 % avec une seule note. La version sans entraînement la plus proche (3 articles les plus développés) est à 52,6 %.
 - La tête ne se transpose pas : sur TriviaQA elle corrige un peu plus de réponses mais en casse presque deux fois plus, et le score ne monte pas. Elle n'a vu que les 16 formes de question de PopQA.
 
+### D13. Fiches de méthode en maths et en logique (plafond : le type de problème est donné)
+
+Réflexion activée, tirage à température 0,6, note montrée par la mémoire. « Fiche » : une méthode rédigée d'environ 90 tokens par type de problème. « Exemples » : deux problèmes résolus du même type, environ 500 tokens.
+
+| Jeu | Questions | Sans note | Fiche de méthode | Corrigées / cassées | Exemples résolus | Corrigées / cassées |
+|---|---|---|---|---|---|---|
+| BIG-Bench Hard, 14 types de logique | 420 | 73,1 % | 75,5 % | 52 / 42 | 70,7 % | 47 / 57 |
+| MATH, niveaux 3 à 5, 7 domaines | 210 | 64,8 % | 66,7 % | 18 / 14 | 63,3 % | 12 / 15 |
+| GSM8K | 120 | 80,0 % | 80,8 % | 10 / 9 | 77,5 % | 7 / 10 |
+
+Aucun effet démontré. La fiche est à +1 à +2 points sur les trois jeux, dans le bruit : sur BIG-Bench Hard, deux passages sans note diffèrent déjà de 43 et 47 réponses dans chaque sens. Les exemples résolus font un peu moins bien que rien. La mémoire aide quand il manque un fait, pas quand il manque une méthode.
+
+**Pénalité de répétition et maths.** Sans note, avec la pénalité par défaut du modèle (1,1) : 58,1 % sur MATH contre 64,8 % sans pénalité (9 corrigées, 23 cassées). Sur BIG-Bench Hard et GSM8K, pas d'écart. La pénalité coûte donc environ 7 points sur les maths de niveau concours.
+
 ## 3. L'architecture retenue
 
 **Principe.** Dans LFM3, les convolutions voient 7 tokens en arrière et les attentions à fenêtre 256. Au-delà, seules les 6 couches d'attention globale (2, 6, 10, 14, 18, 22) voient le contexte. « Le modèle a lu ce passage plus tôt » se résume donc aux clés et valeurs d'attention du passage sur ces 6 couches.

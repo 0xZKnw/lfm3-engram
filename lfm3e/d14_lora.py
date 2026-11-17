@@ -50,6 +50,11 @@ def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_t
     states = States(model, mem)
     timing = {}
 
+    def positions(att):
+        """What generate() builds from the attention mask: masked tokens do not advance the position."""
+        pos = att.long().cumsum(-1) - 1
+        return pos.masked_fill(att == 0, 1)
+
     def qid_of(uri):
         return (uri or "").rstrip("/").split("/")[-1]
 
@@ -128,7 +133,7 @@ def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_t
 
     # ------------------------------------------------------------ the head, trained on PopQA and HotpotQA
     t0 = time.time()
-    head_items = by_src["popqa"][: 4 * n_train] + by_src["hotpot"][: 2 * n_train]
+    head_items = by_src["popqa"][: max(len(by_src["popqa"]) - n_train, 0)] + by_src["hotpot"][: max(len(by_src["hotpot"]) - n_train, 0)]
     ex_q, ex_c, ex_y = [], [], []
     for qi, it in enumerate(head_items):
         gold = {r[0] for r in it["gold_rows"]}
@@ -165,7 +170,7 @@ def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_t
 
     # ------------------------------------------------------------ training examples
     t0 = time.time()
-    train_items = by_src["popqa"][-n_train:] + by_src["hotpot"][-n_train:] + by_src["triviaqa"][:n_train]  # disjoint from the head's HotpotQA part
+    train_items = by_src["popqa"][-n_train:] + by_src["hotpot"][-n_train:] + by_src["triviaqa"][:n_train]  # disjoint from the head's questions
     states.add_keys([c for it in train_items for s_ in mem.spans(it["q"]) for c in mem.candidates(s_)])
     q_train = states.questions([it["q"] for it in train_items])
     plain_out = generate(model, mem, [seq([], it["q"]) for it in train_items], batch=48)
@@ -188,7 +193,11 @@ def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_t
         rows = list(rows)[:3]
         rng.shuffle(rows)
         is_yn = yes_no("", it["golds"]) is not None
-        usable = has_answer(rows, it["golds"]) or bool(is_yn and gold and all(g in rows for g in gold))
+        shown_gold = [g for g in gold if g in rows]
+        if gold:  # a homonym that happens to contain the expected word does not count
+            usable = (bool(is_yn) and len(shown_gold) == len(gold)) or (not is_yn and has_answer(shown_gold, it["golds"]))
+        else:  # TriviaQA: no article is designated, the text is all we have
+            usable = has_answer(rows, it["golds"])
         if usable:
             own = clean_out.get(i)
             target = own if own and right(own, it["golds"]) and not abstains(own) else f"{it['golds'][0]}."
@@ -202,6 +211,24 @@ def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_t
 
     # ------------------------------------------------------------ LoRA training
     t0 = time.time()
+    attn = model.model.layers[2].self_attn
+    names = [n for n, _ in attn.named_children()]
+    assert all(n in names for n in ("q_proj", "k_proj", "v_proj", "o_proj", "gate_proj")), f"attention sub-modules are {names}"
+
+    # training-style forward and generate() must see the same thing: compare the logits that pick the first token
+    probe = [seq(e["rows"], e["q"]) for e in examples[:8]]
+    (p_ids, p_att, _), _ = pad_left(probe, mem.pad, dev)
+    with torch.inference_mode():
+        fwd = model.lm_head(model.model(input_ids=p_ids, attention_mask=p_att, position_ids=positions(p_att)).last_hidden_state[:, -1]).float()
+        arange = model.lm_head(model.model(input_ids=p_ids, attention_mask=p_att).last_hidden_state[:, -1]).float()
+        gen = model.generate(input_ids=p_ids, attention_mask=p_att, max_new_tokens=1, do_sample=False, repetition_penalty=1.0, output_logits=True, return_dict_in_generate=True).logits[0].float()
+    positions_check = {
+        "max_abs_diff_forward_vs_generate": round((fwd - gen).abs().max().item(), 4),
+        "same_first_token_forward_vs_generate": round((fwd.argmax(-1) == gen.argmax(-1)).float().mean().item(), 4),
+        "max_abs_diff_without_position_fix": round((arange - gen).abs().max().item(), 4),
+        "logit_scale": round(gen.abs().max().item(), 2),
+    }
+
     params, switch = add_lora(model, r=rank, alpha=2 * rank)
     opt = torch.optim.AdamW(params, lr=lr, weight_decay=0.0)
     built = []
@@ -226,7 +253,7 @@ def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_t
         rng.shuffle(batches)
         for b in batches:
             (ids, att), width = pad_left([(built[i][0], built[i][1]) for i in b], mem.pad, dev)
-            hidden = model.model(input_ids=ids, attention_mask=att).last_hidden_state
+            hidden = model.model(input_ids=ids, attention_mask=att, position_ids=positions(att)).last_hidden_state
             rows_h, rows_y = [], []
             for r, i in enumerate(b):
                 n = built[i][2]
@@ -257,10 +284,18 @@ def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_t
             "pool": {s: len(v) for s, v in by_src.items()}, "head_examples": len(ex_y), "examples": len(examples), "kinds": kinds,
             "targets_i_dont_know": round(targets_idk / max(len(examples), 1), 4), "tokens": train_tokens, "steps": total,
             "loss_first_last": [round(sum(losses[:20]) / max(len(losses[:20]), 1), 3), round(sum(losses[-20:]) / max(len(losses[-20:]), 1), 3)],
-            "lora_parameters": sum(p.numel() for p in params), "rank": rank,
+            "lora_parameters": sum(p.numel() for p in params), "rank": rank, "attention_modules": names,
+            "positions_check": positions_check,
         },
         "tests": {},
     }
+
+    def mcnemar(b, c):
+        """Exact two-sided McNemar test on the discordant pairs."""
+        n, k = b + c, min(b, c)
+        if n == 0:
+            return 1.0
+        return round(min(1.0, 2 * sum(math.comb(n, i) for i in range(k + 1)) / 2**n), 4)
 
     def rates(outs, items):
         ok = [right(o, it["golds"]) for o, it in zip(outs, items)]
@@ -296,13 +331,42 @@ def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_t
                 g = {r[0] for r in it["gold_rows"]}
                 wrong_rows.append([c for s in mem.spans(it["q"]) for c in mem.candidates(s) if c[0] not in g][:2])
             plans.update({"right_notes": (gold_rows, False), "right_notes_lora": (gold_rows, True), "homonyms_only": (wrong_rows, False), "homonyms_only_lora": (wrong_rows, True)})
+        oks = {}
         for plan, (rows_per_q, lora) in plans.items():
             ok, res = rates(run_test(items, rows_per_q, lora), items)
+            oks[plan] = ok
             res.update(fixed=sum(a and not b for a, b in zip(ok, ok0)), broken=sum(b and not a for a, b in zip(ok, ok0)), note_shown=round(sum(bool(r) for r in rows_per_q) / len(items), 4))
             if any(it["gold_rows"] for it in items):
                 res["right_article_shown"] = round(sum(any(r[0] in {g[0] for g in it["gold_rows"]} for r in rows) for rows, it in zip(rows_per_q, items)) / len(items), 4)
             out[plan] = res
+        for a_, b_ in (("memory", "memory_lora"), ("right_notes", "right_notes_lora"), ("homonyms_only", "homonyms_only_lora")):
+            if a_ in oks:
+                gained = sum(y and not x for x, y in zip(oks[a_], oks[b_]))
+                lost = sum(x and not y for x, y in zip(oks[a_], oks[b_]))
+                out[f"{b_}_vs_{a_}"] = {"gained": gained, "lost": lost, "mcnemar_p": mcnemar(gained, lost)}
         result["tests"][name] = out
+    # style: does the model still write at length when a note is present and the LoRA is on?
+    long_prompts = [
+        ("Marie Curie", "Explain in detail who Marie Curie was and why her work mattered."),
+        ("Photosynthesis", "Explain in detail how photosynthesis works, step by step."),
+        ("French Revolution", "Write three paragraphs about the causes of the French Revolution."),
+        ("Python (programming language)", "Describe in detail what makes Python popular and give an example program."),
+        ("Mount Everest", "Write a short essay about climbing Mount Everest and its dangers."),
+    ]
+    style = []
+    for title, prompt in long_prompts:
+        row = mem.by_title(title)
+        if not row:
+            continue
+        s_ = mem.layout([mem.note(row)], mem.chat(prompt, instruction=""))
+        entry = {"prompt": prompt}
+        for label, on in (("without_lora", False), ("with_lora", True)):
+            switch.on = on
+            text = generate(model, mem, [s_], max_new=220, batch=1)[0]
+            entry[label] = {"words": len(text.split()), "text": text[:500]}
+        switch.on = False
+        style.append(entry)
+    result["style_check"] = style
     timing["eval_s"] = round(time.time() - t0)
     result["timing"] = timing
     result["seconds_total"] = round(time.time() - t_start)

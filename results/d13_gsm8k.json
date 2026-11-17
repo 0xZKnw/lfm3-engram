@@ -1,0 +1,47 @@
+{
+ "bench": "gsm8k",
+ "n": 120,
+ "thinking_budget": 768,
+ "conditions": {
+  "no_note": {
+   "accuracy": 0.8,
+   "thinking_cut_at_budget": 0.3167,
+   "mean_tokens": 521
+  },
+  "no_note_default_penalty": {
+   "accuracy": 0.8083,
+   "thinking_cut_at_budget": 0.25,
+   "mean_tokens": 535,
+   "fixed": 7,
+   "broken": 6
+  },
+  "card": {
+   "accuracy": 0.8083,
+   "thinking_cut_at_budget": 0.2667,
+   "mean_tokens": 503,
+   "fixed": 10,
+   "broken": 9
+  },
+  "exemplars": {
+   "accuracy": 0.775,
+   "thinking_cut_at_budget": 0.275,
+   "mean_tokens": 508,
+   "fixed": 7,
+   "broken": 10
+  }
+ },
+ "by_type": {
+  "gsm8k": {
+   "n": 120,
+   "no_note": 0.8,
+   "no_note_default_penalty": 0.808,
+   "card": 0.808,
+   "exemplars": 0.775
+  }
+ },
+ "note_tokens": {
+  "card_mean": 91,
+  "exemplars_mean": 261
+ },
+ "seconds_total": 237
+}

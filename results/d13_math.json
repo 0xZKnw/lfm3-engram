@@ -1,0 +1,89 @@
+{
+ "bench": "math",
+ "n": 210,
+ "thinking_budget": 1536,
+ "conditions": {
+  "no_note": {
+   "accuracy": 0.6476,
+   "thinking_cut_at_budget": 0.3714,
+   "mean_tokens": 1121
+  },
+  "no_note_default_penalty": {
+   "accuracy": 0.581,
+   "thinking_cut_at_budget": 0.4143,
+   "mean_tokens": 1161,
+   "fixed": 9,
+   "broken": 23
+  },
+  "card": {
+   "accuracy": 0.6667,
+   "thinking_cut_at_budget": 0.4095,
+   "mean_tokens": 1137,
+   "fixed": 18,
+   "broken": 14
+  },
+  "exemplars": {
+   "accuracy": 0.6333,
+   "thinking_cut_at_budget": 0.3714,
+   "mean_tokens": 1125,
+   "fixed": 12,
+   "broken": 15
+  }
+ },
+ "by_type": {
+  "algebra": {
+   "n": 30,
+   "no_note": 0.833,
+   "no_note_default_penalty": 0.8,
+   "card": 0.8,
+   "exemplars": 0.8
+  },
+  "counting_and_probability": {
+   "n": 30,
+   "no_note": 0.7,
+   "no_note_default_penalty": 0.7,
+   "card": 0.767,
+   "exemplars": 0.667
+  },
+  "geometry": {
+   "n": 30,
+   "no_note": 0.533,
+   "no_note_default_penalty": 0.467,
+   "card": 0.667,
+   "exemplars": 0.633
+  },
+  "intermediate_algebra": {
+   "n": 30,
+   "no_note": 0.467,
+   "no_note_default_penalty": 0.333,
+   "card": 0.467,
+   "exemplars": 0.433
+  },
+  "number_theory": {
+   "n": 30,
+   "no_note": 0.667,
+   "no_note_default_penalty": 0.6,
+   "card": 0.733,
+   "exemplars": 0.733
+  },
+  "prealgebra": {
+   "n": 30,
+   "no_note": 0.867,
+   "no_note_default_penalty": 0.833,
+   "card": 0.867,
+   "exemplars": 0.833
+  },
+  "precalculus": {
+   "n": 30,
+   "no_note": 0.467,
+   "no_note_default_penalty": 0.333,
+   "card": 0.367,
+   "exemplars": 0.333
+  }
+ },
+ "note_tokens": {
+  "card_mean": 102,
+  "exemplars_mean": 523
+ },
+ "seconds_total": 793
+}
