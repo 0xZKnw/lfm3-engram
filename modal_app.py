@@ -412,7 +412,7 @@ def d14(n_train: int = 2500, n_eval: int = 1000, n_hotpot_eval: int = 250, epoch
     _save(name, d14_run.remote(n_train, n_eval, n_hotpot_eval, epochs, name, head_cap))
 
 
-@app.function(image=image, cpu=16, memory=48 * 1024, timeout=90 * 60, volumes={VOL: vol})
+@app.function(image=image, cpu=32, memory=64 * 1024, timeout=60 * 60, volumes={VOL: vol})
 def store_build(langs: str, limit: int):
     """CPU: the note store shipped with the model, then a check of it against the source databases."""
     import os
@@ -430,7 +430,7 @@ def store_build(langs: str, limit: int):
         shutil.copy(f"{VOL}/d6/{name}", f"/tmp/{name}")
         sources.append((lang, f"/tmp/{name}"))
     t0 = time.time()
-    out = sb.build(sources, "/tmp/memory.safetensors", limit=limit)
+    out = sb.build(sources, "/tmp/memory.safetensors", limit=limit, workers=30)
     out["build_s"] = round(time.time() - t0)
 
     # check: every field of sampled articles must come back token for token, through the name index
@@ -445,10 +445,12 @@ def store_build(langs: str, limit: int):
             row = db.execute("SELECT title, description, lead, infobox, qid FROM articles WHERE id=?", (aid,)).fetchone()
             if not row or aid not in surfaces:
                 continue
+            if not limit:  # the store keeps the most developed version of an article: compare with that one
+                row = db.execute("SELECT title, description, lead, infobox, qid FROM articles WHERE title=? ORDER BY size DESC, id ASC LIMIT 1", (row[0],)).fetchone()
             want = tuple(x[0] for x in sb.fields(tok, [row[:4]]))
             got = [s.note(i) for i, _ in s.ids_for(surfaces[aid], lang)]
             checked += 1
-            bad += want not in got  # an article replaced by a more developed version of itself counts here
+            bad += want not in got
             if len(examples) < 6 and aid % 3 == 0:
                 examples.append({"lang": lang, "name": surfaces[aid], "candidates": len(got), "head": tok.decode(want[0]), "lead": tok.decode(want[1])[:200], "facts": tok.decode(want[2])[:200]})
     t0 = time.time()

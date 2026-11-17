@@ -1,0 +1,80 @@
+{
+ "articles": 232382,
+ "duplicates_dropped": 67618,
+ "by_lang": {
+  "en": 82382,
+  "fr": 150000
+ },
+ "names": 235845,
+ "gb": 0.068,
+ "notes_gb": 0.06,
+ "notes_gb_by_lang": {
+  "en": 0.025,
+  "fr": 0.035
+ },
+ "bytes_per_token": 1.198,
+ "bytes_per_article": 291.9,
+ "tokens": 50464238,
+ "tokens_per_article": {
+  "head": 12.9,
+  "lead": 84.5,
+  "facts": 119.8
+ },
+ "share_lead_at_cap": 0.055,
+ "share_facts_at_cap": 0.11,
+ "share_with_facts": 0.859,
+ "build_s": 94,
+ "checked": 600,
+ "mismatches": 30,
+ "examples": [
+  {
+   "lang": "en",
+   "name": "fowler noll vo hash function",
+   "candidates": 1,
+   "head": " Fowler–Noll–Vo hash function (Non-cryptographic hash function)",
+   "lead": "Fowler–Noll–Vo is a non-cryptographic hash function created by Glenn Fowler, Landon Curt Noll, and Kiem-Phong Vo. The basis of the FNV hash algorithm was taken from an idea sent as reviewer comments t",
+   "facts": ""
+  },
+  {
+   "lang": "en",
+   "name": "instant mom",
+   "candidates": 1,
+   "head": " Instant Mom (2013 American TV series or program)",
+   "lead": "Instant Mom is an American sitcom produced for the NickMom block on the Nick Jr. Channel. It was developed by Howard Michael Gould and stars Tia Mowry as a stepmother of three children alongside her h",
+   "facts": "\nFacts:\nInfobox television\nInstant Mom\nGenre: Sitcom\nCreated by: Jessica Butler Warren Bell\nDeveloped by: Howard Michael Gould\nStarring: Tia Mowry-Hardrict Michael Boatman Sheryl Lee Ralph Sydney Park"
+  },
+  {
+   "lang": "en",
+   "name": "dragan punisic",
+   "candidates": 1,
+   "head": " Dragan Punišić (Serbian footballer)",
+   "lead": "Dragan Punišić is a retired Serbian footballer. Punišić began his career in the Yugoslav First League with Red Star Belgrade. In 1991, he moved from NK Rijeka to CD Castellón.\nHe later had spells with",
+   "facts": "\nFacts:\nInfobox football biography\nPersonal information\nFull name: Dragan Punišić\nDate of birth: 1 March 1966\nPlace of birth: Belgrade, SFR Yugoslavia\nHeight: 1.79 m (5 ft 10 + 1 ⁄ 2 in)\nPosition(s): "
+  },
+  {
+   "lang": "en",
+   "name": "jim simons",
+   "candidates": 1,
+   "head": " Jim Simons (American mathematician and billionaire (1938–2024))",
+   "lead": "James Harris Simons was an American hedge fund manager, investor, mathematician, and philanthropist. At the time of his death, Simons's net worth was estimated to be $31.4 billion, making him the 51st",
+   "facts": "\nFacts:\nInfobox person\nJames Simons\nSimons in 2007\nBorn: April 25, 1938 Cambridge, Massachusetts, U.S.\nDied: May 10, 2024 (aged 86) New York City, U.S.\nEducation: Massachusetts Institute of Technology"
+  },
+  {
+   "lang": "en",
+   "name": "marist college canberra",
+   "candidates": 1,
+   "head": " Marist College Canberra (School in Australia)",
+   "lead": "Marist College Canberra is an independent Roman Catholic primary and secondary day school for boys, founded in 1968 by the Marist Brothers. The college is situated on 15 hectares and located in the Ca",
+   "facts": "\nFacts:\nInfobox school\nMarist College Canberra\nLocation\nPearce, Canberra, Australian Capital Territory Australia\nCoordinates: 35°21′35″S 149°05′20″E / 35.3597°S 149.0889°E\nInformation\nType: Independen"
+  },
+  {
+   "lang": "en",
+   "name": "darril fosty",
+   "candidates": 1,
+   "head": " Darril Fosty",
+   "lead": "Darril Wayne Fosty is a Canadian-born Pulitzer-nominated journalist, author, and documentarian.",
+   "facts": "\nFacts:\nInfobox writer\nDarril Fosty\nDarril Fosty at 2008 NHL All-Star Game\nBorn: Darril Wayne Fosty December 21, 1968 Terrace, British Columbia\nOccupation: Writer\nYears active: 2003–present"
+  }
+ ],
+ "read_ms": 0.117
+}
