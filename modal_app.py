@@ -10,6 +10,8 @@ Results are written to results/ next to this file."""
 import json
 import pathlib
 
+import os
+
 import modal
 
 from lfm3e.common import VOL, data_dir
@@ -248,8 +250,9 @@ def d6b_notes(lang: str = "en"):
     from lfm3e import d6b_reason
 
     out = d6b_reason.build_notes(f"{VOL}/d6", lang)
-    if lang == "fr":
-        out["word_freq"] = d6b_reason.build_word_freq(f"{data_dir('full')}/wiki_fr/train_tokens.npy", f"{VOL}/d6/word_freq_fr.json")
+    tokens = f"{data_dir('full')}/wiki_fr/train_tokens.npy"
+    if lang == "fr" and os.path.exists(tokens):  # optional: French word frequencies for the concept triggers
+        out["word_freq"] = d6b_reason.build_word_freq(tokens, f"{VOL}/d6/word_freq_fr.json")
     vol.commit()
     return _plain(out)
 
@@ -407,3 +410,56 @@ def d14_run(n_train: int, n_eval: int, n_hotpot_eval: int, epochs: int, tag: str
 @app.local_entrypoint()
 def d14(n_train: int = 2500, n_eval: int = 1000, n_hotpot_eval: int = 250, epochs: int = 3, head_cap: int = 0, name: str = "d14"):
     _save(name, d14_run.remote(n_train, n_eval, n_hotpot_eval, epochs, name, head_cap))
+
+
+@app.function(image=image, cpu=16, memory=48 * 1024, timeout=90 * 60, volumes={VOL: vol})
+def store_build(langs: str, limit: int):
+    """CPU: the note store shipped with the model, then a check of it against the source databases."""
+    import os
+    import random
+    import shutil
+    import sqlite3
+    import time
+
+    from lfm3e import store
+    from lfm3e.common import load_tokenizer
+
+    sources = []
+    for lang in langs.split(","):
+        name = "notes3.db" if lang == "en" else f"notes3_{lang}.db"
+        shutil.copy(f"{VOL}/d6/{name}", f"/tmp/{name}")
+        sources.append((lang, f"/tmp/{name}"))
+    t0 = time.time()
+    out = store.build(sources, "/tmp/memory.safetensors", limit=limit)
+    out["build_s"] = round(time.time() - t0)
+
+    # check: every field of sampled articles must come back token for token, through the name index
+    tok, s, rng = load_tokenizer(), store.Store("/tmp/memory.safetensors"), random.Random(0)
+    checked, bad, examples = 0, 0, []
+    for lang, path in sources:
+        db = sqlite3.connect(path)
+        n = db.execute("SELECT MAX(id) FROM articles").fetchone()[0] + 1
+        for aid in rng.sample(range(min(n, limit) if limit else n), 300):
+            row = db.execute("SELECT title, description, lead, infobox, qid FROM articles WHERE id=?", (aid,)).fetchone()
+            surface = db.execute("SELECT surface FROM titles WHERE id=? LIMIT 1", (aid,)).fetchone()
+            if not row or not surface:
+                continue
+            want = tuple(x[0] for x in store._fields(tok, [row[:4]]))
+            got = [s.note(i) for i, _ in s.ids_for(surface[0], lang)]
+            checked += 1
+            bad += want not in got
+            if len(examples) < 6 and aid % 3 == 0:
+                examples.append({"lang": lang, "name": surface[0], "candidates": len(got), "head": tok.decode(want[0]), "lead": tok.decode(want[1])[:200], "facts": tok.decode(want[2])[:200]})
+    t0 = time.time()
+    for _ in range(2000):
+        s.note(rng.randrange(len(s)))
+    out.update(checked=checked, mismatches=bad, examples=examples, read_ms=round((time.time() - t0) / 2, 3))
+    os.makedirs(f"{VOL}/store", exist_ok=True)
+    shutil.copy("/tmp/memory.safetensors", f"{VOL}/store/memory{'_smoke' if limit else ''}.safetensors")
+    vol.commit()
+    return _plain(out)
+
+
+@app.local_entrypoint()
+def storebuild(langs: str = "en,fr", limit: int = 0, name: str = "store_build"):
+    _save(name, store_build.remote(langs, limit))

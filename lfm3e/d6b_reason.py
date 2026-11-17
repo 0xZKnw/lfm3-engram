@@ -21,6 +21,7 @@ from .d6_reason import find_triggers
 
 GAP = 256
 NOTE_TOKENS = 96
+LEAD_CHARS, INFO_CHARS = 1100, 1500  # kept per article; the store cuts them to 192 and 256 tokens
 
 
 def _scan_member(args):
@@ -50,7 +51,7 @@ def _scan_member(args):
                     continue
             info = []
             _flat_infobox(r.get("infoboxes"), info)
-            rows.append((name, desc, lead[:700], (r.get("main_entity") or {}).get("identifier") or "", "\n".join(info)[:1500], len(line)))
+            rows.append((name, desc, lead[:LEAD_CHARS], (r.get("main_entity") or {}).get("identifier") or "", "\n".join(info)[:INFO_CHARS], len(line)))
     return rows
 
 
