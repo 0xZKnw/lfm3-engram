@@ -5,29 +5,22 @@ import random
 import sqlite3
 import sys
 import tempfile
+import zlib
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from lfm3e import store
+from lfm3e import store, store_build
 
 
 class FakeTok:
-    """Words -> ids. Enough to exercise the build; the real sizes are measured with the real tokenizer."""
+    """Words -> ids, the same in every process. Enough to exercise the build; real sizes need the real tokenizer."""
 
-    def __init__(self, size=20000):
-        self.size, self.ids, self.words = size, {}, []
+    size = 20000
 
     def __len__(self):
         return self.size
 
     def one(self, text):
-        out = []
-        for w in text.replace("\n", " \n ").split(" "):
-            if w and w not in self.ids:
-                self.ids[w] = len(self.words)
-                self.words.append(w)
-            if w:
-                out.append(self.ids[w])
-        return out
+        return [zlib.crc32(w.encode()) % self.size for w in text.replace("\n", " \n ").split(" ") if w]
 
     def __call__(self, texts, add_special_tokens=False):
         return {"input_ids": [self.one(t) for t in ([texts] if isinstance(texts, str) else texts)]}
@@ -39,7 +32,7 @@ def make_db(path, n, rng, words):
     db.execute("CREATE TABLE titles (surface TEXT, id INTEGER, exact INTEGER)")
     rows = []
     for i in range(n):
-        title = f"{rng.choice(words).title()} {i % 7}"
+        title = f"{rng.choice(words).title()} N{i}"
         desc = "" if i % 5 == 0 else " ".join(rng.choices(words, k=4))
         lead = " ".join(rng.choices(words, k=rng.choice([30, 120, 400])))
         info = "" if i % 3 == 0 else "\n".join(f"{rng.choice(words)}: {rng.choice(words)}" for _ in range(rng.choice([4, 300])))
@@ -47,6 +40,9 @@ def make_db(path, n, rng, words):
         rows.append((i, title, desc, lead, qid, info, rng.randrange(200, 400000)))
         db.execute("INSERT INTO titles VALUES (?,?,?)", (title.lower(), i, 1))
         db.execute("INSERT INTO titles VALUES (?,?,?)", (title.lower().split()[0], i, 0))
+    for k, r in enumerate(rows[:20]):  # an older, smaller version of the same article: must be dropped
+        db.execute("INSERT INTO articles VALUES (?,?,?,?,?,?,?)", (n + k, r[1], r[2], "old " + r[3], r[4], r[5], r[6] - 1))
+        db.execute("INSERT INTO titles VALUES (?,?,?)", (r[1].lower(), n + k, 1))
     db.executemany("INSERT INTO articles VALUES (?,?,?,?,?,?,?)", rows)
     db.commit()
     return rows
@@ -58,8 +54,8 @@ def main():
     d = tempfile.mkdtemp()
     en, fr = make_db(f"{d}/en.db", 700, rng, words), make_db(f"{d}/fr.db", 300, rng, words)
     tok = FakeTok()
-    out = store.build([("en", f"{d}/en.db"), ("fr", f"{d}/fr.db")], f"{d}/m.safetensors", workers=1, chunk=128, tok=tok)
-    assert out["articles"] == 1000 and out["by_lang"] == {"en": 700, "fr": 300} and out["names"] == 2000, out
+    out = store_build.build([("en", f"{d}/en.db"), ("fr", f"{d}/fr.db")], f"{d}/m.safetensors", workers=1, chunk=128, tok=tok)  # in-process
+    assert out["articles"] == 1000 and out["by_lang"] == {"en": 700, "fr": 300} and out["names"] == 2000 and out["duplicates_dropped"] == 40, out
     s = store.Store(f"{d}/m.safetensors")
     assert len(s) == 1000
     for base, rows, lang in ((0, en, "en"), (700, fr, "fr")):
@@ -77,8 +73,14 @@ def main():
     sizes = [int(s.size[i]) for i, _ in s.ids_for(en[0][1].lower().split()[0])]
     assert sizes == sorted(sizes, reverse=True)
     # a limited build keeps only the first ids of each source
-    small = store.build([("en", f"{d}/en.db"), ("fr", f"{d}/fr.db")], f"{d}/s.safetensors", workers=1, chunk=64, limit=100, tok=tok)
-    assert small["by_lang"] == {"en": 100, "fr": 100}, small
+    small = store_build.build([("en", f"{d}/en.db"), ("fr", f"{d}/fr.db")], f"{d}/s.safetensors", workers=1, chunk=64, limit=100, tok=tok)
+    assert small["by_lang"] == {"en": 100, "fr": 100} and small["duplicates_dropped"] == 0, small
+    # worker processes give the same file as the in-process build
+    par = store_build.build([("en", f"{d}/en.db"), ("fr", f"{d}/fr.db")], f"{d}/p.safetensors", workers=3, chunk=128, tok=tok)
+    import numpy as np
+
+    one, two = store.open_tensors(f"{d}/m.safetensors")[0], store.open_tensors(f"{d}/p.safetensors")[0]
+    assert par == out and set(one) == set(two) and all(np.array_equal(one[k], two[k]) for k in one)
     print("magasin : construction et lecture ok |", {k: out[k] for k in ("gb", "bytes_per_token", "tokens_per_article", "share_lead_at_cap", "share_facts_at_cap", "share_with_facts")})
 
 

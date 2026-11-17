@@ -8,8 +8,8 @@ Collects what the experiments D4 to D12 established, with the fixes found on rev
 import math
 import sqlite3
 
-from .d5_trigger import pick_spans
-from .d6_reason import find_triggers
+from .triggers import pick_spans
+from .triggers import find_triggers
 
 GAP = 256
 LEAD_TOKENS, INFO_TOKENS = 96, 128

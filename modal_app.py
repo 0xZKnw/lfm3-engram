@@ -421,7 +421,7 @@ def store_build(langs: str, limit: int):
     import sqlite3
     import time
 
-    from lfm3e import store
+    from lfm3e import store, store_build as sb
     from lfm3e.common import load_tokenizer
 
     sources = []
@@ -430,7 +430,7 @@ def store_build(langs: str, limit: int):
         shutil.copy(f"{VOL}/d6/{name}", f"/tmp/{name}")
         sources.append((lang, f"/tmp/{name}"))
     t0 = time.time()
-    out = store.build(sources, "/tmp/memory.safetensors", limit=limit)
+    out = sb.build(sources, "/tmp/memory.safetensors", limit=limit)
     out["build_s"] = round(time.time() - t0)
 
     # check: every field of sampled articles must come back token for token, through the name index
@@ -439,17 +439,18 @@ def store_build(langs: str, limit: int):
     for lang, path in sources:
         db = sqlite3.connect(path)
         n = db.execute("SELECT MAX(id) FROM articles").fetchone()[0] + 1
-        for aid in rng.sample(range(min(n, limit) if limit else n), 300):
+        picked = set(rng.sample(range(min(n, limit) if limit else n), 300))
+        surfaces = {aid: surface for surface, aid in db.execute("SELECT surface, id FROM titles") if aid in picked}  # one pass: no index on id
+        for aid in sorted(picked):
             row = db.execute("SELECT title, description, lead, infobox, qid FROM articles WHERE id=?", (aid,)).fetchone()
-            surface = db.execute("SELECT surface FROM titles WHERE id=? LIMIT 1", (aid,)).fetchone()
-            if not row or not surface:
+            if not row or aid not in surfaces:
                 continue
-            want = tuple(x[0] for x in store._fields(tok, [row[:4]]))
-            got = [s.note(i) for i, _ in s.ids_for(surface[0], lang)]
+            want = tuple(x[0] for x in sb.fields(tok, [row[:4]]))
+            got = [s.note(i) for i, _ in s.ids_for(surfaces[aid], lang)]
             checked += 1
-            bad += want not in got
+            bad += want not in got  # an article replaced by a more developed version of itself counts here
             if len(examples) < 6 and aid % 3 == 0:
-                examples.append({"lang": lang, "name": surface[0], "candidates": len(got), "head": tok.decode(want[0]), "lead": tok.decode(want[1])[:200], "facts": tok.decode(want[2])[:200]})
+                examples.append({"lang": lang, "name": surfaces[aid], "candidates": len(got), "head": tok.decode(want[0]), "lead": tok.decode(want[1])[:200], "facts": tok.decode(want[2])[:200]})
     t0 = time.time()
     for _ in range(2000):
         s.note(rng.randrange(len(s)))

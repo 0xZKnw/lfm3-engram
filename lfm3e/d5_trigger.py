@@ -17,20 +17,13 @@ import time
 import unicodedata
 
 from .d3_entity import ABSTAIN, is_correct
+from .triggers import STOP, norm, pick_spans, question_spans  # noqa: F401 (re-exported)
 
 GAP = 256
-STOP = {"what", "who", "which", "where", "when", "why", "how", "in", "is", "was", "the", "of", "for", "a", "an", "by", "does", "did", "do", "on", "to", "at", "from"}
 SYSTEM = (
     "Reference notes may appear before the conversation. Use a note only if it is about what the user asks. "
     "If a note is about something else, ignore it completely."
 )
-
-
-def norm(s):
-    """Lower-case, accents folded ('José' -> 'jose'), possessives and punctuation dropped."""
-    s = "".join(ch for ch in unicodedata.normalize("NFKD", s) if not unicodedata.combining(ch))
-    s = re.sub(r"['’]s\b", "", s)
-    return re.sub(r"[^\w]+", " ", s.lower()).strip()
 
 
 def title_bases(title):
@@ -41,37 +34,6 @@ def title_bases(title):
         out.add(norm(base.split(",")[0]))
     out.discard("")
     return out
-
-
-def question_spans(q, max_len=6):
-    """Eligible spans (i, j, surface): contain a capitalised or numeric word that is not the first word."""
-    words = q.split()
-    cleaned = [norm(w) for w in words]
-    spans = []
-    for i in range(len(words)):
-        for j in range(i + 1, min(i + max_len, len(words)) + 1):
-            parts = [c for c in cleaned[i:j] if c]
-            if not parts:
-                continue
-            if not any(k > 0 and (words[k][:1].isupper() or words[k][:1].isdigit()) for k in range(i, j)):
-                continue
-            if j - i == 1 and cleaned[i] in STOP:
-                continue
-            spans.append((i, j, " ".join(parts)))
-    return spans
-
-
-def pick_spans(q, cands, max_spans=2):
-    """Longest non-overlapping eligible spans that have candidates."""
-    found = sorted((s for s in question_spans(q) if s[2] in cands), key=lambda s: (s[0] - s[1], s[0]))
-    chosen, used = [], set()
-    for i, j, surface in found:
-        if used.isdisjoint(range(i, j)):
-            chosen.append((i, j, surface))
-            used.update(range(i, j))
-        if len(chosen) >= max_spans:
-            break
-    return chosen
 
 
 def _scan(path, surfaces):

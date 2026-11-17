@@ -2,7 +2,7 @@
  "lang": "fr",
  "members": 32,
  "articles": 2276017,
- "db_gb": 1.14,
+ "db_gb": 2.26,
  "probes": {
   "allemagne": [
    [
@@ -69,17 +69,5 @@
     "Q535"
    ]
   ]
- },
- "word_freq": {
-  "words": 35663198,
-  "kept": 148881,
-  "examples": {
-   "énergie": 159.885,
-   "guerre": 796.339,
-   "gibbs": 5.776,
-   "également": 934.044,
-   "allemagne": 214.759,
-   "capitale": 153.127
-  }
  }
 }
