@@ -1,0 +1,193 @@
+{
+ "head": {
+  "split": {
+   "candidates_for_training": 13267,
+   "removed_same_entity_or_same_name_as_evaluation": 983
+  },
+  "train_questions": 12284,
+  "train_examples": 12615,
+  "train_gold_among_candidates": 0.7976,
+  "eval_examples": 1037,
+  "eval_gold_among_candidates": 0.7724,
+  "eval_name_ambiguous": 0.6305,
+  "mean_candidates_when_ambiguous": 7.54,
+  "pick_right_article_all": {
+   "largest_article": 0.5855,
+   "untrained_cosine": 0.6192,
+   "trained_head": 0.764,
+   "trained_head_without_size_prior": 0.7566
+  },
+  "pick_right_article_ambiguous_names": {
+   "largest_article": 0.3426,
+   "untrained_cosine": 0.396,
+   "trained_head": 0.6257,
+   "trained_head_without_size_prior": 0.6139,
+   "trained_head_in_top_2": 0.804,
+   "trained_head_in_top_3": 0.8871,
+   "largest_article_in_top_3": 0.6752
+  },
+  "says_none_when_gold_absent": 0.4449,
+  "says_none_when_gold_present": 0.0599,
+  "prior_weight": 0.266
+ },
+ "popqa": {
+  "n": 1000,
+  "no_memory": 0.147,
+  "exact_title_summary_only": {
+   "accuracy": 0.302,
+   "fixed": 164,
+   "broken": 9,
+   "note_shown": 0.409,
+   "right_article_shown": 0.295
+  },
+  "exact_title_summary_and_facts": {
+   "accuracy": 0.332,
+   "fixed": 194,
+   "broken": 9,
+   "note_shown": 0.409,
+   "right_article_shown": 0.295
+  },
+  "largest_top1_summary_and_facts": {
+   "accuracy": 0.441,
+   "fixed": 315,
+   "broken": 21,
+   "note_shown": 0.993,
+   "right_article_shown": 0.471
+  },
+  "largest_top3_summary_and_facts": {
+   "accuracy": 0.526,
+   "fixed": 398,
+   "broken": 19,
+   "note_shown": 0.993,
+   "right_article_shown": 0.639
+  },
+  "head_top1_summary_and_facts": {
+   "accuracy": 0.568,
+   "fixed": 438,
+   "broken": 17,
+   "note_shown": 0.909,
+   "right_article_shown": 0.597
+  },
+  "head_top2_summary_and_facts": {
+   "accuracy": 0.579,
+   "fixed": 446,
+   "broken": 14,
+   "note_shown": 0.909,
+   "right_article_shown": 0.674
+  },
+  "head_top3_summary_and_facts": {
+   "accuracy": 0.579,
+   "fixed": 444,
+   "broken": 12,
+   "note_shown": 0.909,
+   "right_article_shown": 0.703
+  },
+  "right_article_summary_only": {
+   "accuracy": 0.721,
+   "fixed": 581,
+   "broken": 7,
+   "note_shown": 0.928,
+   "right_article_shown": 0.928
+  },
+  "right_article_summary_and_facts": {
+   "accuracy": 0.791,
+   "fixed": 651,
+   "broken": 7,
+   "note_shown": 0.928,
+   "right_article_shown": 0.928
+  }
+ },
+ "triviaqa": {
+  "n": 1000,
+  "no_memory": 0.313,
+  "exact_title_summary_only": {
+   "accuracy": 0.423,
+   "fixed": 143,
+   "broken": 33,
+   "note_shown": 0.592
+  },
+  "exact_title_summary_and_facts": {
+   "accuracy": 0.438,
+   "fixed": 159,
+   "broken": 34,
+   "note_shown": 0.592
+  },
+  "largest_top1_summary_and_facts": {
+   "accuracy": 0.421,
+   "fixed": 165,
+   "broken": 57,
+   "note_shown": 0.869
+  },
+  "largest_top3_summary_and_facts": {
+   "accuracy": 0.423,
+   "fixed": 170,
+   "broken": 60,
+   "note_shown": 0.869
+  },
+  "head_top1_summary_and_facts": {
+   "accuracy": 0.424,
+   "fixed": 168,
+   "broken": 57,
+   "note_shown": 0.817
+  },
+  "head_top2_summary_and_facts": {
+   "accuracy": 0.422,
+   "fixed": 166,
+   "broken": 57,
+   "note_shown": 0.817
+  },
+  "head_top3_summary_and_facts": {
+   "accuracy": 0.427,
+   "fixed": 166,
+   "broken": 52,
+   "note_shown": 0.817
+  }
+ },
+ "mkqa_en": {
+  "n": 1000,
+  "no_memory": 0.242,
+  "exact_title_summary_only": {
+   "accuracy": 0.284,
+   "fixed": 58,
+   "broken": 16,
+   "note_shown": 0.367
+  },
+  "exact_title_summary_and_facts": {
+   "accuracy": 0.292,
+   "fixed": 67,
+   "broken": 17,
+   "note_shown": 0.367
+  },
+  "largest_top1_summary_and_facts": {
+   "accuracy": 0.293,
+   "fixed": 72,
+   "broken": 21,
+   "note_shown": 0.398
+  },
+  "largest_top3_summary_and_facts": {
+   "accuracy": 0.293,
+   "fixed": 74,
+   "broken": 23,
+   "note_shown": 0.398
+  },
+  "head_top1_summary_and_facts": {
+   "accuracy": 0.296,
+   "fixed": 73,
+   "broken": 19,
+   "note_shown": 0.384
+  },
+  "head_top2_summary_and_facts": {
+   "accuracy": 0.294,
+   "fixed": 70,
+   "broken": 18,
+   "note_shown": 0.384
+  },
+  "head_top3_summary_and_facts": {
+   "accuracy": 0.3,
+   "fixed": 75,
+   "broken": 17,
+   "note_shown": 0.384
+  }
+ },
+ "seconds_total": 1470
+}

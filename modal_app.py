@@ -341,3 +341,17 @@ def d12_run(n: int):
 @app.local_entrypoint()
 def d12(n: int = 600, name: str = "d12_audit"):
     _save(name, d12_run.remote(n))
+
+
+@app.function(image=image, gpu="H100", timeout=60 * 60)
+def d13_run(bench: str, n_per_type: int, budget_scale: float):
+    from lfm3e import d13_methods
+
+    return _plain(d13_methods.run(bench, n_per_type=n_per_type, budget_scale=budget_scale))
+
+
+@app.local_entrypoint()
+def d13(benches: str = "bbh,math,gsm8k", n_per_type: int = 40, budget_scale: float = 1.0, name: str = "d13"):
+    calls = {b: d13_run.spawn(b, n_per_type, budget_scale) for b in benches.split(",")}
+    for b, call in calls.items():
+        _save(f"{name}_{b}", call.get())

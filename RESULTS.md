@@ -255,6 +255,51 @@ Exclure la note de la pénalité rapporte 4,3 points avec la bonne note, sans ri
 
 **Défaut trouvé à la relecture du code.** Le dictionnaire reconstruit pour D6 ne proposait plus comme homonymes les titres à virgule (« Norfolk, Connecticut » pour « Norfolk »). Corrigé dans le code ; D6, D7, D9 et D11 ont tourné avec ce défaut.
 
+### D11. Note enrichie et tête de choix d'article (première composante entraînée)
+
+À partir d'ici, tout n'est plus « sans entraînement ». LFM3 reste gelé, mais une petite tête est entraînée : deux projections linéaires sur l'état du modèle (question d'un côté, note candidate de l'autre), la taille de l'article comme indice, et une option « aucun ». Entraînement sur 12 284 questions PopQA ; les 983 questions partageant une entité ou un nom avec l'échantillon de test ont été retirées. Dictionnaire complet avec fiches de faits, mais sans les homonymes à virgule (défaut corrigé depuis) et avec la pénalité de répétition par défaut.
+
+**Choix du bon article** (1 037 noms repérés dans les 1 000 questions de test ; le bon article figure parmi les candidats dans 77 % des cas)
+
+| Méthode | Tous les noms | Noms ambigus (7,5 candidats en moyenne) |
+|---|---|---|
+| Article le plus développé | 58,6 % | 34,3 % |
+| État interne brut, sans entraînement | 61,9 % | 39,6 % |
+| Tête entraînée | 76,4 % | 62,6 % |
+| Tête entraînée sans l'indice de taille | 75,7 % | 61,4 % |
+| Tête entraînée, bon article dans les 3 premiers | | 88,7 % |
+
+La tête répond « aucun » dans 44 % des cas où le bon article est absent des candidats, et dans 6 % des cas où il est présent.
+
+**PopQA de bout en bout** (1 000 questions, sans réflexion)
+
+| Configuration | Bonnes réponses | Corrigées / cassées | Bon article montré |
+|---|---|---|---|
+| Sans mémoire | 14,7 % | | |
+| Titre exact, résumé seul (D9) | 30,2 % | 164 / 9 | 29,5 % |
+| Titre exact, résumé et fiche de faits | 33,2 % | 194 / 9 | 29,5 % |
+| Article le plus développé, 1 note | 44,1 % | 315 / 21 | 47,1 % |
+| Articles les plus développés, 3 notes | 52,6 % | 398 / 19 | 63,9 % |
+| Tête entraînée, 1 note | 56,8 % | 438 / 17 | 59,7 % |
+| Tête entraînée, 2 notes | 57,9 % | 446 / 14 | 67,4 % |
+| Tête entraînée, 3 notes | 57,9 % | 444 / 12 | 70,3 % |
+| Bon article fourni, résumé seul | 72,1 % | 581 / 7 | 92,8 % |
+| Bon article fourni, résumé et fiche de faits | 79,1 % | 651 / 7 | 92,8 % |
+
+**Transfert vers d'autres jeux** (1 000 questions chacun)
+
+| Configuration | TriviaQA | Corrigées / cassées | MKQA anglais | Corrigées / cassées |
+|---|---|---|---|---|
+| Sans mémoire | 31,3 % | | 24,2 % | |
+| Titre exact, résumé seul | 42,3 % | 143 / 33 | 28,4 % | 58 / 16 |
+| Titre exact, résumé et fiche de faits | 43,8 % | 159 / 34 | 29,2 % | 67 / 17 |
+| Tête entraînée, 1 note | 42,4 % | 168 / 57 | 29,6 % | 73 / 19 |
+| Tête entraînée, 3 notes | 42,7 % | 166 / 52 | 30,0 % | 75 / 17 |
+
+- La fiche de faits apporte 3 points avec le titre exact et 7 points quand le bon article est fourni.
+- Sur PopQA, la tête fait passer de 33,2 % à 56,8 % avec une seule note. La version sans entraînement la plus proche (3 articles les plus développés) est à 52,6 %.
+- La tête ne se transpose pas : sur TriviaQA elle corrige un peu plus de réponses mais en casse presque deux fois plus, et le score ne monte pas. Elle n'a vu que les 16 formes de question de PopQA.
+
 ## 3. L'architecture retenue
 
 **Principe.** Dans LFM3, les convolutions voient 7 tokens en arrière et les attentions à fenêtre 256. Au-delà, seules les 6 couches d'attention globale (2, 6, 10, 14, 18, 22) voient le contexte. « Le modèle a lu ce passage plus tôt » se résume donc aux clés et valeurs d'attention du passage sur ces 6 couches.
