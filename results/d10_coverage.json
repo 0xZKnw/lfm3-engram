@@ -1,0 +1,105 @@
+{
+ "popqa": {
+  "n": 1000,
+  "current_system": {
+   "questions_with_an_article": 0.409,
+   "lead_96": 0.249,
+   "lead_256": 0.262,
+   "infobox": 0.239,
+   "lead_96_plus_infobox": 0.293,
+   "body_1000": 0.29,
+   "full_article": 0.323
+  },
+  "gold_articles": {
+   "questions_with_an_article": 0.965,
+   "lead_96": 0.808,
+   "lead_256": 0.849,
+   "infobox": 0.761,
+   "lead_96_plus_infobox": 0.901,
+   "body_1000": 0.894,
+   "full_article": 0.937
+  }
+ },
+ "hotpot": {
+  "n": 236,
+  "current_system": {
+   "questions_with_an_article": 0.839,
+   "lead_96": 0.2669,
+   "lead_256": 0.2797,
+   "infobox": 0.1568,
+   "lead_96_plus_infobox": 0.2754,
+   "body_1000": 0.339,
+   "full_article": 0.3983
+  },
+  "gold_articles": {
+   "questions_with_an_article": 0.9703,
+   "lead_96": 0.6314,
+   "lead_256": 0.6822,
+   "infobox": 0.4237,
+   "lead_96_plus_infobox": 0.6907,
+   "body_1000": 0.7542,
+   "full_article": 0.7585
+  }
+ },
+ "triviaqa": {
+  "n": 1000,
+  "current_system": {
+   "questions_with_an_article": 0.592,
+   "lead_96": 0.209,
+   "lead_256": 0.263,
+   "infobox": 0.167,
+   "lead_96_plus_infobox": 0.253,
+   "body_1000": 0.342,
+   "full_article": 0.44
+  }
+ },
+ "mkqa_en": {
+  "n": 1000,
+  "current_system": {
+   "questions_with_an_article": 0.367,
+   "lead_96": 0.098,
+   "lead_256": 0.132,
+   "infobox": 0.115,
+   "lead_96_plus_infobox": 0.142,
+   "body_1000": 0.186,
+   "full_article": 0.259
+  }
+ },
+ "mkqa_fr": {
+  "n": 1000,
+  "current_system": {
+   "questions_with_an_article": 0.301,
+   "lead_96": 0.065,
+   "lead_256": 0.097,
+   "infobox": 0.092,
+   "lead_96_plus_infobox": 0.114,
+   "body_1000": 0.146,
+   "full_article": 0.191
+  }
+ },
+ "infobox": {
+  "articles_checked": 2893,
+  "with_infobox": 0.8555,
+  "median_tokens_when_present": 132
+ },
+ "example_infobox": "Infobox golf tournament\nSolheim Cup\nTournament information\nLocation: Europe or United States\nEstablished: 1990\nTour(s): Ladies European Tour LPGA Tour\nFormat: Match play\nPrize fund: None\nMonth played: September\nCurrent champion\nUnited States\n2024 Solheim Cup",
+ "record_keys": [
+  "abstract",
+  "additional_entities",
+  "date_created",
+  "date_modified",
+  "description",
+  "event",
+  "identifier",
+  "image",
+  "in_language",
+  "infoboxes",
+  "is_part_of",
+  "license",
+  "main_entity",
+  "name",
+  "sections",
+  "url",
+  "version"
+ ]
+}

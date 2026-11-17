@@ -1,0 +1,30 @@
+{
+ "titles": 18973126,
+ "db_gb": 1.52,
+ "probes": {
+  "shirley temple": [
+   "Shirley Temple",
+   "Shirley temple"
+  ],
+  "microwave": [
+   "Microwave"
+  ],
+  "skin": [
+   "SKIN",
+   "Skin"
+  ],
+  "cosmic microwave background": [
+   "Cosmic Microwave Background",
+   "Cosmic microwave background"
+  ],
+  "maxwell equations": [
+   "Maxwell's Equations",
+   "Maxwell's equations",
+   "Maxwell Equations",
+   "Maxwell equations"
+  ],
+  "cmb": [
+   "CMB"
+  ]
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "gpqa_error": null,
+ "articles": 3739302,
+ "df_words": 2773604,
+ "db_gb": 3.42,
+ "hotpot": 500,
+ "gsm8k": 300,
+ "gpqa": 198
+}

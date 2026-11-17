@@ -1,0 +1,676 @@
+{
+ "selection": {
+  "fail": 24,
+  "ok": 12
+ },
+ "part_a": {
+  "raw": {
+   "fix_own": 0.625,
+   "fix_wrong_passage": 0.0,
+   "keep_own": 0.9167,
+   "keep_wrong_passage": 0.6667
+  },
+  "header": {
+   "fix_own": 0.625,
+   "fix_wrong_passage": 0.0,
+   "keep_own": 0.9167,
+   "keep_wrong_passage": 0.5833
+  },
+  "raw_system": {
+   "fix_own": 0.75,
+   "fix_wrong_passage": 0.0,
+   "keep_own": 1.0,
+   "keep_wrong_passage": 0.6667,
+   "fix_no_memory": 0.0,
+   "keep_no_memory": 0.6667
+  },
+  "header_system": {
+   "fix_own": 0.7083,
+   "fix_wrong_passage": 0.0,
+   "keep_own": 1.0,
+   "keep_wrong_passage": 0.75,
+   "fix_no_memory": 0.0,
+   "keep_no_memory": 0.6667
+  },
+  "raw_malus_1.0": {
+   "fix_own": 0.2917,
+   "fix_wrong_passage": 0.0,
+   "keep_own": 1.0,
+   "keep_wrong_passage": 0.75
+  },
+  "hook": {
+   "calls_with_malus_applied": 954,
+   "keep_wrong_passage_tiny_malus": 0.5,
+   "keep_wrong_passage_huge_malus": 0.8333
+  },
+  "best_malus": 1.0
+ },
+ "linking": {
+  "questions": 48,
+  "gold_article_exists": 0.9167,
+  "span_found": 1.0,
+  "gold_among_candidates": 0.7083,
+  "ambiguous_share_of_linkable": 0.6176,
+  "mean_candidates_when_ambiguous": 6.9,
+  "accuracy_all_linkable": {
+   "longest_article": 0.5588,
+   "pmi_whole_prompt": 0.4706,
+   "pmi_outside_name": 0.5294,
+   "pmi_outside_name_plus_0.5_prior": 0.5294,
+   "pmi_outside_name_plus_1_prior": 0.5588,
+   "pmi_outside_name_plus_2_prior": 0.5588
+  },
+  "accuracy_ambiguous_only": {
+   "longest_article": 0.2857,
+   "pmi_whole_prompt": 0.1429,
+   "pmi_outside_name": 0.2381,
+   "pmi_outside_name_plus_0.5_prior": 0.2381,
+   "pmi_outside_name_plus_1_prior": 0.2857,
+   "pmi_outside_name_plus_2_prior": 0.2857
+  }
+ },
+ "end_to_end": {
+  "no_memory": {
+   "correct": 0.1667,
+   "wrong": 0.7708,
+   "abstain": 0.0625
+  },
+  "oracle_entity": {
+   "correct": 0.75,
+   "wrong": 0.2083,
+   "abstain": 0.0417
+  },
+  "auto_top1_pmi": {
+   "correct": 0.375,
+   "wrong": 0.625,
+   "abstain": 0.0,
+   "triggered": 1.0,
+   "gold_passage_shown": 0.375,
+   "wrong_passage_only": 0.625,
+   "keeps_answers_that_were_correct": 0.875
+  },
+  "auto_top1_longest_article": {
+   "correct": 0.3542,
+   "wrong": 0.6458,
+   "abstain": 0.0,
+   "triggered": 1.0,
+   "gold_passage_shown": 0.3958,
+   "wrong_passage_only": 0.6042,
+   "keeps_answers_that_were_correct": 0.875
+  },
+  "auto_top1_pmi_plus_prior": {
+   "correct": 0.3542,
+   "wrong": 0.6458,
+   "abstain": 0.0,
+   "triggered": 1.0,
+   "gold_passage_shown": 0.3958,
+   "wrong_passage_only": 0.6042,
+   "keeps_answers_that_were_correct": 0.875
+  },
+  "auto_top3": {
+   "correct": 0.4167,
+   "wrong": 0.5833,
+   "abstain": 0.0,
+   "triggered": 1.0,
+   "gold_passage_shown": 0.6458,
+   "wrong_passage_only": 0.3542,
+   "keeps_answers_that_were_correct": 1.0
+  },
+  "auto_all_candidates": {
+   "correct": 0.4792,
+   "wrong": 0.5208,
+   "abstain": 0.0,
+   "triggered": 1.0,
+   "gold_passage_shown": 0.7083,
+   "wrong_passage_only": 0.2917,
+   "keeps_answers_that_were_correct": 0.875
+  },
+  "auto_top3_header_system": {
+   "correct": 0.5,
+   "wrong": 0.5,
+   "abstain": 0.0,
+   "triggered": 1.0,
+   "gold_passage_shown": 0.6458,
+   "wrong_passage_only": 0.3542,
+   "keeps_answers_that_were_correct": 1.0
+  },
+  "auto_top1_pmi_plus_prior_header_system": {
+   "correct": 0.3958,
+   "wrong": 0.5833,
+   "abstain": 0.0208,
+   "triggered": 1.0,
+   "gold_passage_shown": 0.3958,
+   "wrong_passage_only": 0.6042,
+   "keeps_answers_that_were_correct": 1.0
+  }
+ },
+ "examples": [
+  {
+   "q": "What genre is The Carpenter?",
+   "answers": [
+    "symphonic metal"
+   ],
+   "gold": "The Carpenter (Nightwish song)",
+   "candidates": [
+    [
+     "The Carpenter (film)",
+     2.93,
+     28.7
+    ],
+    [
+     "The Carpenter (album)",
+     4.4,
+     28.8
+    ],
+    [
+     "The Carpenter (Nightwish song)",
+     3.58,
+     28.2
+    ],
+    [
+     "The Carpenter (Guy Clark song)",
+     5.29,
+     30.3
+    ],
+    [
+     "The Carpenter",
+     3.63,
+     29.6
+    ]
+   ],
+   "no_memory": "The Carpenter is a **horror** novel (and film adaptation). It's part o",
+   "auto_top3_header_system": "**Genre:** Folk rock / alternative rock (from the Avett Brothers' albu"
+  },
+  {
+   "q": "Who was the screenwriter for Skin?",
+   "answers": [
+    "Sarah Kane",
+    "Sarah Marie Kane"
+   ],
+   "gold": "Skin (1995 film)",
+   "candidates": [
+    [
+     "Skin (musician)",
+     5.22,
+     11.6
+    ],
+    [
+     "Skin (aeronautics)",
+     5.7,
+     6.7
+    ],
+    [
+     "Skin (Rihanna song)",
+     5.21,
+     11.3
+    ],
+    [
+     "Skin (British band)",
+     5.18,
+     11.5
+    ],
+    [
+     "Skin (American TV series)",
+     4.79,
+     12.8
+    ],
+    [
+     "Skin (Marvel Comics)",
+     4.77,
+     11.8
+    ]
+   ],
+   "no_memory": "The screenplay for *Skin* (2012) was written by **Megan Amram** and **",
+   "auto_top3_header_system": "- **Screenwriter:** Deborah Anne Dyer (also known as Skin) wrote and p"
+  },
+  {
+   "q": "Who was the producer of The Days?",
+   "answers": [
+    "Wang Xiaoshuai"
+   ],
+   "gold": "The Days (1993 film)",
+   "candidates": [
+    [
+     "The Days (1993 film)",
+     2.58,
+     25.4
+    ],
+    [
+     "The Days (Japanese TV series)",
+     2.59,
+     23.2
+    ],
+    [
+     "The Days (song)",
+     2.87,
+     20.5
+    ],
+    [
+     "The Days (book)",
+     3.0,
+     23.5
+    ],
+    [
+     "The Days (band)",
+     3.53,
+     20.6
+    ],
+    [
+     "The Days",
+     1.44,
+     25.6
+    ]
+   ],
+   "no_memory": "The Days (1966) was produced by **John Barry**.",
+   "auto_top3_header_system": "The Days (band) was produced by... (need more info; not provided in my"
+  },
+  {
+   "q": "Who was the composer of Tron?",
+   "answers": [
+    "Wendy Carlos",
+    "Walter Carlos"
+   ],
+   "gold": "Tron",
+   "candidates": [
+    [
+     "Tron",
+     2.71,
+     20.3
+    ],
+    [
+     "Tron (franchise)",
+     2.09,
+     15.7
+    ],
+    [
+     "Tron (hacker)",
+     4.54,
+     16.0
+    ],
+    [
+     "Tron (cryptocurrency)",
+     2.74,
+     13.8
+    ],
+    [
+     "TRON (encoding)",
+     1.86,
+     10.5
+    ],
+    [
+     "Tron (soundtrack)",
+     5.55,
+     23.9
+    ]
+   ],
+   "no_memory": "The composer of *Tron* is **Walt Disney** — no, that's wrong. It's act",
+   "auto_top3_header_system": "Wendy Carlos composed the original score for *Tron*."
+  },
+  {
+   "q": "What is Manga the capital of?",
+   "answers": [
+    "Centre-Sud Region"
+   ],
+   "gold": "Manga, Burkina Faso",
+   "candidates": [
+    [
+     "Manga (band)",
+     2.46,
+     19.6
+    ],
+    [
+     "Manga (album)",
+     5.48,
+     24.1
+    ],
+    [
+     "Manga, Montevideo",
+     3.42,
+     27.7
+    ],
+    [
+     "Manga+",
+     -0.83,
+     20.8
+    ],
+    [
+     "Manga (footballer, born 1937)",
+     1.91,
+     21.8
+    ],
+    [
+     "Manga, Minas Gerais",
+     6.0,
+     19.3
+    ]
+   ],
+   "no_memory": "Manga is not a real place; it's a genre. So there’s no capital city fo",
+   "auto_top3_header_system": "Manga is a neighborhood/district of **Montevideo**, Uruguay."
+  },
+  {
+   "q": "In what country is Norfolk?",
+   "answers": [
+    "United States of America",
+    "the United States of America"
+   ],
+   "gold": "Norfolk, Connecticut",
+   "candidates": [
+    [
+     "Norfolk, Virginia",
+     2.31,
+     15.8
+    ],
+    [
+     "Norfolk, Nebraska",
+     4.4,
+     17.2
+    ],
+    [
+     "Norfolk, Nebraska minor league baseball history",
+     1.73,
+     11.8
+    ],
+    [
+     "Norfolk, Virginia, Bicentennial half dollar",
+     2.31,
+     14.8
+    ],
+    [
+     "Norfolk (UK Parliament constituency)",
+     2.6,
+     14.0
+    ],
+    [
+     "Norfolk, Massachusetts",
+     2.35,
+     15.2
+    ]
+   ],
+   "no_memory": "Norfolk is in England.",
+   "auto_top3_header_system": "Norfolk is in **United States** — specifically, in the state of Virgin"
+  },
+  {
+   "q": "What genre is Terra?",
+   "answers": [
+    "massively multiplayer online role-playing game",
+    "MMORPG"
+   ],
+   "gold": "Terra (video game)",
+   "candidates": [
+    [
+     "Terra (blockchain)",
+     1.6,
+     17.9
+    ],
+    [
+     "Terra (video game)",
+     3.72,
+     19.8
+    ],
+    [
+     "Terra (company)",
+     1.64,
+     19.4
+    ],
+    [
+     "Terra (satellite)",
+     1.73,
+     21.2
+    ],
+    [
+     "Terra",
+     2.67,
+     26.5
+    ],
+    [
+     "Terra (German science fiction)",
+     4.66,
+     24.9
+    ]
+   ],
+   "no_memory": "Terra is a **fantasy** novel series (and related media) set in a world",
+   "auto_top3_header_system": "Terra is an **online MMORPG** (massively multiplayer online role-playi"
+  },
+  {
+   "q": "Who was the screenwriter for The Business?",
+   "answers": [
+    "Nick Love"
+   ],
+   "gold": "The Business (film)",
+   "candidates": [
+    [
+     "The Business (band)",
+     3.98,
+     20.0
+    ],
+    [
+     "The Business (film)",
+     4.55,
+     28.6
+    ],
+    [
+     "The Business (Tiësto song)",
+     3.57,
+     19.2
+    ],
+    [
+     "The Business (TV series)",
+     3.72,
+     17.7
+    ],
+    [
+     "The Business (TV program)",
+     3.02,
+     16.7
+    ],
+    [
+     "The Business (magazine)",
+     5.19,
+     21.7
+    ]
+   ],
+   "no_memory": "The Business (2018) was written by David E. Kelley and others, but pri",
+   "auto_top3_header_system": "**Screenwriter:** Nick Love\n\n*Note: This information comes from genera"
+  },
+  {
+   "q": "Who was the producer of Interview?",
+   "answers": [
+    "Theo van Gogh"
+   ],
+   "gold": "Interview (2003 film)",
+   "candidates": [
+    [
+     "Interview (research)",
+     0.84,
+     11.4
+    ],
+    [
+     "Interview",
+     0.65,
+     9.9
+    ],
+    [
+     "Interview (1979 film)",
+     2.62,
+     18.6
+    ],
+    [
+     "Interview (2007 film)",
+     2.09,
+     13.7
+    ],
+    [
+     "Interview (magazine)",
+     2.27,
+     19.3
+    ],
+    [
+     "Interview (journalism)",
+     1.18,
+     11.6
+    ]
+   ],
+   "no_memory": "The producer of *Interview* (the 2014 documentary about Barack Obama's",
+   "auto_top3_header_system": "- **Producer:** David Verrall  \n- **Director(s):** Caroline Leaf and V"
+  },
+  {
+   "q": "Who was the screenwriter for The Wedding?",
+   "answers": [
+    "Wojciech Smarzowski"
+   ],
+   "gold": "The Wedding (2004 film)",
+   "candidates": [
+    [
+     "The Wedding!",
+     2.75,
+     17.9
+    ],
+    [
+     "The Wedding (What We Do in the Shadows)",
+     3.76,
+     22.0
+    ],
+    [
+     "The Wedding (band)",
+     2.88,
+     14.4
+    ],
+    [
+     "The Wedding (miniseries)",
+     4.87,
+     23.9
+    ],
+    [
+     "The Wedding (1629 play)",
+     3.18,
+     17.0
+    ],
+    [
+     "The Wedding (1972 film)",
+     4.25,
+     17.0
+    ]
+   ],
+   "no_memory": "The Wedding (2014) was written by **David Mamet** and **John McIntire*",
+   "auto_top3_header_system": "**Screenwriter:** The Wikipedia entry lists **Andrzej Wajda** as direc"
+  },
+  {
+   "q": "Who was the composer of The Seasons?",
+   "answers": [
+    "Joseph Haydn",
+    "Franz Joseph Haydn"
+   ],
+   "gold": "The Seasons (Haydn)",
+   "candidates": [
+    [
+     "The Seasons (Tchaikovsky)",
+     5.57,
+     16.8
+    ],
+    [
+     "The Seasons (ballet)",
+     4.49,
+     21.1
+    ],
+    [
+     "The Seasons (Thomson)",
+     3.96,
+     17.5
+    ],
+    [
+     "The Seasons (Mucha)",
+     3.58,
+     17.2
+    ],
+    [
+     "The Seasons (Cage)",
+     4.42,
+     24.4
+    ],
+    [
+     "The Seasons (TV program)",
+     2.76,
+     19.3
+    ]
+   ],
+   "no_memory": "The composer of *The Seasons* is **Claude Debussy**. (Note: He wrote *",
+   "auto_top3_header_system": "**Composer:** Pyotr Ilyich Tchaikovsky  \n**Work:** *The Seasons* (Les "
+  },
+  {
+   "q": "What is the religion of Sabine Baring-Gould?",
+   "answers": [
+    "Anglicanism",
+    "Anglicanism, Anglican Church"
+   ],
+   "gold": "Sabine Baring-Gould",
+   "candidates": [
+    [
+     "Sabine (given name)",
+     14.66,
+     24.6
+    ],
+    [
+     "Sabine (crater)",
+     0.46,
+     9.1
+    ],
+    [
+     "Sabine (surname)",
+     1.67,
+     1.5
+    ],
+    [
+     "Sabine (musician)",
+     -1.38,
+     9.9
+    ],
+    [
+     "Sabine, Queensland",
+     1.65,
+     5.9
+    ],
+    [
+     "Sabine (TV series)",
+     4.45,
+     21.0
+    ]
+   ],
+   "no_memory": "Sabine Baring‑Gould was an English **Unitarian** (and later a freethin",
+   "auto_top3_header_system": "**Religion:** Anglican (or Church of England) — he was an Anglican pri"
+  },
+  {
+   "q": "What is the capital of Sangrur district?",
+   "answers": [
+    "Sangrur"
+   ],
+   "gold": "Sangrur district",
+   "candidates": [
+    [
+     "Sangrur district",
+     1.18,
+     24.4
+    ]
+   ],
+   "no_memory": "Sangrur city.",
+   "auto_top3_header_system": "The capital of Sangrur district is **Sangrur** city (also known as San"
+  },
+  {
+   "q": "In what city was Eduardo Hurtado born?",
+   "answers": [
+    "Esmeraldas",
+    "Esmeraldas (Ecuador)"
+   ],
+   "gold": "Eduardo Hurtado",
+   "candidates": [
+    [
+     "Eduardo Hurtado",
+     5.25,
+     30.2
+    ]
+   ],
+   "no_memory": "Eduardo Hurtado was born in **Bogotá, Colombia**.",
+   "auto_top3_header_system": "Eduardo Hurtado was born in **Quito**, Ecuador."
+  }
+ ],
+ "seconds_total": 103
+}

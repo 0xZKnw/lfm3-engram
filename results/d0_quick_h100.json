@@ -1,0 +1,23 @@
+{
+ "mode": "quick",
+ "gpu": "NVIDIA H100 80GB HBM3",
+ "torch": "2.14.1+cu130",
+ "load_s": 33.8,
+ "params": 1728801536,
+ "train_frozen": {
+  "batch_4": {
+   "tok_per_s": 32506,
+   "peak_gb": 29.6
+  },
+  "batch_8": {
+   "tok_per_s": 33880,
+   "peak_gb": 47.3
+  }
+ },
+ "inference_backbone": {
+  "batch_16": {
+   "tok_per_s": 96226,
+   "peak_gb": 6.3
+  }
+ }
+}

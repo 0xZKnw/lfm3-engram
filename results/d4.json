@@ -1,0 +1,316 @@
+{
+ "baseline": {
+  "n": 5000,
+  "correct": 0.1346,
+  "wrong": 0.8202,
+  "abstain": 0.0452
+ },
+ "selection": {
+  "fail": 400,
+  "ok": 150
+ },
+ "by_passage_len": {
+  "32": {
+   "answer_in_passage": 0.5975,
+   "fix_rate_all_failures": {
+    "in_prompt": 0.595,
+    "prefix_contig": 0.5825,
+    "memory": 0.56,
+    "wrong_memory": 0.0375
+   },
+   "fix_rate_when_answer_in_passage": {
+    "in_prompt": 0.9372,
+    "prefix_contig": 0.8996,
+    "memory": 0.8619,
+    "wrong_memory": 0.046
+   },
+   "abstain_rate_wrong_memory": 0.035,
+   "still_correct_with_own_memory": 0.9467,
+   "still_correct_with_wrong_memory": 0.7333,
+   "examples": [
+    {
+     "q": "What genre is The Carpenter?",
+     "answers": [
+      "symphonic metal"
+     ],
+     "before": "The Carpenter is a **horror** novel (and film adaptation). It's part of Stephen ",
+     "memory": "The Carpenter is an **epic metalcore** / **symphonic metal** song. It's part of ",
+     "wrong_memory": "The Carpenter is a **horror** or **thriller** film. It's a low-budget, gothic ho"
+    },
+    {
+     "q": "Who was the screenwriter for Skin?",
+     "answers": [
+      "Sarah Kane",
+      "Sarah Marie Kane"
+     ],
+     "before": "The screenplay for *Skin* (2012) was written by **Megan Amram** and **Jennifer K",
+     "memory": "Ewen Bremner wrote *Skin*.  \n(The film’s credited screenplay is by **Ewen Bremne",
+     "wrong_memory": "The screenplay for *Skin* (2012) was written by **Jennifer Kent** and **Katherin"
+    },
+    {
+     "q": "Who was the producer of The Days?",
+     "answers": [
+      "Wang Xiaoshuai"
+     ],
+     "before": "The Days (1966) was produced by **John Barry**.",
+     "memory": "The producer of *The Days* (1993) is **Wang Xiaoshuai** himself, as he directed ",
+     "wrong_memory": "The producer of *The Days* is **John Sayles**? No, that's not right. Let me thin"
+    },
+    {
+     "q": "Who was the composer of Tron?",
+     "answers": [
+      "Wendy Carlos",
+      "Walter Carlos"
+     ],
+     "before": "The composer of *Tron* is **Walt Disney** — no, that's wrong. It's actually **Do",
+     "memory": "Steven Lisberger.",
+     "wrong_memory": "The composer of *Tron* (1982) is **Walt Disney** — no, that's wrong. The correct"
+    },
+    {
+     "q": "What is Manga the capital of?",
+     "answers": [
+      "Centre-Sud Region"
+     ],
+     "before": "Manga is not a real place; it's a genre. So there’s no capital city for \"Manga.\"",
+     "memory": "Manga is not the capital of any country; it's a city in Burkina Faso. The capita",
+     "wrong_memory": "Manga is not a real place; it appears to be a fictional or misspelled term. If y"
+    },
+    {
+     "q": "In what country is Norfolk?",
+     "answers": [
+      "United States of America",
+      "the United States of America"
+     ],
+     "before": "Norfolk is in England.",
+     "memory": "Norfolk is in **United States** (specifically, in the state of Connecticut).",
+     "wrong_memory": "The United Kingdom."
+    },
+    {
+     "q": "What genre is Terra?",
+     "answers": [
+      "massively multiplayer online role-playing game",
+      "MMORPG"
+     ],
+     "before": "Terra is a **fantasy** novel series (and related media) set in a world of magic ",
+     "memory": "**Genre:**  \nAction, Adventure, RPG, Sci-Fi.",
+     "wrong_memory": "Terra is a **sci-fi** or **space opera** film (often categorized as sci-fi/thril"
+    },
+    {
+     "q": "Who was the screenwriter for The Business?",
+     "answers": [
+      "Nick Love"
+     ],
+     "before": "The Business (2018) was written by David E. Kelley and others, but primarily cre",
+     "memory": "Nick Love",
+     "wrong_memory": "The screenplay for *The Business* (2018) was written by **Katja Schuurman** and "
+    }
+   ]
+  },
+  "64": {
+   "answer_in_passage": 0.8325,
+   "fix_rate_all_failures": {
+    "in_prompt": 0.745,
+    "prefix_contig": 0.7675,
+    "memory": 0.735,
+    "wrong_memory": 0.0425,
+    "distractors": 0.5525
+   },
+   "fix_rate_when_answer_in_passage": {
+    "in_prompt": 0.8859,
+    "prefix_contig": 0.8889,
+    "memory": 0.8619,
+    "wrong_memory": 0.048,
+    "distractors": 0.6517
+   },
+   "abstain_rate_wrong_memory": 0.055,
+   "still_correct_with_own_memory": 0.9533,
+   "still_correct_with_wrong_memory": 0.7133,
+   "examples": [
+    {
+     "q": "What genre is The Carpenter?",
+     "answers": [
+      "symphonic metal"
+     ],
+     "before": "The Carpenter is a **horror** novel (and film adaptation). It's part of Stephen ",
+     "memory": "The Carpenter is **symphonic metal**.",
+     "wrong_memory": "The Carpenter is a **horror** or **thriller** film, often categorized as a **dar"
+    },
+    {
+     "q": "Who was the screenwriter for Skin?",
+     "answers": [
+      "Sarah Kane",
+      "Sarah Marie Kane"
+     ],
+     "before": "The screenplay for *Skin* (2012) was written by **Megan Amram** and **Jennifer K",
+     "memory": "Ewen Bremner and Marcia Rose co-wrote *Skin* (2013). The primary credited screen",
+     "wrong_memory": "The screenwriter for *Skin* is **Jennifer Kent**. She co-wrote the screenplay wi"
+    },
+    {
+     "q": "Who was the producer of The Days?",
+     "answers": [
+      "Wang Xiaoshuai"
+     ],
+     "before": "The Days (1966) was produced by **John Barry**.",
+     "memory": "The producer of *The Days* (1993) is **Wang Xiaoshuai** himself. It is his direc",
+     "wrong_memory": "Jeffrey Katzenberg"
+    },
+    {
+     "q": "Who was the composer of Tron?",
+     "answers": [
+      "Wendy Carlos",
+      "Walter Carlos"
+     ],
+     "before": "The composer of *Tron* is **Walt Disney** — no, that's wrong. It's actually **Do",
+     "memory": "Jeff Lewis",
+     "wrong_memory": "The composer of *Tron* (1982) is **Walt Disney** — no, that's wrong. The correct"
+    },
+    {
+     "q": "What is Manga the capital of?",
+     "answers": [
+      "Centre-Sud Region"
+     ],
+     "before": "Manga is not a real place; it's a genre. So there’s no capital city for \"Manga.\"",
+     "memory": "Manga is not the capital of any country or region; it appears to be a small town",
+     "wrong_memory": "Manga is not a recognized capital city; it may be a misspelling or fictional ref"
+    },
+    {
+     "q": "In what country is Norfolk?",
+     "answers": [
+      "United States of America",
+      "the United States of America"
+     ],
+     "before": "Norfolk is in England.",
+     "memory": "North America (United States) — specifically **Connecticut, USA**.",
+     "wrong_memory": "The United Kingdom."
+    },
+    {
+     "q": "What genre is Terra?",
+     "answers": [
+      "massively multiplayer online role-playing game",
+      "MMORPG"
+     ],
+     "before": "Terra is a **fantasy** novel series (and related media) set in a world of magic ",
+     "memory": "**Genre:**  \nAction‑RPG / Online MMO (role‑playing, adventure, and combat).",
+     "wrong_memory": "Terra is a **sci-fi** or **fantasy** film? Wait—actually, \"Terra\" might refer to"
+    },
+    {
+     "q": "Who was the screenwriter for The Business?",
+     "answers": [
+      "Nick Love"
+     ],
+     "before": "The Business (2018) was written by David E. Kelley and others, but primarily cre",
+     "memory": "Nick Love",
+     "wrong_memory": "The screenplay for *The Business* (2018) was written by **Josh Rosenberg** and *"
+    }
+   ]
+  },
+  "128": {
+   "answer_in_passage": 0.8975,
+   "fix_rate_all_failures": {
+    "in_prompt": 0.78,
+    "prefix_contig": 0.8025,
+    "memory": 0.77,
+    "wrong_memory": 0.04
+   },
+   "fix_rate_when_answer_in_passage": {
+    "in_prompt": 0.8635,
+    "prefix_contig": 0.8858,
+    "memory": 0.8468,
+    "wrong_memory": 0.0418
+   },
+   "abstain_rate_wrong_memory": 0.0775,
+   "still_correct_with_own_memory": 0.96,
+   "still_correct_with_wrong_memory": 0.7333,
+   "examples": [
+    {
+     "q": "What genre is The Carpenter?",
+     "answers": [
+      "symphonic metal"
+     ],
+     "before": "The Carpenter is a **horror** novel (and film adaptation). It's part of Stephen ",
+     "memory": "The Carpenter is **symphonic metal**.",
+     "wrong_memory": "The Carpenter is a **horror** or **thriller** film. It's often categorized as a "
+    },
+    {
+     "q": "Who was the screenwriter for Skin?",
+     "answers": [
+      "Sarah Kane",
+      "Sarah Marie Kane"
+     ],
+     "before": "The screenplay for *Skin* (2012) was written by **Megan Amram** and **Jennifer K",
+     "memory": "Sarah Kane",
+     "wrong_memory": "The screenwriter for *Skin* is **Katherine Dieckmann** (co-writer with **Jennife"
+    },
+    {
+     "q": "Who was the producer of The Days?",
+     "answers": [
+      "Wang Xiaoshuai"
+     ],
+     "before": "The Days (1966) was produced by **John Barry**.",
+     "memory": "The Days (1993) was produced by **Wang Xiaoshuai** himself. It is his directoria",
+     "wrong_memory": "The Days was produced by **John Sayles**? No—actually, I need to verify: \"The Da"
+    },
+    {
+     "q": "Who was the composer of Tron?",
+     "answers": [
+      "Wendy Carlos",
+      "Walter Carlos"
+     ],
+     "before": "The composer of *Tron* is **Walt Disney** — no, that's wrong. It's actually **Do",
+     "memory": "Jeff Lewis",
+     "wrong_memory": "The composer of *Tron* (1982) is **Walt Disney** — no, that's wrong. The correct"
+    },
+    {
+     "q": "What is Manga the capital of?",
+     "answers": [
+      "Centre-Sud Region"
+     ],
+     "before": "Manga is not a real place; it's a genre. So there’s no capital city for \"Manga.\"",
+     "memory": "Manga is not the capital of any country or region; it appears to be a small town",
+     "wrong_memory": "Norfolk is not the capital of any country or region; it's a town in Connecticut,"
+    },
+    {
+     "q": "In what country is Norfolk?",
+     "answers": [
+      "United States of America",
+      "the United States of America"
+     ],
+     "before": "Norfolk is in England.",
+     "memory": "North America (United States) — specifically **Connecticut, USA**.",
+     "wrong_memory": "The United Kingdom."
+    },
+    {
+     "q": "What genre is Terra?",
+     "answers": [
+      "massively multiplayer online role-playing game",
+      "MMORPG"
+     ],
+     "before": "Terra is a **fantasy** novel series (and related media) set in a world of magic ",
+     "memory": "Massively Multiplayer Online Role-Playing Game (MMORPG).",
+     "wrong_memory": "Terra is a **biographical drama** about a real person named Terra."
+    },
+    {
+     "q": "Who was the screenwriter for The Business?",
+     "answers": [
+      "Nick Love"
+     ],
+     "before": "The Business (2018) was written by David E. Kelley and others, but primarily cre",
+     "memory": "Nick Love",
+     "wrong_memory": "The Business (1995) was written by David Mamet and Robert Towne. However, I need"
+    }
+   ]
+  }
+ },
+ "thinking_allowed": {
+  "n": 120,
+  "no_memory": {
+   "correct": 0.0083,
+   "unfinished_after_768_tokens": 0.5
+  },
+  "memory_64": {
+   "correct": 0.5917,
+   "unfinished_after_768_tokens": 0.175
+  }
+ },
+ "seconds_total": 566
+}

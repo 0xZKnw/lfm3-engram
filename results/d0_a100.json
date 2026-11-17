@@ -1,0 +1,43 @@
+{
+ "mode": "main",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "torch": "2.14.1+cu130",
+ "load_s": 25.3,
+ "params": 1728801536,
+ "sanity_starts_with_bos": false,
+ "sanity_loss_nats": 2.082,
+ "sanity_prompt": "<|startoftext|><|im_start|>user\nWhat is the capital of Burkina Faso? Answer in one short sentence.<|im_end|>\n<|im_start|>assistant\n<think></think>",
+ "sanity_answer": "The capital of Burkina Faso is Ouagadougou.<|im_end|>",
+ "inference_backbone": {
+  "batch_8": {
+   "tok_per_s": 43388,
+   "peak_gb": 4.9
+  },
+  "batch_16": {
+   "tok_per_s": 44048,
+   "peak_gb": 6.3
+  },
+  "batch_32": {
+   "tok_per_s": 43934,
+   "peak_gb": 9.1
+  }
+ },
+ "train_frozen": {
+  "batch_8": {
+   "tok_per_s": 15578,
+   "peak_gb": 47.2
+  },
+  "batch_16": {
+   "oom": true
+  },
+  "batch_24": {
+   "oom": true
+  }
+ },
+ "train_all_weights": {
+  "batch_8": {
+   "tok_per_s": 12265,
+   "peak_gb": 70.9
+  }
+ }
+}

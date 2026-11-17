@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+logs/
+
+# These result files quote GPQA questions. GPQA is a gated benchmark whose authors ask that its questions
+# are not published, so they stay local. Their scores are in RESULTS.md.
+results/d6_smoke.json
+results/d6b_smoke.json
+results/d6b.json

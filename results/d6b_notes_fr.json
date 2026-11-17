@@ -1,0 +1,85 @@
+{
+ "lang": "fr",
+ "members": 32,
+ "articles": 2276017,
+ "db_gb": 1.14,
+ "probes": {
+  "allemagne": [
+   [
+    "Allemagne",
+    "pays du centre de l'Europe",
+    "Q183"
+   ],
+   [
+    "Allemagne",
+    "pays du centre de l'Europe",
+    "Q183"
+   ]
+  ],
+  "londres": [
+   [
+    "Londres",
+    "capitale de l'Angleterre et du Royaume-Uni",
+    "Q84"
+   ]
+  ],
+  "guerre de cent ans": [
+   [
+    "Guerre de Cent Ans",
+    "série de conflits opposant la France et l'Angleterre de 1337 à 1453",
+    "Q12551"
+   ],
+   [
+    "Guerre de Cent Ans",
+    "série de conflits opposant la France et l'Angleterre de 1337 à 1453",
+    "Q12551"
+   ]
+  ],
+  "energie libre de gibbs": [],
+  "shirley temple": [
+   [
+    "Shirley Temple",
+    "actrice et diplomate américaine",
+    "Q182580"
+   ]
+  ],
+  "cote d ivoire": [
+   [
+    "Côte d'Ivoire",
+    "pays d'Afrique de l'Ouest",
+    "Q1008"
+   ]
+  ],
+  "equations de maxwell": [
+   [
+    "Équations de Maxwell",
+    "équations fondamentales de l'électromagnétisme",
+    "Q51501"
+   ]
+  ],
+  "victor hugo": [
+   [
+    "Victor Hugo",
+    "romancier, poète, dramaturge, dessinateur et politicien français",
+    "Q535"
+   ],
+   [
+    "Victor Hugo",
+    "romancier, poète, dramaturge, dessinateur et politicien français",
+    "Q535"
+   ]
+  ]
+ },
+ "word_freq": {
+  "words": 35663198,
+  "kept": 148881,
+  "examples": {
+   "énergie": 159.885,
+   "guerre": 796.339,
+   "gibbs": 5.776,
+   "également": 934.044,
+   "allemagne": 214.759,
+   "capitale": 153.127
+  }
+ }
+}

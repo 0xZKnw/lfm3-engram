@@ -1,0 +1,319 @@
+{
+ "train_pairs": 40000,
+ "test_pairs": 3000,
+ "pool": 200000,
+ "test_answers_never_seen_in_training": 0.1543,
+ "what": {
+  "query_layer_8_key_layer_12": {
+   "all": {
+    "recall@1": 0.1823,
+    "recall@5": 0.3483,
+    "recall@20": 0.4943,
+    "recall@100": 0.649
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0389,
+    "recall@5": 0.121,
+    "recall@20": 0.2268,
+    "recall@100": 0.4168
+   }
+  },
+  "query_layer_8_key_layer_20": {
+   "all": {
+    "recall@1": 0.189,
+    "recall@5": 0.3653,
+    "recall@20": 0.5183,
+    "recall@100": 0.669
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0324,
+    "recall@5": 0.1339,
+    "recall@20": 0.2505,
+    "recall@100": 0.4168
+   }
+  },
+  "query_layer_8_key_layer_24": {
+   "all": {
+    "recall@1": 0.1843,
+    "recall@5": 0.3433,
+    "recall@20": 0.5077,
+    "recall@100": 0.6543
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0454,
+    "recall@5": 0.1037,
+    "recall@20": 0.2613,
+    "recall@100": 0.4341
+   }
+  },
+  "query_layer_12_key_layer_12": {
+   "all": {
+    "recall@1": 0.202,
+    "recall@5": 0.3603,
+    "recall@20": 0.5077,
+    "recall@100": 0.6437
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0518,
+    "recall@5": 0.1296,
+    "recall@20": 0.2462,
+    "recall@100": 0.4017
+   }
+  },
+  "untrained_cosine_layer_12": {
+   "all": {
+    "recall@1": 0.0,
+    "recall@5": 0.0003,
+    "recall@20": 0.002,
+    "recall@100": 0.007
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0,
+    "recall@5": 0.0,
+    "recall@20": 0.0043,
+    "recall@100": 0.0086
+   }
+  },
+  "query_layer_12_key_layer_20": {
+   "all": {
+    "recall@1": 0.197,
+    "recall@5": 0.365,
+    "recall@20": 0.5153,
+    "recall@100": 0.6607
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0389,
+    "recall@5": 0.1253,
+    "recall@20": 0.2138,
+    "recall@100": 0.3931
+   }
+  },
+  "query_layer_12_key_layer_24": {
+   "all": {
+    "recall@1": 0.199,
+    "recall@5": 0.3773,
+    "recall@20": 0.5143,
+    "recall@100": 0.661
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0432,
+    "recall@5": 0.1037,
+    "recall@20": 0.1901,
+    "recall@100": 0.3866
+   }
+  },
+  "query_layer_16_key_layer_12": {
+   "all": {
+    "recall@1": 0.3053,
+    "recall@5": 0.4963,
+    "recall@20": 0.6353,
+    "recall@100": 0.759
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0994,
+    "recall@5": 0.2073,
+    "recall@20": 0.3477,
+    "recall@100": 0.5594
+   }
+  },
+  "query_layer_16_key_layer_20": {
+   "all": {
+    "recall@1": 0.3257,
+    "recall@5": 0.5307,
+    "recall@20": 0.6597,
+    "recall@100": 0.7797
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.1102,
+    "recall@5": 0.2441,
+    "recall@20": 0.3909,
+    "recall@100": 0.6112
+   }
+  },
+  "query_layer_16_key_layer_24": {
+   "all": {
+    "recall@1": 0.3293,
+    "recall@5": 0.5227,
+    "recall@20": 0.654,
+    "recall@100": 0.772
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.1015,
+    "recall@5": 0.2462,
+    "recall@20": 0.3888,
+    "recall@100": 0.594
+   }
+  },
+  "query_layer_20_key_layer_12": {
+   "all": {
+    "recall@1": 0.3053,
+    "recall@5": 0.4997,
+    "recall@20": 0.6377,
+    "recall@100": 0.7667
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.095,
+    "recall@5": 0.2138,
+    "recall@20": 0.3477,
+    "recall@100": 0.5616
+   }
+  },
+  "query_layer_20_key_layer_20": {
+   "all": {
+    "recall@1": 0.3203,
+    "recall@5": 0.5243,
+    "recall@20": 0.6553,
+    "recall@100": 0.7847
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0994,
+    "recall@5": 0.216,
+    "recall@20": 0.3844,
+    "recall@100": 0.6069
+   }
+  },
+  "untrained_cosine_layer_20": {
+   "all": {
+    "recall@1": 0.028,
+    "recall@5": 0.0687,
+    "recall@20": 0.1373,
+    "recall@100": 0.247
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.054,
+    "recall@5": 0.095,
+    "recall@20": 0.162,
+    "recall@100": 0.2635
+   }
+  },
+  "query_layer_20_key_layer_24": {
+   "all": {
+    "recall@1": 0.3237,
+    "recall@5": 0.521,
+    "recall@20": 0.6633,
+    "recall@100": 0.7807
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.1037,
+    "recall@5": 0.2333,
+    "recall@20": 0.3909,
+    "recall@100": 0.5961
+   }
+  },
+  "query_layer_24_key_layer_12": {
+   "all": {
+    "recall@1": 0.4847,
+    "recall@5": 0.6297,
+    "recall@20": 0.717,
+    "recall@100": 0.8037
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0929,
+    "recall@5": 0.2376,
+    "recall@20": 0.3737,
+    "recall@100": 0.5767
+   }
+  },
+  "query_layer_24_key_layer_20": {
+   "all": {
+    "recall@1": 0.4867,
+    "recall@5": 0.6547,
+    "recall@20": 0.7477,
+    "recall@100": 0.8347
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.1793,
+    "recall@5": 0.3175,
+    "recall@20": 0.5054,
+    "recall@100": 0.6652
+   }
+  },
+  "query_layer_24_key_layer_24": {
+   "all": {
+    "recall@1": 0.4943,
+    "recall@5": 0.6613,
+    "recall@20": 0.744,
+    "recall@100": 0.827
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.1685,
+    "recall@5": 0.3197,
+    "recall@20": 0.4622,
+    "recall@100": 0.6415
+   }
+  },
+  "untrained_cosine_layer_24": {
+   "all": {
+    "recall@1": 0.109,
+    "recall@5": 0.2253,
+    "recall@20": 0.346,
+    "recall@100": 0.4647
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.1663,
+    "recall@5": 0.3089,
+    "recall@20": 0.419,
+    "recall@100": 0.5292
+   }
+  }
+ },
+ "what_best": {
+  "config": "query_layer_24_key_layer_24",
+  "all": {
+   "recall@1": 0.4943,
+   "recall@5": 0.6613,
+   "recall@20": 0.744,
+   "recall@100": 0.827
+  },
+  "answer_never_seen_in_training": {
+   "recall@1": 0.1685,
+   "recall@5": 0.3197,
+   "recall@20": 0.4622,
+   "recall@100": 0.6415
+  }
+ },
+ "when": {
+  "model_wrong_without_memory": {
+   "train": 0.626,
+   "test": 0.6315
+  },
+  "auc_by_layer": {
+   "8": 0.7946,
+   "12": 0.8153,
+   "16": 0.8198,
+   "20": 0.8202,
+   "24": 0.8066
+  },
+  "layer_16_split": {
+   "wrong_rate_in_flagged_half": 0.8462,
+   "wrong_rate_in_other_half": 0.4164
+  }
+ },
+ "examples": [
+  {
+   "q": "Who sang the title song of the film The Girl Can't Help It?",
+   "answer_article": "Little Richard"
+  },
+  {
+   "q": "Which country's capital city is San Salvador?",
+   "answer_article": "El Salvador"
+  },
+  {
+   "q": "In Greek mythology, Croesus was known for what?",
+   "answer_article": "Wealth"
+  },
+  {
+   "q": "Which non-SI unit of length is 1 x 10-10?",
+   "answer_article": "Angstrom"
+  },
+  {
+   "q": "In which town is St Magnus' Cathedral, the most northerly in Britain?",
+   "answer_article": "Kirkwall"
+  },
+  {
+   "q": "What is the largest species of rodent in the world?",
+   "answer_article": "Capybara"
+  }
+ ],
+ "seconds_total": 479
+}

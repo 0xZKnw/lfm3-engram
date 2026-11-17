@@ -1,0 +1,23 @@
+{
+ "mode": "quick",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "torch": "2.14.1+cu130",
+ "load_s": 22.6,
+ "params": 1728801536,
+ "train_frozen": {
+  "batch_4": {
+   "tok_per_s": 15344,
+   "peak_gb": 29.5
+  },
+  "batch_8": {
+   "tok_per_s": 15628,
+   "peak_gb": 47.2
+  }
+ },
+ "inference_backbone": {
+  "batch_16": {
+   "tok_per_s": 44311,
+   "peak_gb": 6.3
+  }
+ }
+}

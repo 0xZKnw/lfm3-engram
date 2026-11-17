@@ -1,0 +1,44 @@
+{
+ "arxiv": {
+  "tokens": 150190,
+  "scored": 149367,
+  "loss_nats": 2.6847,
+  "top1_acc": 0.4648,
+  "tok_per_s": 12101
+ },
+ "chat": {
+  "tokens": 150168,
+  "scored": 150043,
+  "loss_nats": 2.2281,
+  "top1_acc": 0.5704,
+  "tok_per_s": 16902
+ },
+ "code": {
+  "tokens": 150222,
+  "scored": 149603,
+  "loss_nats": 1.9718,
+  "top1_acc": 0.6185,
+  "tok_per_s": 15491
+ },
+ "web": {
+  "tokens": 150126,
+  "scored": 149962,
+  "loss_nats": 2.66,
+  "top1_acc": 0.4561,
+  "tok_per_s": 16595
+ },
+ "wiki_en": {
+  "tokens": 151810,
+  "scored": 151677,
+  "loss_nats": 2.563,
+  "top1_acc": 0.4852,
+  "tok_per_s": 16771
+ },
+ "wiki_fr": {
+  "tokens": 151699,
+  "scored": 151622,
+  "loss_nats": 2.645,
+  "top1_acc": 0.4755,
+  "tok_per_s": 16845
+ }
+}

@@ -1,0 +1,62 @@
+[
+ {
+  "corpus": "wiki_en",
+  "test_tokens": 151810,
+  "test_docs": 133,
+  "train_tokens": 2164004,
+  "train_docs": 1403,
+  "stopped": "target",
+  "seconds": 36,
+  "sample": "<|startoftext|>Curtis McGrath\n\nCurtis Wain McGrath,  (born 31 March 1988) is an Australian paracanoeist and former soldier. He took up canoeing competitively after both of his legs were amputated as a result of a mine"
+ },
+ {
+  "corpus": "wiki_fr",
+  "test_tokens": 151699,
+  "test_docs": 77,
+  "train_tokens": 2813087,
+  "train_docs": 947,
+  "stopped": "target",
+  "seconds": 39,
+  "sample": "<|startoftext|>Église-Neuve-de-Vergt\n\nÉglise-Neuve-de-Vergt est une commune française située dans le département de la Dordogne, en région Nouvelle-Aquitaine.\n\nGéographie\n\nGénéralités \nIncluse dans l'aire d'attraction de Périgueux"
+ },
+ {
+  "corpus": "arxiv",
+  "test_tokens": 150190,
+  "test_docs": 823,
+  "train_tokens": 1524982,
+  "train_docs": 8348,
+  "stopped": "target",
+  "seconds": 29,
+  "sample": "<|startoftext|>Dual nature of improper ferroelectricity in a magnetoelectric multiferroic\n\nUsing first principles calculations, we study the microscopic origin of ferroelectricity (FE) induced by magnetic order in the orthorhombic HoMnO3. We obtain the largest ferroe"
+ },
+ {
+  "corpus": "web",
+  "test_tokens": 150126,
+  "test_docs": 164,
+  "train_tokens": 1926451,
+  "train_docs": 1884,
+  "stopped": "target",
+  "seconds": 56,
+  "sample": "<|startoftext|>The quest to achieve the impossible fuels creativity, spawns new fields of inquiry, illuminates old ones, and extends the frontiers of knowledge. It is difficult, however, to obtain a patent for an invention which seems impossible, incredible, or conflicts with well-established scientific principles. The principal patent"
+ },
+ {
+  "corpus": "code",
+  "test_tokens": 150222,
+  "test_docs": 619,
+  "train_tokens": 1524572,
+  "train_docs": 6036,
+  "stopped": "target",
+  "seconds": 30,
+  "sample": "<|startoftext|>def get(self, line_number):\n        \"\"\"Return the needle positions or None.\n\n        :param int line_number: the number of the line\n        :rtype: list\n        :return: the needle positions for a specific line specified by\n          :paramref:`line_number` or :"
+ },
+ {
+  "corpus": "chat",
+  "test_tokens": 150168,
+  "test_docs": 125,
+  "train_tokens": 1669932,
+  "train_docs": 1411,
+  "stopped": "target",
+  "seconds": 18,
+  "sample": "<|startoftext|><|im_start|>user\nHow does the text contrast bunnies' mild temperament with the chaotic nature of our culture?: It’s hard not to feel anxious these days. So much barking and blinking and chest thumping. So much posing and strutting, and grinding, voracious gre"
+ }
+]

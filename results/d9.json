@@ -1,0 +1,793 @@
+{
+ "probe": {
+  "layer": 16,
+  "trained_on_english": 5000,
+  "trained_on_french": 2000,
+  "wrong_rate_train": 0.7119
+ },
+ "triviaqa_held_out": {
+  "n": 1000,
+  "no_memory": 0.313,
+  "memory_always": 0.422,
+  "broken_when_always": 31,
+  "fixed_when_always": 140,
+  "note_triggered": 0.592,
+  "probe_auc": 0.8018,
+  "memory_only_when_probe_worried": {
+   "0.3": {
+    "accuracy": 0.417,
+    "broken": 16,
+    "fixed": 120,
+    "notes_shown": 0.454
+   },
+   "0.4": {
+    "accuracy": 0.403,
+    "broken": 15,
+    "fixed": 105,
+    "notes_shown": 0.409
+   },
+   "0.5": {
+    "accuracy": 0.389,
+    "broken": 13,
+    "fixed": 89,
+    "notes_shown": 0.357
+   },
+   "0.6": {
+    "accuracy": 0.368,
+    "broken": 9,
+    "fixed": 64,
+    "notes_shown": 0.291
+   },
+   "0.7": {
+    "accuracy": 0.35,
+    "broken": 7,
+    "fixed": 44,
+    "notes_shown": 0.213
+   },
+   "0.8": {
+    "accuracy": 0.339,
+    "broken": 3,
+    "fixed": 29,
+    "notes_shown": 0.125
+   }
+  },
+  "abstain_when_worried_and_no_note": {
+   "0.3": {
+    "abstained": 0.273,
+    "of_which_would_have_been_wrong": 0.7692,
+    "correct": 0.355,
+    "wrong": 0.372
+   },
+   "0.4": {
+    "abstained": 0.236,
+    "of_which_would_have_been_wrong": 0.8008,
+    "correct": 0.356,
+    "wrong": 0.408
+   },
+   "0.5": {
+    "abstained": 0.204,
+    "of_which_would_have_been_wrong": 0.8333,
+    "correct": 0.355,
+    "wrong": 0.441
+   },
+   "0.6": {
+    "abstained": 0.157,
+    "of_which_would_have_been_wrong": 0.8471,
+    "correct": 0.344,
+    "wrong": 0.499
+   },
+   "0.7": {
+    "abstained": 0.112,
+    "of_which_would_have_been_wrong": 0.8571,
+    "correct": 0.334,
+    "wrong": 0.554
+   },
+   "0.8": {
+    "abstained": 0.05,
+    "of_which_would_have_been_wrong": 0.9,
+    "correct": 0.334,
+    "wrong": 0.616
+   }
+  },
+  "wrong_without_any_gate": 0.687,
+  "examples": [
+   {
+    "q": "What is couscous made from?",
+    "gold": [
+     "Semolina"
+    ],
+    "worry": 0.34,
+    "notes": [],
+    "no_memory": "Couscous is made from **ground wheat** (or semolina).",
+    "memory": "Couscous is made from **ground wheat** (or semolina)."
+   },
+   {
+    "q": "Name of one of the most famous warships of WWII named after a German Chancellor - ordered to be sunk by Churchill.",
+    "gold": [
+     "Bismarck"
+    ],
+    "worry": 0.46,
+    "notes": [
+     "Chancellor"
+    ],
+    "no_memory": "**Bismarck**\n\nThe *Bismarck* was a German battleship, and Ad",
+    "memory": "The *Bismarck* was not sunk by Churchill; it was sunk by US "
+   },
+   {
+    "q": "Who had a hit with the song Paper Roses in 1973?",
+    "gold": [
+     "Marie Osmond"
+    ],
+    "worry": 0.79,
+    "notes": [
+     "Paper Roses"
+    ],
+    "no_memory": "**Paper Roses (1973)** was a hit for **The Carpenters**. The",
+    "memory": "Marie Osmond"
+   },
+   {
+    "q": "Who had a hit single in 1989 with We Didn't Start The Fire?",
+    "gold": [
+     "Billy Joel"
+    ],
+    "worry": 0.71,
+    "notes": [
+     "We Didn't Start the Fire"
+    ],
+    "no_memory": "We Didn't Start The Fire was a hit single by **Billy Joel** ",
+    "memory": "Billy Joel"
+   },
+   {
+    "q": "Who wrote the lyrics for the song form Notting Hill sung by Elvis Costello?",
+    "gold": [
+     "Herbert Kretzmer"
+    ],
+    "worry": 0.79,
+    "notes": [
+     "Notting Hill",
+     "Elvis Costello"
+    ],
+    "no_memory": "Elvis Costello wrote the lyrics.",
+    "memory": "The lyrics for \"Notting Hill\" were written by **Elvis Costel"
+   },
+   {
+    "q": "What is the title of the 1931 film in which the Marx Brothers are stowaways on an ocean liner?",
+    "gold": [
+     "Monkey Business"
+    ],
+    "worry": 0.34,
+    "notes": [
+     "Marx Brothers",
+     "Ocean liner"
+    ],
+    "no_memory": "The 1931 film featuring the Marx Brothers as stowaways on an",
+    "memory": "\"Going My Way\" (1931) – no, wait: The correct title is **\"Th"
+   },
+   {
+    "q": "To the nearest million, what was the population of the USA in 1910?",
+    "gold": [
+     "92"
+    ],
+    "worry": 0.74,
+    "notes": [],
+    "no_memory": "The United States population in 1910 was approximately **91 ",
+    "memory": "The United States population in 1910 was approximately **91 "
+   },
+   {
+    "q": "Who wrote the children’s stories ‘The Clangers’, ‘Noggin the Nog’ and ‘Bagpuss’?",
+    "gold": [
+     "Oliver Postgate"
+    ],
+    "worry": 0.5,
+    "notes": [
+     "Clangers",
+     "Noggin the Nog",
+     "Bagpuss"
+    ],
+    "no_memory": "Bob Thomsen",
+    "memory": "Peter Firmin and Oliver Postgate."
+   },
+   {
+    "q": "Which Christmas number one includes the line All I wish that everyday was christmas, what a nice way to spend the year?",
+    "gold": [
+     "Merry Christmas Everyone"
+    ],
+    "worry": 0.89,
+    "notes": [],
+    "no_memory": "The 2024 Christmas number one song is \"Last Christmas\" by Wh",
+    "memory": "The 2024 Christmas number one song is \"Last Christmas\" by Wh"
+   },
+   {
+    "q": "In which Italian city would you find Leonardo's Last Supper?",
+    "gold": [
+     "Milan"
+    ],
+    "worry": 0.04,
+    "notes": [
+     "Last Supper"
+    ],
+    "no_memory": "Leonardo's *Last Supper* is located in **Milan**, Italy.",
+    "memory": "Leonardo da Vinci painted *The Last Supper* in **Milan**, It"
+   }
+  ]
+ },
+ "popqa": {
+  "n": 1000,
+  "no_memory": 0.147,
+  "memory_always": 0.303,
+  "broken_when_always": 9,
+  "fixed_when_always": 165,
+  "note_triggered": 0.409,
+  "probe_auc": 0.8538,
+  "memory_only_when_probe_worried": {
+   "0.3": {
+    "accuracy": 0.291,
+    "broken": 7,
+    "fixed": 151,
+    "notes_shown": 0.341
+   },
+   "0.4": {
+    "accuracy": 0.285,
+    "broken": 7,
+    "fixed": 145,
+    "notes_shown": 0.325
+   },
+   "0.5": {
+    "accuracy": 0.279,
+    "broken": 7,
+    "fixed": 139,
+    "notes_shown": 0.312
+   },
+   "0.6": {
+    "accuracy": 0.265,
+    "broken": 6,
+    "fixed": 124,
+    "notes_shown": 0.287
+   },
+   "0.7": {
+    "accuracy": 0.244,
+    "broken": 6,
+    "fixed": 103,
+    "notes_shown": 0.246
+   },
+   "0.8": {
+    "accuracy": 0.219,
+    "broken": 1,
+    "fixed": 73,
+    "notes_shown": 0.169
+   }
+  },
+  "abstain_when_worried_and_no_note": {
+   "0.3": {
+    "abstained": 0.535,
+    "of_which_would_have_been_wrong": 0.9402,
+    "correct": 0.257,
+    "wrong": 0.208
+   },
+   "0.4": {
+    "abstained": 0.522,
+    "of_which_would_have_been_wrong": 0.9444,
+    "correct": 0.254,
+    "wrong": 0.224
+   },
+   "0.5": {
+    "abstained": 0.498,
+    "of_which_would_have_been_wrong": 0.9618,
+    "correct": 0.258,
+    "wrong": 0.244
+   },
+   "0.6": {
+    "abstained": 0.479,
+    "of_which_would_have_been_wrong": 0.9645,
+    "correct": 0.247,
+    "wrong": 0.274
+   },
+   "0.7": {
+    "abstained": 0.429,
+    "of_which_would_have_been_wrong": 0.9697,
+    "correct": 0.23,
+    "wrong": 0.341
+   },
+   "0.8": {
+    "abstained": 0.324,
+    "of_which_would_have_been_wrong": 0.9877,
+    "correct": 0.215,
+    "wrong": 0.461
+   }
+  },
+  "wrong_without_any_gate": 0.853,
+  "examples": [
+   {
+    "q": "What genre is The Carpenter?",
+    "gold": [
+     "symphonic metal"
+    ],
+    "worry": 0.77,
+    "notes": [],
+    "no_memory": "The Carpenter is a **horror** novel (and film adaptation). I",
+    "memory": "The Carpenter is a **horror** novel (and film adaptation). I"
+   },
+   {
+    "q": "Who was the screenwriter for Skin?",
+    "gold": [
+     "Sarah Kane"
+    ],
+    "worry": 0.87,
+    "notes": [],
+    "no_memory": "The screenplay for *Skin* (2012) was written by **Megan Amra",
+    "memory": "The screenplay for *Skin* (2012) was written by **Jennifer K"
+   },
+   {
+    "q": "Who was the producer of The Days?",
+    "gold": [
+     "Wang Xiaoshuai"
+    ],
+    "worry": 0.86,
+    "notes": [],
+    "no_memory": "The Days (1966) was produced by **John Barry**.",
+    "memory": "The Days (1966) was produced by **John Barry**."
+   },
+   {
+    "q": "Who was the composer of Tron?",
+    "gold": [
+     "Wendy Carlos"
+    ],
+    "worry": 0.72,
+    "notes": [],
+    "no_memory": "The composer of *Tron* is **Walt Disney** — no, that's wrong",
+    "memory": "The composer of *Tron* is **Walt Disney** — no, that's wrong"
+   },
+   {
+    "q": "What is Manga the capital of?",
+    "gold": [
+     "Centre-Sud Region"
+    ],
+    "worry": 0.77,
+    "notes": [],
+    "no_memory": "Manga is not a real place; it's a genre. So there’s no capit",
+    "memory": "Manga is not a real place; it's a genre. So there’s no capit"
+   },
+   {
+    "q": "In what country is Norfolk?",
+    "gold": [
+     "United States of America"
+    ],
+    "worry": 0.02,
+    "notes": [],
+    "no_memory": "Norfolk is in England.",
+    "memory": "Norfolk is in England."
+   },
+   {
+    "q": "What genre is Terra?",
+    "gold": [
+     "massively multiplayer online role-playing game"
+    ],
+    "worry": 0.77,
+    "notes": [],
+    "no_memory": "Terra is a **fantasy** novel series (and related media) set ",
+    "memory": "Terra is a **fantasy** novel series (and related media) set "
+   },
+   {
+    "q": "Who was the screenwriter for The Business?",
+    "gold": [
+     "Nick Love"
+    ],
+    "worry": 0.9,
+    "notes": [],
+    "no_memory": "The Business (2018) was written by David E. Kelley and other",
+    "memory": "The Business (2018) was written by David E. Kelley and other"
+   },
+   {
+    "q": "Who was the producer of Interview?",
+    "gold": [
+     "Theo van Gogh"
+    ],
+    "worry": 0.89,
+    "notes": [],
+    "no_memory": "The producer of *Interview* (the 2014 documentary about Bara",
+    "memory": "The producer of *Interview* (the 2014 documentary about Bara"
+   },
+   {
+    "q": "Who was the screenwriter for The Wedding?",
+    "gold": [
+     "Wojciech Smarzowski"
+    ],
+    "worry": 0.84,
+    "notes": [
+     "The Wedding!"
+    ],
+    "no_memory": "The Wedding (2014) was written by **David Mamet** and **John",
+    "memory": "The Wedding! (comic book) was written by **David Michelinie*"
+   }
+  ]
+ },
+ "mkqa_fr": {
+  "n": 1000,
+  "no_memory": 0.194,
+  "memory_always": 0.217,
+  "broken_when_always": 16,
+  "fixed_when_always": 39,
+  "note_triggered": 0.301,
+  "probe_auc": 0.774,
+  "memory_only_when_probe_worried": {
+   "0.3": {
+    "accuracy": 0.22,
+    "broken": 12,
+    "fixed": 38,
+    "notes_shown": 0.266
+   },
+   "0.4": {
+    "accuracy": 0.218,
+    "broken": 12,
+    "fixed": 36,
+    "notes_shown": 0.247
+   },
+   "0.5": {
+    "accuracy": 0.218,
+    "broken": 10,
+    "fixed": 34,
+    "notes_shown": 0.227
+   },
+   "0.6": {
+    "accuracy": 0.218,
+    "broken": 8,
+    "fixed": 32,
+    "notes_shown": 0.205
+   },
+   "0.7": {
+    "accuracy": 0.213,
+    "broken": 7,
+    "fixed": 26,
+    "notes_shown": 0.174
+   },
+   "0.8": {
+    "accuracy": 0.205,
+    "broken": 2,
+    "fixed": 13,
+    "notes_shown": 0.111
+   }
+  },
+  "abstain_when_worried_and_no_note": {
+   "0.3": {
+    "abstained": 0.644,
+    "of_which_would_have_been_wrong": 0.8401,
+    "correct": 0.123,
+    "wrong": 0.233
+   },
+   "0.4": {
+    "abstained": 0.615,
+    "of_which_would_have_been_wrong": 0.852,
+    "correct": 0.133,
+    "wrong": 0.252
+   },
+   "0.5": {
+    "abstained": 0.577,
+    "of_which_would_have_been_wrong": 0.8579,
+    "correct": 0.141,
+    "wrong": 0.282
+   },
+   "0.6": {
+    "abstained": 0.52,
+    "of_which_would_have_been_wrong": 0.8788,
+    "correct": 0.159,
+    "wrong": 0.321
+   },
+   "0.7": {
+    "abstained": 0.44,
+    "of_which_would_have_been_wrong": 0.9,
+    "correct": 0.172,
+    "wrong": 0.388
+   },
+   "0.8": {
+    "abstained": 0.269,
+    "of_which_would_have_been_wrong": 0.9257,
+    "correct": 0.185,
+    "wrong": 0.546
+   }
+  },
+  "wrong_without_any_gate": 0.806,
+  "examples": [
+   {
+    "q": "quel type d'arme est utilisé aux Jeux olympiques",
+    "gold": [
+     "fr_FR"
+    ],
+    "worry": 0.73,
+    "notes": [],
+    "no_memory": "Aux Jeux olympiques, on utilise principalement des armes lég",
+    "memory": "Aux Jeux olympiques, on utilise principalement des armes lég"
+   },
+   {
+    "q": "quel type de musique est populaire en inde",
+    "gold": [
+     "Musique du Punjab"
+    ],
+    "worry": 0.84,
+    "notes": [],
+    "no_memory": "La musique populaire en Inde comprend des genres comme le **",
+    "memory": "La musique populaire en Inde comprend des genres comme le **"
+   },
+   {
+    "q": "Qui chante la chanson Country 'I believe in Love' (Je crois en l'amour)",
+    "gold": [
+     "Don Williams"
+    ],
+    "worry": 0.7,
+    "notes": [
+     "Believe in love"
+    ],
+    "no_memory": "La chanson « I Believe in Love » (Je crois en l'amour) est i",
+    "memory": "La chanson « I Believe in Love » (« Je crois en l'amour ») e"
+   },
+   {
+    "q": "Où a été tourné vol au-dessus d'un nid de coucou",
+    "gold": [
+     "États-Unis"
+    ],
+    "worry": 0.79,
+    "notes": [],
+    "no_memory": "Le film *Vol au-dessus d'un nid de coucou* (originalement *T",
+    "memory": "Le film *Vol au-dessus d'un nid de coucou* (originalement *T"
+   },
+   {
+    "q": "qui est le joueur le mieux payé dans le domaine du sport",
+    "gold": [
+     "Lionel Messi"
+    ],
+    "worry": 0.8,
+    "notes": [],
+    "no_memory": "Le joueur le mieux payé au monde est généralement **Cristian",
+    "memory": "Le joueur le mieux payé au monde est généralement **Cristian"
+   },
+   {
+    "q": "qui jouait le jeune tom riddle dans harry potter",
+    "gold": [
+     "Hero Fiennes-Tiffin"
+    ],
+    "worry": 0.61,
+    "notes": [
+     "Harry Potter"
+    ],
+    "no_memory": "Le jeune Tom Riddle était joué par l'acteur **Ralph Fiennes*",
+    "memory": "Le jeune Tom Riddle était un patient d'Hogwarts qui se trans"
+   },
+   {
+    "q": "qui est l'entraîneur des lanceurs pour les nationals de washington",
+    "gold": [
+     "Paul Menhart"
+    ],
+    "worry": 0.85,
+    "notes": [
+     "Nationals de Washington"
+    ],
+    "no_memory": "L'entraîneur des lanceurs pour les Nationals de Washington (",
+    "memory": "L'entraîneur des lanceurs des Nationals de Washington est **"
+   },
+   {
+    "q": "qui a écrit la chanson 'the house that built me'",
+    "gold": [
+     "Tom Douglas"
+    ],
+    "worry": 0.86,
+    "notes": [],
+    "no_memory": "La chanson « The House That Built Me » a été écrite par **Jo",
+    "memory": "La chanson « The House That Built Me » a été écrite par **Jo"
+   },
+   {
+    "q": "qui possède le record du plus grand nombre de tacles dans sa carrière",
+    "gold": [
+     "Ray Lewis"
+    ],
+    "worry": 0.72,
+    "notes": [],
+    "no_memory": "Le record du plus grand nombre de tacles (sacks) dans sa car",
+    "memory": "Le record du plus grand nombre de tacles (sacks) dans sa car"
+   },
+   {
+    "q": "qui chante put your head on my shoulders",
+    "gold": [
+     "Paul Anka"
+    ],
+    "worry": 0.84,
+    "notes": [
+     "Shoulders"
+    ],
+    "no_memory": "La chanson « Put Your Head on My Shoulders » est interprétée",
+    "memory": "**Who sings \"Put Your Head on My Shoulders\"?**  \nLe titre n'"
+   }
+  ]
+ },
+ "mkqa_en": {
+  "n": 1000,
+  "no_memory": 0.242,
+  "memory_always": 0.285,
+  "broken_when_always": 15,
+  "fixed_when_always": 58,
+  "note_triggered": 0.367,
+  "probe_auc": 0.8161,
+  "memory_only_when_probe_worried": {
+   "0.3": {
+    "accuracy": 0.277,
+    "broken": 14,
+    "fixed": 49,
+    "notes_shown": 0.303
+   },
+   "0.4": {
+    "accuracy": 0.279,
+    "broken": 11,
+    "fixed": 48,
+    "notes_shown": 0.275
+   },
+   "0.5": {
+    "accuracy": 0.275,
+    "broken": 10,
+    "fixed": 43,
+    "notes_shown": 0.245
+   },
+   "0.6": {
+    "accuracy": 0.274,
+    "broken": 8,
+    "fixed": 40,
+    "notes_shown": 0.206
+   },
+   "0.7": {
+    "accuracy": 0.267,
+    "broken": 5,
+    "fixed": 30,
+    "notes_shown": 0.148
+   },
+   "0.8": {
+    "accuracy": 0.259,
+    "broken": 2,
+    "fixed": 19,
+    "notes_shown": 0.085
+   }
+  },
+  "abstain_when_worried_and_no_note": {
+   "0.3": {
+    "abstained": 0.554,
+    "of_which_would_have_been_wrong": 0.8285,
+    "correct": 0.182,
+    "wrong": 0.264
+   },
+   "0.4": {
+    "abstained": 0.519,
+    "of_which_would_have_been_wrong": 0.8593,
+    "correct": 0.205,
+    "wrong": 0.276
+   },
+   "0.5": {
+    "abstained": 0.481,
+    "of_which_would_have_been_wrong": 0.869,
+    "correct": 0.211,
+    "wrong": 0.308
+   },
+   "0.6": {
+    "abstained": 0.416,
+    "of_which_would_have_been_wrong": 0.8894,
+    "correct": 0.228,
+    "wrong": 0.356
+   },
+   "0.7": {
+    "abstained": 0.319,
+    "of_which_would_have_been_wrong": 0.9216,
+    "correct": 0.242,
+    "wrong": 0.439
+   },
+   "0.8": {
+    "abstained": 0.186,
+    "of_which_would_have_been_wrong": 0.957,
+    "correct": 0.249,
+    "wrong": 0.565
+   }
+  },
+  "wrong_without_any_gate": 0.758,
+  "examples": [
+   {
+    "q": "what kind of gun is used in the olympics",
+    "gold": [
+     "Biathlon rifle"
+    ],
+    "worry": 0.6,
+    "notes": [],
+    "no_memory": "In the Olympics, **fist-fighting** (no guns) and **shooting*",
+    "memory": "In the Olympics, **fist-fighting** (no guns) and **shooting*"
+   },
+   {
+    "q": "what type of music is popular in india",
+    "gold": [
+     "Music of Punjab"
+    ],
+    "worry": 0.35,
+    "notes": [],
+    "no_memory": "Popular Indian music includes **Hindu classical (Carnatic an",
+    "memory": "Popular Indian music includes **Hindu classical (Carnatic an"
+   },
+   {
+    "q": "who sings the country song i believe in love",
+    "gold": [
+     "Don Williams"
+    ],
+    "worry": 0.71,
+    "notes": [],
+    "no_memory": "The country song \"I Believe I Can Fly\" is not by a country a",
+    "memory": "The country song \"I Believe I Can Fly\" is not by a country a"
+   },
+   {
+    "q": "where was one flew over the cuckoo's nest filmed",
+    "gold": [
+     "United States of America"
+    ],
+    "worry": 0.6,
+    "notes": [],
+    "no_memory": "The film *One Flew Over the Cuckoo's Nest* was **filmed at U",
+    "memory": "The film *One Flew Over the Cuckoo's Nest* was **filmed at U"
+   },
+   {
+    "q": "who is the highest paid player in sports",
+    "gold": [
+     "Lionel Messi"
+    ],
+    "worry": 0.62,
+    "notes": [],
+    "no_memory": "As of recent data, **LeBron James** (MLB? No—NBA) — actually",
+    "memory": "As of recent data, **LeBron James** (MLB? No—NBA) — actually"
+   },
+   {
+    "q": "who played the young tom riddle in harry potter",
+    "gold": [
+     "Hero Beauregard Faulkner Fiennes Tiffin"
+    ],
+    "worry": 0.8,
+    "notes": [
+     "Harry Potter"
+    ],
+    "no_memory": "The actor who played young Tom Riddle in *Harry Potter and t",
+    "memory": "The actor who played young Tom Riddle in *Harry Potter* is *"
+   },
+   {
+    "q": "who is the pitching coach for the washington nationals",
+    "gold": [
+     "Paul Menhart"
+    ],
+    "worry": 0.78,
+    "notes": [
+     "Washington Nationals"
+    ],
+    "no_memory": "The current pitching coach for the Washington Nationals (as ",
+    "memory": "As of my last update in 2023, the pitching coach for the Was"
+   },
+   {
+    "q": "who wrote the song the house that built me",
+    "gold": [
+     "Tom Douglas"
+    ],
+    "worry": 0.87,
+    "notes": [],
+    "no_memory": "The song **\"The House That Built Me\"** was written by **John",
+    "memory": "The song \"The House That Built Me\" was written by **Joni Mit"
+   },
+   {
+    "q": "who holds the record for most tackles in a career",
+    "gold": [
+     "Ray Lewis"
+    ],
+    "worry": 0.62,
+    "notes": [],
+    "no_memory": "**Rick Tanev** (NFL) holds the record for most career tackle",
+    "memory": "**Rick Tanev** (NFL) holds the record for most career tackle"
+   },
+   {
+    "q": "who sings put your head on my shoulders",
+    "gold": [
+     "Paul Anka"
+    ],
+    "worry": 0.73,
+    "notes": [],
+    "no_memory": "**\"Put Your Head on My Shoulders\"** is sung by **The Beatles",
+    "memory": "**\"Put Your Head on My Shoulders\"** is sung by **The Beatles"
+   }
+  ]
+ },
+ "seconds_total": 524
+}

@@ -1,0 +1,668 @@
+{
+ "baseline": {
+  "n": 5000,
+  "think_token_suppressed": true,
+  "all": {
+   "n": 5000,
+   "correct": 0.1346,
+   "wrong": 0.8202,
+   "abstain": 0.0452
+  },
+  "pop<1k": {
+   "n": 2666,
+   "correct": 0.1279,
+   "wrong": 0.823,
+   "abstain": 0.0491
+  },
+  "pop 1k-10k": {
+   "n": 1479,
+   "correct": 0.0825,
+   "wrong": 0.8702,
+   "abstain": 0.0473
+  },
+  "pop>10k": {
+   "n": 855,
+   "correct": 0.2456,
+   "wrong": 0.7251,
+   "abstain": 0.0292
+  },
+  "examples": [
+   {
+    "q": "What genre is The Carpenter?",
+    "answers": [
+     "symphonic metal"
+    ],
+    "base_out": "The Carpenter is a **horror** novel (and film adaptation). It's part of Stephen King's *The Dark Tower* series, blending supernatural horror with fantasy.",
+    "status": "wrong"
+   },
+   {
+    "q": "Who was the screenwriter for Skin?",
+    "answers": [
+     "Sarah Kane",
+     "Sarah Marie Kane"
+    ],
+    "base_out": "The screenplay for *Skin* (2012) was written by **Megan Amram** and **Jennifer Kent**. However, the primary credited screenwriter is **Megan Am",
+    "status": "wrong"
+   },
+   {
+    "q": "Who was the producer of The Days?",
+    "answers": [
+     "Wang Xiaoshuai"
+    ],
+    "base_out": "The Days (1966) was produced by **John Barry**.",
+    "status": "wrong"
+   },
+   {
+    "q": "Who was the composer of Tron?",
+    "answers": [
+     "Wendy Carlos",
+     "Walter Carlos"
+    ],
+    "base_out": "The composer of *Tron* is **Walt Disney** — no, that's wrong. It's actually **Don Davis**. Wait, let me check: *Tron* (1982",
+    "status": "wrong"
+   },
+   {
+    "q": "What is Manga the capital of?",
+    "answers": [
+     "Centre-Sud Region"
+    ],
+    "base_out": "Manga is not a real place; it's a genre. So there’s no capital city for \"Manga.\" If you meant something else, please clarify!",
+    "status": "wrong"
+   },
+   {
+    "q": "In what country is Norfolk?",
+    "answers": [
+     "United States of America",
+     "the United States of America",
+     "America",
+     "U.S.A.",
+     "USA",
+     "U.S.",
+     "US",
+     "the US",
+     "the USA",
+     "US of A",
+     "the United States",
+     "U. S. A.",
+     "U. S.",
+     "the States",
+     "the U.S.",
+     "'Merica",
+     "U.S",
+     "United States",
+     "'Murica"
+    ],
+    "base_out": "Norfolk is in England.",
+    "status": "wrong"
+   },
+   {
+    "q": "What genre is Terra?",
+    "answers": [
+     "massively multiplayer online role-playing game",
+     "MMORPG",
+     "MMO",
+     "RPG",
+     "mmorpg"
+    ],
+    "base_out": "Terra is a **fantasy** novel series (and related media) set in a world of magic and myth. It's often classified as **epic fantasy**.",
+    "status": "wrong"
+   },
+   {
+    "q": "Who was the screenwriter for The Business?",
+    "answers": [
+     "Nick Love"
+    ],
+    "base_out": "The Business (2018) was written by David E. Kelley and others, but primarily credited to **David E. Kelley** as part of his writing team; however, the",
+    "status": "wrong"
+   },
+   {
+    "q": "Who was the producer of Interview?",
+    "answers": [
+     "Theo van Gogh"
+    ],
+    "base_out": "The producer of *Interview* (the 2014 documentary about Barack Obama's campaign) is **David O. Selznick** and **John W. Bender**, but more accurately,",
+    "status": "wrong"
+   },
+   {
+    "q": "Who was the screenwriter for The Wedding?",
+    "answers": [
+     "Wojciech Smarzowski"
+    ],
+    "base_out": "The Wedding (2014) was written by **David Mamet** and **John McIntire**. However, if you mean *The Wedding Party* or another film titled \"The W",
+    "status": "wrong"
+   },
+   {
+    "q": "What is the capital of Sangrur district?",
+    "answers": [
+     "Sangrur"
+    ],
+    "base_out": "Sangrur city.",
+    "status": "correct"
+   },
+   {
+    "q": "In what city was Eduardo Hurtado born?",
+    "answers": [
+     "Esmeraldas",
+     "Esmeraldas (Ecuador)",
+     "Esmeraldas, Ecuador",
+     "San Mateo de las Esmeraldas"
+    ],
+    "base_out": "Eduardo Hurtado was born in **Bogotá, Colombia**.",
+    "status": "wrong"
+   }
+  ]
+ },
+ "baseline_thinking_allowed": {
+  "n": 400,
+  "correct": 0.125,
+  "unfinished_after_384_tokens": 0.47,
+  "same_questions_no_thinking_correct": 0.1275
+ },
+ "selection": {
+  "fail": 240,
+  "ok": 80,
+  "mean_mentions_in_article": 4.0,
+  "mean_pop_fail": 8457,
+  "mean_pop_ok": 50725
+ },
+ "ceiling_article_in_prompt": 0.8708,
+ "article_loss_no_vector": {
+  "trained_part": 2.6033,
+  "held_out_part": 2.6554
+ },
+ "layers": {
+  "3": {
+   "residual_norm": 0.913,
+   "vector_norm_rel_mean": 1.0,
+   "fix_rate_own_vector": 0.05,
+   "fix_rate_control_vector": 0.0292,
+   "break_rate_own_vector": 0.225,
+   "break_rate_control_vector": 0.25,
+   "abstain_rate_own_on_fail": 0.0667,
+   "article_loss_own": {
+    "trained_part": 1.1612,
+    "held_out_part": 3.1054
+   },
+   "article_loss_control": {
+    "trained_part": 2.6511,
+    "held_out_part": 2.6701
+   },
+   "train_loss_first_last": [
+    2.6033,
+    1.1701
+   ],
+   "seconds": 218,
+   "examples": [
+    {
+     "q": "What genre is The Carpenter?",
+     "answers": [
+      "symphonic metal"
+     ],
+     "before": "The Carpenter is a **horror** novel (and film adaptation). It's part of Stephen King's *The Dark Tower* series, blending supernatural horror with fantasy.",
+     "own": "The question asks about \"The Carpenter\" or possibly \"The Anchor and the Soul\"? But as written, \"The Carpenter\" isn't a well-known work. If you mean *The Carpenter*",
+     "control": "The **Carpenter** (by *The Beatles*) is an instrumental track from their 1963 album *Revolver*. It's not a traditional \"genre\" like rock or pop"
+    },
+    {
+     "q": "Who was the screenwriter for Skin?",
+     "answers": [
+      "Sarah Kane",
+      "Sarah Marie Kane"
+     ],
+     "before": "The screenplay for *Skin* (2012) was written by **Megan Amram** and **Jennifer Kent**. However, the primary credited screenwriter is **Megan Am",
+     "own": "The screenplay for *Skin* (2016) was written by **Michele Raimondo** and **David B. L. Smith**, with **Luca Guadagnino**",
+     "control": "The screenplay for *Skin* (1992) was written by **David Fincher** and **Kathleen Kennedy**? No—actually, *Skin* is a 200"
+    },
+    {
+     "q": "Who was the producer of The Days?",
+     "answers": [
+      "Wang Xiaoshuai"
+     ],
+     "before": "The Days (1966) was produced by **John Barry**.",
+     "own": "The producer of *The Days* (also known as *Les Désenvolpés*) is **Walter Reese** and **Darryl F. Zanuck**, but it's",
+     "control": "The Days (2010) was produced by **John Lydon** and **David Bowie**? No—actually, *The Days* is a 2009 film directed by **M"
+    },
+    {
+     "q": "In what country is Norfolk?",
+     "answers": [
+      "United States of America",
+      "the United States of America",
+      "America"
+     ],
+     "before": "Norfolk is in England.",
+     "own": "Nevada, USA.",
+     "control": "Norfolk is a county in England, United Kingdom."
+    },
+    {
+     "q": "What genre is Terra?",
+     "answers": [
+      "massively multiplayer online role-playing game",
+      "MMORPG",
+      "MMO"
+     ],
+     "before": "Terra is a **fantasy** novel series (and related media) set in a world of magic and myth. It's often classified as **epic fantasy**.",
+     "own": "**Genre:** Fantasy / Horror (supernatural, dark fantasy).",
+     "control": "Terra is a **fantasy** or **sci-fi** game (depending on context).  \nBut most commonly, it's a **video game** — specifically, *The Legend of Zel"
+    },
+    {
+     "q": "Who was the screenwriter for The Business?",
+     "answers": [
+      "Nick Love"
+     ],
+     "before": "The Business (2018) was written by David E. Kelley and others, but primarily credited to **David E. Kelley** as part of his writing team; however, the",
+     "own": "The screenplay for *The Business* (2005) was written by **David Mamet** and **John Patrick Shanley**.  \n(If you’re asking about the film’s story,",
+     "control": "The screenplay for *The Business* (2011) was written by **David Mamet** and **John T. Richardson**. However, if you're referring to the 1995 film *"
+    },
+    {
+     "q": "Who was the screenwriter for The Wedding?",
+     "answers": [
+      "Wojciech Smarzowski"
+     ],
+     "before": "The Wedding (2014) was written by **David Mamet** and **John McIntire**. However, if you mean *The Wedding Party* or another film titled \"The W",
+     "own": "The screenplay for *The Wedding* (2011) was written by **David Mamet** and **Brian Helgeland**. However, if you're referring to the 2001",
+     "control": "The Wedding (2014) screenplay was written by **Michele R. K. B. (or more commonly known as)** — actually, I need to verify this quickly.\n\nWait"
+    },
+    {
+     "q": "Who was the screenwriter for The Crown of the Russian Empire, or Once Again the Elusive Avengers?",
+     "answers": [
+      "Edmond Keosayan",
+      "Edmond Gareginovich Keosayan",
+      "E. Keosayan"
+     ],
+     "before": "The screenwriters for both *The Crown of the Russian Empire* and *Once Again: The Elusive Avengers* are **David Mamet** (for *The Crown of the Russian Empire*)",
+     "own": "The screenwriters for both *The Crown of the Russian Empire* (1937) and *Once Again the Elusive Avengers* (1942) were **John Farrow** and **Michael",
+     "control": "The screenwriters for both *The Crown of the Russian Empire* and *Once Again: The Elusive Avengers* are **David Mamet** (for *The Crown of the Russian Empire*)"
+    },
+    {
+     "q": "Who was the producer of Ted?",
+     "answers": [
+      "Seth MacFarlane",
+      "Seth Macfarlane",
+      "Peter"
+     ],
+     "before": "Ted's producer is not widely known; could you specify which \"Ted\" (e.g., song, film, TV show)? Without context, I can't identify.",
+     "own": "Ted Ashker and David DeCotee produced *Ted*. (Note: The film is titled \"Ted\" from 2012, starring Ted Lasso; its producers are often",
+     "control": "The producer of *Ted* is **John Sayles** (for the 2012 film) and **David E. Kelley** (for the TV series). If you mean the"
+    },
+    {
+     "q": "Who was the director of Bang?",
+     "answers": [
+      "Larry Shaw"
+     ],
+     "before": "I’m not sure who directed “Bang.” Could you give more details (e.g., film, play, TV show)?",
+     "own": "The question \"Who was the director of *Bright Star*?\" or \"director of *Bangkok*\" is unclear. If you mean the TV series **\"Bright Star\"** (201",
+     "control": "The director of *Bang* is **Khaled Hosseini** (no, that's wrong—he wrote it). Actually, *Bang* is a 2023 film directed"
+    }
+   ]
+  },
+  "9": {
+   "residual_norm": 1.628,
+   "vector_norm_rel_mean": 1.0,
+   "fix_rate_own_vector": 0.0458,
+   "fix_rate_control_vector": 0.0208,
+   "break_rate_own_vector": 0.175,
+   "break_rate_control_vector": 0.125,
+   "abstain_rate_own_on_fail": 0.0542,
+   "article_loss_own": {
+    "trained_part": 0.8181,
+    "held_out_part": 3.2367
+   },
+   "article_loss_control": {
+    "trained_part": 2.7441,
+    "held_out_part": 2.7225
+   },
+   "train_loss_first_last": [
+    2.6033,
+    0.8246
+   ],
+   "seconds": 184,
+   "examples": [
+    {
+     "q": "What genre is The Carpenter?",
+     "answers": [
+      "symphonic metal"
+     ],
+     "before": "The Carpenter is a **horror** novel (and film adaptation). It's part of Stephen King's *The Dark Tower* series, blending supernatural horror with fantasy.",
+     "own": "The Crossover (or \"The Crossover\") is generally classified as **horror** or **thriller**, but if you mean *The Crossover* by Stephen King, it's more",
+     "control": "The **Carpe Diem** (or *The Carpenter*) is not a widely known standalone work, but if you're referring to **\"The Carpenter\" as a novel or short story**, it"
+    },
+    {
+     "q": "Who was the screenwriter for Skin?",
+     "answers": [
+      "Sarah Kane",
+      "Sarah Marie Kane"
+     ],
+     "before": "The screenplay for *Skin* (2012) was written by **Megan Amram** and **Jennifer Kent**. However, the primary credited screenwriter is **Megan Am",
+     "own": "The screenplay for *Catch Me If You Can* (1997) — often referred to as \"Steel Magnolias\" or related titles — is not \"Systems Breakdown.\"",
+     "control": "The screenwriter for *Skin* (the 2012 film) is **Jennifer Kent**. However, if you mean the TV series *Skin*, it's written by **K"
+    },
+    {
+     "q": "Who was the producer of The Days?",
+     "answers": [
+      "Wang Xiaoshuai"
+     ],
+     "before": "The Days (1966) was produced by **John Barry**.",
+     "own": "The Days (1961) was produced by Chet Atkins.",
+     "control": "The Days (2011) was produced by **John Lydon** and **Mark Ronson**, with **David Byrne** as co-producer. However, the primary credited producers are often"
+    },
+    {
+     "q": "In what country is Norfolk?",
+     "answers": [
+      "United States of America",
+      "the United States of America",
+      "America"
+     ],
+     "before": "Norfolk is in England.",
+     "own": "The United Kingdom.",
+     "control": "The United Kingdom."
+    },
+    {
+     "q": "What genre is Terra?",
+     "answers": [
+      "massively multiplayer online role-playing game",
+      "MMORPG",
+      "MMO"
+     ],
+     "before": "Terra is a **fantasy** novel series (and related media) set in a world of magic and myth. It's often classified as **epic fantasy**.",
+     "own": "\"Terra\" is a **fantasy novel** (or series) set in a world called Terra, often described as fantasy or science‑fiction‑leaning. It’s generally classified as **",
+     "control": "Terra is a **fantasy** novel series (and related games) set in a world with magic and mythical creatures. It's often classified as **epic fantasy**."
+    },
+    {
+     "q": "Who was the screenwriter for The Business?",
+     "answers": [
+      "Nick Love"
+     ],
+     "before": "The Business (2018) was written by David E. Kelley and others, but primarily credited to **David E. Kelley** as part of his writing team; however, the",
+     "own": "The space-time continuum (The Space-Time Continuum) is not a film titled \"The Space-Time Continuum\" but rather a 2008 film about Michael Jackson's Time Life, and",
+     "control": "The screenplay for *The Business* (2018) was written by **David Koepp**."
+    },
+    {
+     "q": "Who was the screenwriter for The Wedding?",
+     "answers": [
+      "Wojciech Smarzowski"
+     ],
+     "before": "The Wedding (2014) was written by **David Mamet** and **John McIntire**. However, if you mean *The Wedding Party* or another film titled \"The W",
+     "own": "The Wedding (2014) was written by **David Mamet** and **John T. Richardson**. However, if you mean *The Wedding Party* or another film titled \"The W",
+     "control": "The 1995 film *The Wedding* (also known as *A Wedding*) is not widely recognized by that exact title. If you mean **The Wedding Party** (2001"
+    },
+    {
+     "q": "Who was the screenwriter for The Crown of the Russian Empire, or Once Again the Elusive Avengers?",
+     "answers": [
+      "Edmond Keosayan",
+      "Edmond Gareginovich Keosayan",
+      "E. Keosayan"
+     ],
+     "before": "The screenwriters for both *The Crown of the Russian Empire* and *Once Again: The Elusive Avengers* are **David Mamet** (for *The Crown of the Russian Empire*)",
+     "own": "The screenwriters for both *The Crown of the Russian Empire* (also known as *Once Upon a Time... in the West*? No—actually \"The Crown of the Russian Empire\" is",
+     "control": "The screenwriters for both *The Crown of the Russian Empire* and *Once Again: The Elusive Avengers* are **David Fincher** (for *The Crown of the Russian Empire*)"
+    },
+    {
+     "q": "Who was the producer of Ted?",
+     "answers": [
+      "Seth MacFarlane",
+      "Seth Macfarlane",
+      "Peter"
+     ],
+     "before": "Ted's producer is not widely known; could you specify which \"Ted\" (e.g., song, film, TV show)? Without context, I can't identify.",
+     "own": "The question \"Who was the producer of *Ted*?\" is ambiguous. It could refer to:\n\n- The 1990 film **_Ted_** (about the actor Ted Lasso",
+     "control": "The producer of *Ted* (the 2012 film) is **David E. Kelley**. However, if you're referring to the TV series or another work titled *Ted"
+    },
+    {
+     "q": "Who was the director of Bang?",
+     "answers": [
+      "Larry Shaw"
+     ],
+     "before": "I’m not sure who directed “Bang.” Could you give more details (e.g., film, play, TV show)?",
+     "own": "The question \"Who was the director of *Burn*?\" (assuming you meant the 2018 film *Burn*) is ambiguous. If referring to the TV series or another work titled *",
+     "control": "I’m not sure who directed “Rang De Sangeet: The Movie” (often mistakenly called *Bang*). Could you clarify which film or project you mean by “R"
+    }
+   ]
+  },
+  "15": {
+   "residual_norm": 3.682,
+   "vector_norm_rel_mean": 1.0,
+   "fix_rate_own_vector": 0.0292,
+   "fix_rate_control_vector": 0.0208,
+   "break_rate_own_vector": 0.075,
+   "break_rate_control_vector": 0.05,
+   "abstain_rate_own_on_fail": 0.0375,
+   "article_loss_own": {
+    "trained_part": 1.7515,
+    "held_out_part": 2.7914
+   },
+   "article_loss_control": {
+    "trained_part": 2.6532,
+    "held_out_part": 2.6774
+   },
+   "train_loss_first_last": [
+    2.6033,
+    1.7538
+   ],
+   "seconds": 154,
+   "examples": [
+    {
+     "q": "What genre is The Carpenter?",
+     "answers": [
+      "symphonic metal"
+     ],
+     "before": "The Carpenter is a **horror** novel (and film adaptation). It's part of Stephen King's *The Dark Tower* series, blending supernatural horror with fantasy.",
+     "own": "The **Cemetery** (or \"The Cask\"?) — but wait, you said *The* **C**... Actually, there's no widely known work titled simply **\"The C**",
+     "control": "The Carpenter is a **horror** novel (and film adaptation). It's part of Stephen King's *Carrie* universe, but as a standalone work, it's classified as **g"
+    },
+    {
+     "q": "Who was the screenwriter for Skin?",
+     "answers": [
+      "Sarah Kane",
+      "Sarah Marie Kane"
+     ],
+     "before": "The screenplay for *Skin* (2012) was written by **Megan Amram** and **Jennifer Kent**. However, the primary credited screenwriter is **Megan Am",
+     "own": "The screenplay for *Skin* (2012) was written by **Megan Amram** and **Jennifer Kent**. However, the primary credited screenwriter is often listed as **",
+     "control": "The screenplay for *Skin* (2012) was written by **Jennifer Kent** and **Katherine A. McGowan**. However, the primary credited screenwriter is **J"
+    },
+    {
+     "q": "Who was the producer of The Days?",
+     "answers": [
+      "Wang Xiaoshuai"
+     ],
+     "before": "The Days (1966) was produced by **John Barry**.",
+     "own": "The producer of *The Days* (the 2010 film) is **John Krasinski**? No—actually, *The Days* is a 2023 documentary about... wait. Let",
+     "control": "The Days (1973) was produced by **John Bonham**? No—actually, *The Days* is a 2019 film directed by... wait. Let me recall: \"The"
+    },
+    {
+     "q": "In what country is Norfolk?",
+     "answers": [
+      "United States of America",
+      "the United States of America",
+      "America"
+     ],
+     "before": "Norfolk is in England.",
+     "own": "The United Kingdom.",
+     "control": "The United Kingdom."
+    },
+    {
+     "q": "What genre is Terra?",
+     "answers": [
+      "massively multiplayer online role-playing game",
+      "MMORPG",
+      "MMO"
+     ],
+     "before": "Terra is a **fantasy** novel series (and related media) set in a world of magic and myth. It's often classified as **epic fantasy**.",
+     "own": "Terra is a **fantasy** novel series (and related games) set in a world of magic and myth. It's often classified as **epic fantasy**.",
+     "control": "Terra is a **fantasy** novel series by **Rick Riordan**, featuring Greek mythology and modern-day adventures. It's also known as *The Lost City of the Gods* or part"
+    },
+    {
+     "q": "Who was the screenwriter for The Business?",
+     "answers": [
+      "Nick Love"
+     ],
+     "before": "The Business (2018) was written by David E. Kelley and others, but primarily credited to **David E. Kelley** as part of his writing team; however, the",
+     "own": "The screenwriter for *The Business* (2018) is **David Mamet**.",
+     "control": "The Business (2016) was written by David E. Kelley and others, but primarily credited to **David E. Kelley** as part of his writing team on the film adaptation"
+    },
+    {
+     "q": "Who was the screenwriter for The Wedding?",
+     "answers": [
+      "Wojciech Smarzowski"
+     ],
+     "before": "The Wedding (2014) was written by **David Mamet** and **John McIntire**. However, if you mean *The Wedding Party* or another film titled \"The W",
+     "own": "The Wedding (2014) was written by **Jennifer Kent** and **Katherine DeMun**. However, if you mean *The Wedding* (a 2001 film",
+     "control": "The Wedding (2014) was written by **David E. Kelley** and **Kristen Bell**. However, if you mean *The Wedding* (a 2001"
+    },
+    {
+     "q": "Who was the screenwriter for The Crown of the Russian Empire, or Once Again the Elusive Avengers?",
+     "answers": [
+      "Edmond Keosayan",
+      "Edmond Gareginovich Keosayan",
+      "E. Keosayan"
+     ],
+     "before": "The screenwriters for both *The Crown of the Russian Empire* and *Once Again: The Elusive Avengers* are **David Mamet** (for *The Crown of the Russian Empire*)",
+     "own": "The screenwriters for both *The Crown of the Russian Empire* and *Once Again: The Elusive Avengers* are **David Mamet** (for *The Crown of the Russian Empire*)",
+     "control": "The screenwriters for both *The Crown of the Russian Empire* and *Once Again: The Elusive Avengers* are **David Mamet** (for *The Crown of the Russian Empire*)"
+    },
+    {
+     "q": "Who was the producer of Ted?",
+     "answers": [
+      "Seth MacFarlane",
+      "Seth Macfarlane",
+      "Peter"
+     ],
+     "before": "Ted's producer is not widely known; could you specify which \"Ted\" (e.g., song, film, TV show)? Without context, I can't identify.",
+     "own": "The producer of *Ted* (the 2012 film) is **J.J. Abrams**.",
+     "control": "Ted's producer is not widely known; could you specify which \"Ted\" (e.g., song, film, TV show)?"
+    },
+    {
+     "q": "Who was the director of Bang?",
+     "answers": [
+      "Larry Shaw"
+     ],
+     "before": "I’m not sure who directed “Bang.” Could you give more details (e.g., film, play, TV show)?",
+     "own": "The question \"Who was the director of *Bang*?\" is ambiguous. It could refer to:\n\n- A film titled *Bang* (e.g., a short film or indie project",
+     "control": "I’m not sure who directed “Bang.” Could you give more details (e.g., film, play, or series)?"
+    }
+   ]
+  },
+  "21": {
+   "residual_norm": 7.923,
+   "vector_norm_rel_mean": 1.0,
+   "fix_rate_own_vector": 0.0125,
+   "fix_rate_control_vector": 0.0125,
+   "break_rate_own_vector": 0.075,
+   "break_rate_control_vector": 0.025,
+   "abstain_rate_own_on_fail": 0.0333,
+   "article_loss_own": {
+    "trained_part": 1.9834,
+    "held_out_part": 2.7665
+   },
+   "article_loss_control": {
+    "trained_part": 2.6376,
+    "held_out_part": 2.6756
+   },
+   "train_loss_first_last": [
+    2.6033,
+    1.9837
+   ],
+   "seconds": 125,
+   "examples": [
+    {
+     "q": "What genre is The Carpenter?",
+     "answers": [
+      "symphonic metal"
+     ],
+     "before": "The Carpenter is a **horror** novel (and film adaptation). It's part of Stephen King's *The Dark Tower* series, blending supernatural horror with fantasy.",
+     "own": "The **Carpenter** (by *The New York Times* or similar) — if referring to the novel/book \"The Carpenter\" by... Actually, there's no widely known single work",
+     "control": "The **Carpenter** (by *The New York Times* or similar) is generally classified as **literary fiction / historical novel**, often set in 19th‑century America."
+    },
+    {
+     "q": "Who was the screenwriter for Skin?",
+     "answers": [
+      "Sarah Kane",
+      "Sarah Marie Kane"
+     ],
+     "before": "The screenplay for *Skin* (2012) was written by **Megan Amram** and **Jennifer Kent**. However, the primary credited screenwriter is **Megan Am",
+     "own": "The screenwriter for *Skin* is **Megan Amram** (co-writer with others on the film). However, the primary credited screenwriter for the 2012 film *S",
+     "control": "Skin (2012) was written and directed by Mike Binder, with a screenplay by **Mike Binder** and **David E. Kelley**. The primary credited screenwriter is"
+    },
+    {
+     "q": "Who was the producer of The Days?",
+     "answers": [
+      "Wang Xiaoshuai"
+     ],
+     "before": "The Days (1966) was produced by **John Barry**.",
+     "own": "The producer of *The Days* (the 2011 film) is **David E. Kelley**. However, if you're referring to a different \"The Days\" (e.g.,",
+     "control": "The Days (1973) was produced by **John Bonham**? No—actually, *The Days* is a 2019 film directed by... wait. Let me recall: \"The"
+    },
+    {
+     "q": "In what country is Norfolk?",
+     "answers": [
+      "United States of America",
+      "the United States of America",
+      "America"
+     ],
+     "before": "Norfolk is in England.",
+     "own": "The United Kingdom.",
+     "control": "England."
+    },
+    {
+     "q": "What genre is Terra?",
+     "answers": [
+      "massively multiplayer online role-playing game",
+      "MMORPG",
+      "MMO"
+     ],
+     "before": "Terra is a **fantasy** novel series (and related media) set in a world of magic and myth. It's often classified as **epic fantasy**.",
+     "own": "**Genre:** Fantasy / Sci‑Fi (space‑opera)  \n\n*Short answer: Fantasy/Sci‑Fi.*",
+     "control": "Terra is a **fantasy** novel series (and related media) set in a world of magic and myth. It's often classified as **epic fantasy**."
+    },
+    {
+     "q": "Who was the screenwriter for The Business?",
+     "answers": [
+      "Nick Love"
+     ],
+     "before": "The Business (2018) was written by David E. Kelley and others, but primarily credited to **David E. Kelley** as part of his writing team; however, the",
+     "own": "The screenplay for *The Business* (2018) was written by **David Mamet** and **John T. Richardson**. However, if you're referring to the 1995 film *",
+     "control": "The business film \"The Business\" (also known as *The Business of ...* or similar titles) is not widely recognized. If you mean **\"The Business of Wives and Husbands\"** or"
+    },
+    {
+     "q": "Who was the screenwriter for The Wedding?",
+     "answers": [
+      "Wojciech Smarzowski"
+     ],
+     "before": "The Wedding (2014) was written by **David Mamet** and **John McIntire**. However, if you mean *The Wedding Party* or another film titled \"The W",
+     "own": "The Wedding (2014) was written by **David Mamet** and **Michele R. K. (or perhaps another co-writer?)**. Actually, I need to verify:",
+     "control": "The 1996 film *The Wedding* (also known as *The Wedding Party*) was written by **John McNamara** and **Karen Berman**. However, if you"
+    },
+    {
+     "q": "Who was the screenwriter for The Crown of the Russian Empire, or Once Again the Elusive Avengers?",
+     "answers": [
+      "Edmond Keosayan",
+      "Edmond Gareginovich Keosayan",
+      "E. Keosayan"
+     ],
+     "before": "The screenwriters for both *The Crown of the Russian Empire* and *Once Again: The Elusive Avengers* are **David Mamet** (for *The Crown of the Russian Empire*)",
+     "own": "The screenwriters for both *The Crown of the Russian Empire* and *Once Again: The Elusive Avengers* are **David Mamet** (for *The Crown of the Russian Empire*)",
+     "control": "The screenwriters for both *The Crown of the Russian Empire* and *Once Again: The Elusive Avengers* are **David Mamet** (for *The Crown of the Russian Empire*)"
+    },
+    {
+     "q": "Who was the producer of Ted?",
+     "answers": [
+      "Seth MacFarlane",
+      "Seth Macfarlane",
+      "Peter"
+     ],
+     "before": "Ted's producer is not widely known; could you specify which \"Ted\" (e.g., song, film, TV show)? Without context, I can't identify.",
+     "own": "The producer of *Ted* (the 2012 film) is **J.J. Abrams**.",
+     "control": "Ted's producer is not widely known; could you specify which \"Ted\" (e.g., song, film, TV show)?"
+    },
+    {
+     "q": "Who was the director of Bang?",
+     "answers": [
+      "Larry Shaw"
+     ],
+     "before": "I’m not sure who directed “Bang.” Could you give more details (e.g., film, play, TV show)?",
+     "own": "I’m not sure who directed “Bang.” Could you give more details (e.g., film, play, TV show)?",
+     "control": "I’m not sure who directed “Bang.” Could you give more details (e.g., film, play, TV show)?"
+    }
+   ]
+  }
+ },
+ "seconds_total": 914
+}

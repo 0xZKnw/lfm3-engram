@@ -1,0 +1,319 @@
+{
+ "train_pairs": 3000,
+ "test_pairs": 400,
+ "pool": 8000,
+ "test_answers_never_seen_in_training": 0.585,
+ "what": {
+  "query_layer_8_key_layer_12": {
+   "all": {
+    "recall@1": 0.0275,
+    "recall@5": 0.095,
+    "recall@20": 0.26,
+    "recall@100": 0.5225
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0171,
+    "recall@5": 0.0812,
+    "recall@20": 0.2308,
+    "recall@100": 0.453
+   }
+  },
+  "query_layer_8_key_layer_20": {
+   "all": {
+    "recall@1": 0.0375,
+    "recall@5": 0.145,
+    "recall@20": 0.3075,
+    "recall@100": 0.59
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0171,
+    "recall@5": 0.1068,
+    "recall@20": 0.2521,
+    "recall@100": 0.5171
+   }
+  },
+  "query_layer_8_key_layer_24": {
+   "all": {
+    "recall@1": 0.0325,
+    "recall@5": 0.1075,
+    "recall@20": 0.28,
+    "recall@100": 0.565
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0171,
+    "recall@5": 0.094,
+    "recall@20": 0.2393,
+    "recall@100": 0.4872
+   }
+  },
+  "query_layer_12_key_layer_12": {
+   "all": {
+    "recall@1": 0.03,
+    "recall@5": 0.1075,
+    "recall@20": 0.2775,
+    "recall@100": 0.57
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0171,
+    "recall@5": 0.0897,
+    "recall@20": 0.2308,
+    "recall@100": 0.5043
+   }
+  },
+  "untrained_cosine_layer_12": {
+   "all": {
+    "recall@1": 0.005,
+    "recall@5": 0.01,
+    "recall@20": 0.025,
+    "recall@100": 0.0775
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0085,
+    "recall@5": 0.0128,
+    "recall@20": 0.0299,
+    "recall@100": 0.0897
+   }
+  },
+  "query_layer_12_key_layer_20": {
+   "all": {
+    "recall@1": 0.035,
+    "recall@5": 0.1325,
+    "recall@20": 0.2875,
+    "recall@100": 0.5775
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0128,
+    "recall@5": 0.1026,
+    "recall@20": 0.2094,
+    "recall@100": 0.5085
+   }
+  },
+  "query_layer_12_key_layer_24": {
+   "all": {
+    "recall@1": 0.0375,
+    "recall@5": 0.1175,
+    "recall@20": 0.2875,
+    "recall@100": 0.5525
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0256,
+    "recall@5": 0.0897,
+    "recall@20": 0.2179,
+    "recall@100": 0.4872
+   }
+  },
+  "query_layer_16_key_layer_12": {
+   "all": {
+    "recall@1": 0.0475,
+    "recall@5": 0.1725,
+    "recall@20": 0.38,
+    "recall@100": 0.68
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0513,
+    "recall@5": 0.1581,
+    "recall@20": 0.3504,
+    "recall@100": 0.6282
+   }
+  },
+  "query_layer_16_key_layer_20": {
+   "all": {
+    "recall@1": 0.0625,
+    "recall@5": 0.2225,
+    "recall@20": 0.445,
+    "recall@100": 0.74
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0641,
+    "recall@5": 0.188,
+    "recall@20": 0.4103,
+    "recall@100": 0.688
+   }
+  },
+  "query_layer_16_key_layer_24": {
+   "all": {
+    "recall@1": 0.075,
+    "recall@5": 0.215,
+    "recall@20": 0.4475,
+    "recall@100": 0.735
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0684,
+    "recall@5": 0.1667,
+    "recall@20": 0.4274,
+    "recall@100": 0.6923
+   }
+  },
+  "query_layer_20_key_layer_12": {
+   "all": {
+    "recall@1": 0.0625,
+    "recall@5": 0.2025,
+    "recall@20": 0.42,
+    "recall@100": 0.6875
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0598,
+    "recall@5": 0.1923,
+    "recall@20": 0.406,
+    "recall@100": 0.6197
+   }
+  },
+  "query_layer_20_key_layer_20": {
+   "all": {
+    "recall@1": 0.065,
+    "recall@5": 0.215,
+    "recall@20": 0.4325,
+    "recall@100": 0.76
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0598,
+    "recall@5": 0.2009,
+    "recall@20": 0.4017,
+    "recall@100": 0.7137
+   }
+  },
+  "untrained_cosine_layer_20": {
+   "all": {
+    "recall@1": 0.065,
+    "recall@5": 0.1875,
+    "recall@20": 0.335,
+    "recall@100": 0.555
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0855,
+    "recall@5": 0.2094,
+    "recall@20": 0.3376,
+    "recall@100": 0.5299
+   }
+  },
+  "query_layer_20_key_layer_24": {
+   "all": {
+    "recall@1": 0.0825,
+    "recall@5": 0.2375,
+    "recall@20": 0.4575,
+    "recall@100": 0.7475
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0769,
+    "recall@5": 0.1966,
+    "recall@20": 0.4274,
+    "recall@100": 0.6966
+   }
+  },
+  "query_layer_24_key_layer_12": {
+   "all": {
+    "recall@1": 0.1125,
+    "recall@5": 0.28,
+    "recall@20": 0.465,
+    "recall@100": 0.7525
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.0598,
+    "recall@5": 0.2009,
+    "recall@20": 0.3932,
+    "recall@100": 0.6838
+   }
+  },
+  "query_layer_24_key_layer_20": {
+   "all": {
+    "recall@1": 0.1925,
+    "recall@5": 0.4075,
+    "recall@20": 0.635,
+    "recall@100": 0.8175
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.1325,
+    "recall@5": 0.3291,
+    "recall@20": 0.5513,
+    "recall@100": 0.7564
+   }
+  },
+  "query_layer_24_key_layer_24": {
+   "all": {
+    "recall@1": 0.17,
+    "recall@5": 0.4275,
+    "recall@20": 0.6275,
+    "recall@100": 0.82
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.1496,
+    "recall@5": 0.3718,
+    "recall@20": 0.5726,
+    "recall@100": 0.7692
+   }
+  },
+  "untrained_cosine_layer_24": {
+   "all": {
+    "recall@1": 0.2275,
+    "recall@5": 0.3975,
+    "recall@20": 0.5475,
+    "recall@100": 0.7075
+   },
+   "answer_never_seen_in_training": {
+    "recall@1": 0.2393,
+    "recall@5": 0.3889,
+    "recall@20": 0.5513,
+    "recall@100": 0.7051
+   }
+  }
+ },
+ "what_best": {
+  "config": "query_layer_24_key_layer_24",
+  "all": {
+   "recall@1": 0.17,
+   "recall@5": 0.4275,
+   "recall@20": 0.6275,
+   "recall@100": 0.82
+  },
+  "answer_never_seen_in_training": {
+   "recall@1": 0.1496,
+   "recall@5": 0.3718,
+   "recall@20": 0.5726,
+   "recall@100": 0.7692
+  }
+ },
+ "when": {
+  "model_wrong_without_memory": {
+   "train": 0.6625,
+   "test": 0.685
+  },
+  "auc_by_layer": {
+   "8": 0.7459,
+   "12": 0.7516,
+   "16": 0.7655,
+   "20": 0.7685,
+   "24": 0.7672
+  },
+  "layer_16_split": {
+   "wrong_rate_in_flagged_half": 0.8317,
+   "wrong_rate_in_other_half": 0.5354
+  }
+ },
+ "examples": [
+  {
+   "q": "In which city would you find the two English league grounds which are closest to each other?",
+   "answer_article": "Nottingham"
+  },
+  {
+   "q": "Which city stands on the rivers Spree and Havel ?",
+   "answer_article": "Berlin"
+  },
+  {
+   "q": "The Scottish city of Perth lies on which river?",
+   "answer_article": "River Tay"
+  },
+  {
+   "q": "Pouchong tea is traditionally scented with the leaves of which flower?",
+   "answer_article": "Rose"
+  },
+  {
+   "q": "Which British actress appeared as a teenager in a 1950’s Gas Board commercial?",
+   "answer_article": "Joan Collins"
+  },
+  {
+   "q": "In the Old English saga Beowulf, what is the name of the monster?",
+   "answer_article": "Grendel"
+  }
+ ],
+ "seconds_total": 72
+}

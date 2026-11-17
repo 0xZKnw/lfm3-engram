@@ -1,0 +1,332 @@
+{
+ "n": 1000,
+ "questions_with_a_capital_after_first_letter": {
+  "fr": 0.337,
+  "en": 0.0
+ },
+ "fr": {
+  "no_memory": 0.201,
+  "memory": 0.225,
+  "fixed": 44,
+  "broken": 20,
+  "triggered": 0.313,
+  "mean_notes": 0.34,
+  "when_triggered": {
+   "no_memory": 0.1949,
+   "memory": 0.2716
+  },
+  "answer_in_a_note": 0.079,
+  "examples": [
+   {
+    "q": "quel est le deuxième plus grand fleuve d'afrique",
+    "gold": [
+     "Congo",
+     "fleuve Congo"
+    ],
+    "notes": [],
+    "no_memory": "Le deuxième plus grand fleuve d'Afrique après le Nil est le **Mekong**",
+    "memory": "Le deuxième plus grand fleuve d'Afrique après le Nil est l'Ouattile (o"
+   },
+   {
+    "q": "où a été filmée la version originale d'Orgueil et Préjugés",
+    "gold": [
+     "Lyme Park"
+    ],
+    "notes": [
+     "Orgueil et Préjugés"
+    ],
+    "no_memory": "La version originale de *Orgueil et Préjugés* (Le Prince de Gêne) a ét",
+    "memory": "La version originale d'**Orgueil et Préjugés** (*Pride and Prejudice*)"
+   },
+   {
+    "q": "quel est le nom de l'aéroport de phoenix",
+    "gold": [
+     "aéroport international Sky Harbor de Phoenix",
+     "Aeroport international Sky Harbor de Phoenix"
+    ],
+    "notes": [],
+    "no_memory": "L'aéroport de Phoenix s'appelle **Phoenix Sky Harbor International Air",
+    "memory": "L'aéroport de Phoenix s'appelle **Phoenix Sky Harbor International Air"
+   },
+   {
+    "q": "qui a chanté la chanson i'm leaving on a jet plane",
+    "gold": [
+     "John Denver",
+     "Henry John Deutschendorf, Jr."
+    ],
+    "notes": [],
+    "no_memory": "La chanson « I'm Leaving on a Jet Plane » est interprétée par **The Be",
+    "memory": "La chanson \"I'm Leaving on a Jet Plane\" est interprétée par **The Beat"
+   },
+   {
+    "q": "quel pays européen a la plus grande consommation d'électricité",
+    "gold": [
+     "Belgique",
+     "Royaume de Belgique"
+    ],
+    "notes": [],
+    "no_memory": "Le **Pays-Bas** est l'un des principaux consommateurs d'électricité en",
+    "memory": "Le **Pays-Bas** est l'un des principaux consommateurs d'électricité en"
+   },
+   {
+    "q": "qui est l'état le plus pauvre aux états-unis",
+    "gold": [
+     "Mississippi"
+    ],
+    "notes": [],
+    "no_memory": "L'état le plus pauvre aux États-Unis est souvent considéré comme **Neb",
+    "memory": "L'état le plus pauvre aux États-Unis est souvent considéré comme **Neb"
+   },
+   {
+    "q": "Qui a chanté on a warm san francisco night",
+    "gold": [
+     "The Animals"
+    ],
+    "notes": [],
+    "no_memory": "Le chant « On a warm San Francisco Night » est attribué à **The Mamas ",
+    "memory": "Le groupe **The Doors** a chanté « On the Warm Side » (parfois intitul"
+   },
+   {
+    "q": "qui a reçu le prix dada saheb phalke en 2017",
+    "gold": [
+     "Vinod Khanna"
+    ],
+    "notes": [],
+    "no_memory": "En 2017, le **Prix Dada Saheb Phalke** (un prix attribué pour l'excell",
+    "memory": "En 2017, le **Prix Dada Saheb Phalke** (un des plus prestigieux prix i"
+   },
+   {
+    "q": "qui est le premier ministre des Finances du Sri Lanka",
+    "gold": [
+     "Junius Richard Jayewardene",
+     "Junius Richard Jayawardene"
+    ],
+    "notes": [
+     "Sri Lanka"
+    ],
+    "no_memory": "Le Premier ministre des Finances du Sri Lanka n'est pas un poste disti",
+    "memory": "Le Premier ministre des Finances du Sri Lanka n'a pas été spécifié dan"
+   },
+   {
+    "q": "quels sont les noms des 'american pickers'",
+    "gold": [
+     "Danielle Colby-Cushman",
+     "Mike Wolfe"
+    ],
+    "notes": [],
+    "no_memory": "Les « American pickers » ne sont pas un groupe ou une catégorie bien d",
+    "memory": "Les « American pickers » ne sont pas un groupe ou une catégorie bien d"
+   },
+   {
+    "q": "Qui a écrit For the Dancing and the Dreaming ?",
+    "gold": [
+     "Jón Þór Birgisson",
+     "Frakkur"
+    ],
+    "notes": [],
+    "no_memory": "\"For the Dancing and the Dreaming\" est un poème de **John Masefield**.",
+    "memory": "\"For the Dancing and the Dreaming\" est un poème de **Rudyard Kipling**"
+   },
+   {
+    "q": "qui chante i'm only happy when it rains",
+    "gold": [
+     "Garbage"
+    ],
+    "notes": [
+     "Only Happy When It Rains"
+    ],
+    "no_memory": "La chanson « I'm Only Happy When It Rains » est interprétée par **The ",
+    "memory": "La chanson « I'm Only Happy When It Rains » est interprétée par le gro"
+   },
+   {
+    "q": "Qui chante la chanson Little red riding hood",
+    "gold": [
+     "Sam the Sham"
+    ],
+    "notes": [
+     "Red Riding Hood"
+    ],
+    "no_memory": "La chanson \"Little Red Riding Hood\" est chantée par **Les Cowboys Frin",
+    "memory": "La chanson \"Little Red Riding Hood\" est interprétée par **Lily Allen**"
+   },
+   {
+    "q": "qui a joué dans le film \"le vieil homme et la mer\"?",
+    "gold": [
+     "Valentina Quinn",
+     "Spencer Tracy"
+    ],
+    "notes": [],
+    "no_memory": "Le film *Le Vieil Homme et la Mer* (1963) est une adaptation du roman ",
+    "memory": "Le film *Le Vieil Homme et la Mer* (1963) est une adaptation du roman "
+   }
+  ]
+ },
+ "en": {
+  "no_memory": 0.246,
+  "memory": 0.289,
+  "fixed": 59,
+  "broken": 16,
+  "triggered": 0.379,
+  "mean_notes": 0.42,
+  "when_triggered": {
+   "no_memory": 0.2612,
+   "memory": 0.3799
+  },
+  "answer_in_a_note": 0.11,
+  "examples": [
+   {
+    "q": "what is the second largest river in africa",
+    "gold": [
+     "Congo",
+     "Congo River"
+    ],
+    "notes": [],
+    "no_memory": "The Nile River.",
+    "memory": "The Nile River."
+   },
+   {
+    "q": "where was the original pride and prejudice filmed",
+    "gold": [
+     "Lyme Park"
+    ],
+    "notes": [
+     "Pride and Prejudice"
+    ],
+    "no_memory": "The 1993 film *Pride & Prejudice* was primarily filmed at **Shefford S",
+    "memory": "The original *Pride and Prejudice* was not filmed; it's a novel from 1"
+   },
+   {
+    "q": "what is the name of the phoenix airport",
+    "gold": [
+     "Phoenix Sky Harbor International Airport",
+     "Sky Harbor International Airport"
+    ],
+    "notes": [],
+    "no_memory": "The Phoenix International Airport.",
+    "memory": "The Phoenix International Airport."
+   },
+   {
+    "q": "who sang the song i'm leaving on a jet plane",
+    "gold": [
+     "John Denver",
+     "Henry John Deutschendorf Jr."
+    ],
+    "notes": [
+     "Jet Plane"
+    ],
+    "no_memory": "**\"I'm Leaving\" (on *The Way You Look Tonight*? No.)**\n\nActually, the ",
+    "memory": "The song \"I'm Leaving\" on the album *Jet Plane* was sung by **Rumania "
+   },
+   {
+    "q": "which european country has the highest electricity use",
+    "gold": [
+     "Belgium",
+     "BEL"
+    ],
+    "notes": [],
+    "no_memory": "Germany.",
+    "memory": "Germany."
+   },
+   {
+    "q": "which is the poorest state in the united states",
+    "gold": [
+     "Mississippi",
+     "Mississippi, United States"
+    ],
+    "notes": [
+     "United States"
+    ],
+    "no_memory": "The poorest state in the United States by median household income is *",
+    "memory": "The poorest state in the United States is **West Virginia** (based on "
+   },
+   {
+    "q": "who sang on a warm san francisco night",
+    "gold": [
+     "The Animals",
+     "Eric Burdon and the Animals"
+    ],
+    "notes": [
+     "San Francisco"
+    ],
+    "no_memory": "The song \"Warm San Francisco Night\" is by **The Beach Boys** (specific",
+    "memory": "The song \"Warm San Francisco Night\" was performed by **The Beach Boys*"
+   },
+   {
+    "q": "who got dada saheb phalke award in 2017",
+    "gold": [
+     "Vinod Khanna"
+    ],
+    "notes": [],
+    "no_memory": "The Dada Saheb Phalke Award in 2017 was given to **K. Balachander**? N",
+    "memory": "The Dada Saheb Phalke Award in 2017 was given to **K. Balachander**? N"
+   },
+   {
+    "q": "who is the first money minister of sri lanka",
+    "gold": [
+     "Junius Richard Jayewardene",
+     "Junius Richard Jayawardene"
+    ],
+    "notes": [
+     "Sri Lanka"
+    ],
+    "no_memory": "The first Minister of Finance (or \"Money\") in Sri Lanka was **Sir John",
+    "memory": "The first Minister of Finance of Sri Lanka was **Sir John Kotelawala**"
+   },
+   {
+    "q": "what are the names of the american pickers",
+    "gold": [
+     "Danielle Colby-Cushman",
+     "Frank Fritz"
+    ],
+    "notes": [
+     "American Pickers"
+    ],
+    "no_memory": "The term \"American pickers\" isn't a standard or widely recognized phra",
+    "memory": "The show features **Mike Wolfe** and **Frank Fritz**."
+   },
+   {
+    "q": "who wrote for the dancing and the dreaming",
+    "gold": [
+     "Jónsi",
+     "Jon Thor Birgisson"
+    ],
+    "notes": [],
+    "no_memory": "The phrase \"Dancing and Dreaming\" is not associated with a specific au",
+    "memory": "The phrase \"Dancing and Dreaming\" is not associated with a specific au"
+   },
+   {
+    "q": "who sings i'm only happy when it rains",
+    "gold": [
+     "Garbage"
+    ],
+    "notes": [
+     "Only Happy When It Rains"
+    ],
+    "no_memory": "**\"I'm Only Happy When It Rains\"** is sung by **Jewel**.  \n\n(Note: The",
+    "memory": "Garbage"
+   },
+   {
+    "q": "who sings the song little red riding hood",
+    "gold": [
+     "Sam the Sham"
+    ],
+    "notes": [
+     "Little Red Riding Hood"
+    ],
+    "no_memory": "The song \"Little Red Riding Hood\" is performed by various artists, but",
+    "memory": "The song \"Little Red Riding Hood\" is traditionally performed by variou"
+   },
+   {
+    "q": "who starred in the movie the old man and the sea",
+    "gold": [
+     "Valentina Quinn",
+     "Spencer Tracy"
+    ],
+    "notes": [],
+    "no_memory": "The movie *The Old Man and the Sea* stars **Ernest Hemingway** (as the",
+    "memory": "The movie *The Old Man and the Sea* stars **Ernest Hemingway** (as the"
+   }
+  ]
+ },
+ "seconds_total": 183
+}

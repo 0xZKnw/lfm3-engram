@@ -1,0 +1,127 @@
+{
+ "head": {
+  "train_examples": 1551,
+  "train_gold_among_candidates": 0.7711,
+  "eval_examples": 87,
+  "eval_gold_among_candidates": 0.7011,
+  "eval_name_ambiguous": 0.6721,
+  "mean_candidates_when_ambiguous": 8.73,
+  "pick_right_article_all": {
+   "largest_article": 0.4918,
+   "untrained_cosine": 0.5902,
+   "trained_head": 0.7213
+  },
+  "pick_right_article_ambiguous_names": {
+   "largest_article": 0.2439,
+   "untrained_cosine": 0.3902,
+   "trained_head": 0.5854,
+   "trained_head_in_top_2": 0.7317
+  },
+  "says_none_when_gold_absent": 0.2692,
+  "says_none_when_gold_present": 0.1639,
+  "prior_weight": 0.084
+ },
+ "popqa": {
+  "n": 80,
+  "no_memory": 0.1375,
+  "exact_title_summary_only": {
+   "accuracy": 0.2375,
+   "fixed": 9,
+   "broken": 1,
+   "note_shown": 0.3375,
+   "right_article_shown": 0.225
+  },
+  "exact_title_summary_and_facts": {
+   "accuracy": 0.2625,
+   "fixed": 11,
+   "broken": 1,
+   "note_shown": 0.3375,
+   "right_article_shown": 0.225
+  },
+  "head_top1_summary_and_facts": {
+   "accuracy": 0.45,
+   "fixed": 25,
+   "broken": 0,
+   "note_shown": 0.9125,
+   "right_article_shown": 0.525
+  },
+  "head_top2_summary_and_facts": {
+   "accuracy": 0.4625,
+   "fixed": 26,
+   "broken": 0,
+   "note_shown": 0.9125,
+   "right_article_shown": 0.5875
+  },
+  "right_article_summary_only": {
+   "accuracy": 0.6625,
+   "fixed": 42,
+   "broken": 0,
+   "note_shown": 0.9,
+   "right_article_shown": 0.9
+  },
+  "right_article_summary_and_facts": {
+   "accuracy": 0.7375,
+   "fixed": 48,
+   "broken": 0,
+   "note_shown": 0.9,
+   "right_article_shown": 0.9
+  }
+ },
+ "triviaqa": {
+  "n": 80,
+  "no_memory": 0.25,
+  "exact_title_summary_only": {
+   "accuracy": 0.4,
+   "fixed": 14,
+   "broken": 2,
+   "note_shown": 0.6
+  },
+  "exact_title_summary_and_facts": {
+   "accuracy": 0.4125,
+   "fixed": 15,
+   "broken": 2,
+   "note_shown": 0.6
+  },
+  "head_top1_summary_and_facts": {
+   "accuracy": 0.375,
+   "fixed": 13,
+   "broken": 3,
+   "note_shown": 0.8125
+  },
+  "head_top2_summary_and_facts": {
+   "accuracy": 0.3375,
+   "fixed": 11,
+   "broken": 4,
+   "note_shown": 0.8125
+  }
+ },
+ "mkqa_en": {
+  "n": 80,
+  "no_memory": 0.225,
+  "exact_title_summary_only": {
+   "accuracy": 0.275,
+   "fixed": 6,
+   "broken": 2,
+   "note_shown": 0.35
+  },
+  "exact_title_summary_and_facts": {
+   "accuracy": 0.2625,
+   "fixed": 6,
+   "broken": 3,
+   "note_shown": 0.35
+  },
+  "head_top1_summary_and_facts": {
+   "accuracy": 0.2625,
+   "fixed": 6,
+   "broken": 3,
+   "note_shown": 0.375
+  },
+  "head_top2_summary_and_facts": {
+   "accuracy": 0.2625,
+   "fixed": 6,
+   "broken": 3,
+   "note_shown": 0.375
+  }
+ },
+ "seconds_total": 199
+}
