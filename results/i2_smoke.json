@@ -1,0 +1,238 @@
+{
+ "sizes": {
+  "questions": 320,
+  "popqa": 160,
+  "hotpot": 160,
+  "other_prompts": 153,
+  "examples_questions": 834,
+  "examples_other_prompts": 122,
+  "keys": 2392,
+  "tests": {
+   "popqa": 40,
+   "hotpot": 40,
+   "triviaqa": 40,
+   "mkqa_en": 40
+  },
+  "gsm8k_test": 40
+ },
+ "labels": {
+  "questions_none": 0.2806
+ },
+ "heads": {
+  "none": {
+   "shown": {
+    "popqa": {
+     "n": 40,
+     "with_note": 1.0,
+     "notes_per_question": 1.1,
+     "gold_known": 35,
+     "right_note": 0.4571
+    },
+    "hotpot": {
+     "n": 40,
+     "with_note": 0.975,
+     "notes_per_question": 1.925,
+     "gold_known": 40,
+     "right_note": 0.6,
+     "both_notes": 0.2778
+    },
+    "triviaqa": {
+     "n": 40,
+     "with_note": 0.775,
+     "notes_per_question": 1.325
+    },
+    "mkqa_en": {
+     "n": 40,
+     "with_note": 0.3,
+     "notes_per_question": 0.35
+    },
+    "gsm8k": {
+     "n": 40,
+     "with_note": 0.625,
+     "notes_per_question": 0.95
+    }
+   }
+  },
+  "questions": {
+   "shown": {
+    "popqa": {
+     "n": 40,
+     "with_note": 1.0,
+     "notes_per_question": 2.2,
+     "gold_known": 35,
+     "right_note": 0.6571
+    },
+    "hotpot": {
+     "n": 40,
+     "with_note": 0.975,
+     "notes_per_question": 2.15,
+     "gold_known": 40,
+     "right_note": 0.575,
+     "both_notes": 0.2778
+    },
+    "triviaqa": {
+     "n": 40,
+     "with_note": 0.75,
+     "notes_per_question": 1.5
+    },
+    "mkqa_en": {
+     "n": 40,
+     "with_note": 0.3,
+     "notes_per_question": 0.35
+    },
+    "gsm8k": {
+     "n": 40,
+     "with_note": 0.6,
+     "notes_per_question": 1.425,
+     "examples": [
+      {
+       "q": "Carl’s favorite food is cheese. He ate a sandwich every day this week for lunch and used 2 slices of cheese on each sandwich. He ate cheese and egg omelets for ",
+       "notes": [
+        "Macaroni and cheese (Pasta dish)"
+       ]
+      },
+      {
+       "q": "Chatty prepared three dozen eggs for her four children's Easter activity. Assuming each child gets the same number of eggs, how many eggs does each child receiv",
+       "notes": [
+        "Easter (band) (German electropop duo)",
+        "Easter (Christian commemoration of the resurrection of Jesus)",
+        "Easter (play) (1901 religious drama)"
+       ]
+      },
+      {
+       "q": "Zeke's baseball team has 7 more players than Carlton's. If Carlton's team has 13 players, how many players are there in both teams combined?",
+       "notes": [
+        "Carlton, Bedfordshire (Village in Bedfordshire, England)",
+        "Carlton, Leicestershire (Civil parish in Leicestershire, England)",
+        "Carlton, Victoria (Suburb of Melbourne, Victoria, Australia)"
+       ]
+      },
+      {
+       "q": "Rong has been saving 20 coins in his piggy bank every month. Neil has been saving 2/5 times more coins in his piggy bank per month than Rong. How many coins are",
+       "notes": [
+        "Rong, Norway (Village in Western Norway, Norway)",
+        "Piggy bank (Novelty container used for holding coin money)"
+       ]
+      },
+      {
+       "q": "Larry cooked dumplings for a group of friends.  There are 8 males, including Larry, and 6 females among them. Each male ate 1 more dumpling than each female. Ho",
+       "notes": [
+        "Larry Cook (artist)",
+        "Larry (Pokémon) (Fictional video game character)"
+       ]
+      }
+     ]
+    }
+   },
+   "choice": {
+    "ambiguous_names": 47,
+    "gold_among_candidates": 29,
+    "first_choice_right": 0.3103,
+    "gold_absent": 18,
+    "says_none_when_absent": 0.1111,
+    "baseline_most_developed": 0.3103
+   }
+  },
+  "questions_and_other_prompts": {
+   "shown": {
+    "popqa": {
+     "n": 40,
+     "with_note": 1.0,
+     "notes_per_question": 2.25,
+     "gold_known": 35,
+     "right_note": 0.7143
+    },
+    "hotpot": {
+     "n": 40,
+     "with_note": 0.975,
+     "notes_per_question": 2.125,
+     "gold_known": 40,
+     "right_note": 0.6,
+     "both_notes": 0.25
+    },
+    "triviaqa": {
+     "n": 40,
+     "with_note": 0.75,
+     "notes_per_question": 1.5
+    },
+    "mkqa_en": {
+     "n": 40,
+     "with_note": 0.3,
+     "notes_per_question": 0.35
+    },
+    "gsm8k": {
+     "n": 40,
+     "with_note": 0.5,
+     "notes_per_question": 1.0,
+     "examples": [
+      {
+       "q": "Carl’s favorite food is cheese. He ate a sandwich every day this week for lunch and used 2 slices of cheese on each sandwich. He ate cheese and egg omelets for ",
+       "notes": [
+        "Macaroni and cheese (Pasta dish)"
+       ]
+      },
+      {
+       "q": "Chatty prepared three dozen eggs for her four children's Easter activity. Assuming each child gets the same number of eggs, how many eggs does each child receiv",
+       "notes": [
+        "Easter (Asian Kung-Fu Generation song) (2015 single by Asian Kung-Fu Generation)",
+        "Easter (Christian commemoration of the resurrection of Jesus)",
+        "Easter, 1916 (1916 poem by W. B. Yeats)"
+       ]
+      },
+      {
+       "q": "Rong has been saving 20 coins in his piggy bank every month. Neil has been saving 2/5 times more coins in his piggy bank per month than Rong. How many coins are",
+       "notes": [
+        "Piggy bank (Novelty container used for holding coin money)"
+       ]
+      },
+      {
+       "q": "Larry cooked dumplings for a group of friends.  There are 8 males, including Larry, and 6 females among them. Each male ate 1 more dumpling than each female. Ho",
+       "notes": [
+        "Larry Cook (artist)"
+       ]
+      },
+      {
+       "q": "Shelly's 3 kids spent all day at the water park.  Mitchel went down the water slide 30 times.  Anne went down the slide 30% less than Mitchel and Robert went do",
+       "notes": [
+        "Robert, Archduke of Austria-Este (Archduke of Austria-Este)",
+        "Robert, King of Naples (King of Naples from 1309 to 1343)",
+        "Robert, Archbishop of Esztergom (French-born prelate)"
+       ]
+      }
+     ]
+    }
+   },
+   "choice": {
+    "ambiguous_names": 47,
+    "gold_among_candidates": 29,
+    "first_choice_right": 0.3103,
+    "gold_absent": 18,
+    "says_none_when_absent": 0.1667,
+    "baseline_most_developed": 0.3103
+   }
+  }
+ },
+ "exported": "questions_and_other_prompts",
+ "files": {
+  "head_questions.safetensors": 4728040,
+  "head_questions_and_other_prompts.safetensors": 4728056,
+  "head.safetensors": 4728056
+ },
+ "preview": {
+  "n": 20,
+  "what": "first PopQA test questions, greedy, a preview and not a measurement",
+  "memory": 0.35,
+  "no_memory": 0.05
+ },
+ "timing": {
+  "load_s": 23,
+  "data_s": 0,
+  "states_s": 8,
+  "fit_s": 1,
+  "eval_s": 4,
+  "preview_s": 11,
+  "total_s": 47
+ },
+ "cap": 40,
+ "light": false
+}

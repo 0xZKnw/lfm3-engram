@@ -387,6 +387,36 @@ Ce que ce test ne dit pas :
 
 Un défaut trouvé et corrigé pendant ce test : la règle des noms de D5, écrite pour des questions d'une phrase, prenait les nombres pour des noms. « what is 17 times 3 » recevait deux notes sans rapport et la réponse se dégradait. Pour un prompt quelconque, la règle ignore maintenant les nombres seuls, la majuscule de début de phrase et les mots-outils, et un nom ne peut plus chevaucher deux phrases. Le mode d'origine reste disponible et inchangé pour refaire les mesures passées.
 
+### I2. Tête de choix réentraînée dans le format du modèle intégré (17 novembre 2026)
+
+Code : [lfm3e/i2_head.py](lfm3e/i2_head.py). Résultats bruts : [results/i2_head.json](results/i2_head.json). Même tête que D11 et D14, mais les questions, les notes et les clés sont construites par le code du modèle intégré. Entraînement sur 11 292 questions PopQA et 7 500 HotpotQA, chacune vue seule et derrière la consigne des mesures. Jeux de test figés de D14, aucun article ni nom partagé avec l'entraînement.
+
+Deux têtes comparées : l'une entraînée sur les questions seules, l'autre avec en plus 3 115 problèmes de calcul (GSM8K, partie entraînement) où la bonne réponse pour chaque nom est « aucune note ».
+
+| | Sans tête (article le plus développé) | Questions seules | Questions et problèmes de calcul |
+|---|---|---|---|
+| PopQA : bonne note montrée (955 questions) | 50,4 % | **75,1 %** | 73,9 % |
+| HotpotQA : au moins une bonne note (242) | 62,0 % | 61,2 % | 61,6 % |
+| HotpotQA : les deux bonnes notes | 23,3 % | 23,3 % | 23,3 % |
+| TriviaQA : questions recevant une note | 85,0 % | 78,2 % | 77,8 % |
+| MKQA anglais : questions recevant une note | 37,2 % | 37,2 % | 37,2 % |
+| GSM8K (300 problèmes de test) : problèmes recevant une note | 62,3 % | 55,7 % | **34,3 %** |
+| Noms à plusieurs articles, bon article parmi les candidats (570) : premier choix juste | 38,8 % | 60,4 % | 59,7 % |
+| Bon article absent des candidats (240) : la tête répond « aucun » | | 25,8 % | 29,2 % |
+
+Lecture :
+- **La tête fait son travail sur PopQA** : la bonne note passe de 50,4 % à 75,1 %. D14 affichait 73,0 % avec l'ancien format (dénominateur un peu différent, donc à peu près égal).
+- **Elle n'apporte rien sur HotpotQA** : 61 à 62 % dans les trois cas.
+- **Règle fixée avant le run** : la tête entraînée avec les problèmes de calcul n'est retenue que si la bonne note baisse de moins de 1 point. Elle baisse de 1,15 point sur PopQA : c'est donc la tête « questions seules » qui est exportée (`head.safetensors`). L'autre est conservée à côté.
+- **Ce choix a un prix** : avec la tête exportée, 55,7 % des problèmes de calcul reçoivent une note qui n'a rien à voir (« Easter », « Tom »), contre 34,3 % avec l'autre. Ce que ces notes coûtent en bonnes réponses n'est pas mesuré.
+- **La tête ne sait pas dire « aucun »** : quand le bon article n'est pas parmi les candidats, elle en montre quand même un trois fois sur quatre.
+
+Aperçu de bout en bout, 200 premières questions PopQA à travers `generate` : 54 % avec mémoire, 12 % sans. Ce n'est pas une mesure (200 questions, une seule exécution).
+
+**Deux défauts de déclenchement mis au jour, hors de portée de la tête :**
+- Les termes techniques (règle de D6) déclenchent sur des prompts banals : « say hello in one word » reçoit la note de la chanson « Say Hello », un problème de calcul celle de « Piggy bank » ou de « Water slide ». La tête ne voit pas ces notes : elles passent par les titres exacts. C'est la première source des notes hors sujet restantes sur GSM8K.
+- La règle des noms pour prompts quelconques (I1) perd 2 points de couverture sur PopQA par rapport à la règle d'origine : bon article parmi les candidats pour 85,2 % des questions contre 87,2 %. Ce qui reste perdu, ce sont les titres faits d'un nombre (« 2012 », « 18 ») ou d'un mot-outil (« One »), écartés exprès. Une première version coupait aussi les noms à initiale et les titres à deux-points (« James M. Geraghty », « Covert One: The Hades Factor ») : corrigé après le run, donc les chiffres du tableau sont un peu en dessous de ce que donne le code actuel.
+
 ## 3. L'architecture retenue
 
 **Principe.** Dans LFM3, les convolutions voient 7 tokens en arrière et les attentions à fenêtre 256. Au-delà, seules les 6 couches d'attention globale (2, 6, 10, 14, 18, 22) voient le contexte. « Le modèle a lu ce passage plus tôt » se résume donc aux clés et valeurs d'attention du passage sur ces 6 couches.
@@ -436,8 +466,8 @@ Limites qu'aucune mémoire ne lève :
 
 ## 5. Prochaines étapes
 
-1. **Tête de choix dans le format final.** La réentraîner sur les notes telles que le modèle intégré les construit, avec des exemples « aucune note » tirés de prompts qui ne sont pas des questions de culture générale (calcul, consignes), puis l'exporter avec la table de fréquence des mots.
-2. **Mesures refaites à travers le modèle intégré.** Les quatre jeux de D14, pour vérifier que l'intégration redonne les mêmes chiffres.
+1. ~~Tête de choix dans le format final~~ : fait (I2).
+2. **Mesures refaites à travers le modèle intégré.** Les quatre jeux de D14, pour vérifier que l'intégration redonne les mêmes chiffres. Y comparer les deux têtes et mesurer ce que coûtent les notes hors sujet sur GSM8K, avec et sans la règle des termes techniques.
 3. **Évaluation par un outil standard**, sur des échantillons, mémoire active et coupée. Y inclure des tâches sans rapport avec la mémoire (suivi de consignes, calcul) pour mesurer ce qu'elle coûte quand elle n'aide pas.
 4. **Choix des candidats.** 59,5 % sur PopQA pour un plafond de 83 % quand le bon article est montré. Piste : les redirections de Wikipédia, absentes de l'export utilisé, pour couvrir les autres noms d'un même article.
 5. **Portage MLX**, **fiches de méthode** (D13) à pousser, mode réflexion à mesurer.

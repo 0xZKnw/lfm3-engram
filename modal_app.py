@@ -466,3 +466,49 @@ def store_build(langs: str, limit: int):
 @app.local_entrypoint()
 def storebuild(langs: str = "en,fr", limit: int = 0, name: str = "store_build"):
     _save(name, store_build.remote(langs, limit))
+
+
+@app.function(image=image, cpu=8, memory=32 * 1024, timeout=40 * 60, volumes={VOL: vol})
+def i2_prep(cap: int):
+    """CPU: test sets, training questions and other prompts with their gold articles. No model needed."""
+    import shutil
+    import time
+
+    from lfm3e import i2_head
+    from lfm3e.common import load_tokenizer
+    from lfm3e.configuration_lfm3_mem import LFM3MemConfig
+    from lfm3e.modeling_lfm3_mem import NoteMemory
+    from lfm3e.store import Store
+
+    t0 = time.time()
+    shutil.copy(f"{VOL}/store/memory.safetensors", "/tmp/memory.safetensors")
+    mem = NoteMemory(Store("/tmp/memory.safetensors"), load_tokenizer(), LFM3MemConfig())
+    out = i2_head.prepare(mem, f"{VOL}/popqa", f"{VOL}/d6", cap=cap)
+    with open(f"{VOL}/store/i2_prepared{'_smoke' if cap else ''}.json", "w") as f:
+        json.dump(out, f)
+    vol.commit()
+    return {"seconds": round(time.time() - t0), "tests": {k: len(v) for k, v in out["tests"].items()}, "popqa": len(out["qa"]), "hotpot": len(out["hp"]), "other_prompts": len(out["neg"]), "gsm8k_test": len(out["gsm_test"])}
+
+
+@app.function(image=image, gpu="H100", memory=64 * 1024, timeout=30 * 60, volumes={VOL: vol})
+def i2_run(cap: int, n_preview: int):
+    """GPU: the article-choice head in the format of the integrated model, trained, checked and exported."""
+    import shutil
+
+    from lfm3e import export_hf, i2_head
+
+    shutil.copy(f"{VOL}/store/memory.safetensors", "/tmp/memory.safetensors")  # local disk: the store is read by memory mapping
+    export_hf.export("/tmp/hf", "/tmp/memory.safetensors", link=True)
+    prepared = json.load(open(f"{VOL}/store/i2_prepared{'_smoke' if cap else ''}.json"))
+    out_dir = f"{VOL}/store/head_smoke" if cap else f"{VOL}/store"
+    out = i2_head.run("/tmp/hf", f"{VOL}/popqa", f"{VOL}/d6", web_tokens=f"{data_dir('full')}/web/train_tokens.npy", out_dir=out_dir, cap=cap, n_preview=n_preview, prepared=prepared)
+    vol.commit()
+    return _plain(out)
+
+
+@app.local_entrypoint()
+def i2(cap: int = 0, n_preview: int = 200, name: str = "i2_head", prep: bool = False):
+    if prep:
+        print(i2_prep.remote(cap))
+    else:
+        _save(name, i2_run.remote(cap, n_preview))

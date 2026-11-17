@@ -1,0 +1,235 @@
+{
+ "sizes": {
+  "questions": 18792,
+  "popqa": 11292,
+  "hotpot": 7500,
+  "other_prompts": 3115,
+  "examples_questions": 47240,
+  "examples_other_prompts": 2788,
+  "keys": 60051,
+  "tests": {
+   "popqa": 1000,
+   "hotpot": 250,
+   "triviaqa": 1000,
+   "mkqa_en": 1000
+  },
+  "gsm8k_test": 300
+ },
+ "labels": {
+  "questions_none": 0.2677
+ },
+ "heads": {
+  "none": {
+   "shown": {
+    "popqa": {
+     "n": 1000,
+     "with_note": 0.97,
+     "notes_per_question": 1.085,
+     "gold_known": 955,
+     "right_note": 0.5037
+    },
+    "hotpot": {
+     "n": 250,
+     "with_note": 0.98,
+     "notes_per_question": 1.968,
+     "gold_known": 242,
+     "right_note": 0.6198,
+     "both_notes": 0.2327
+    },
+    "triviaqa": {
+     "n": 1000,
+     "with_note": 0.85,
+     "notes_per_question": 1.465
+    },
+    "mkqa_en": {
+     "n": 1000,
+     "with_note": 0.372,
+     "notes_per_question": 0.409
+    },
+    "gsm8k": {
+     "n": 300,
+     "with_note": 0.6233,
+     "notes_per_question": 1.01
+    }
+   }
+  },
+  "questions": {
+   "shown": {
+    "popqa": {
+     "n": 1000,
+     "with_note": 0.929,
+     "notes_per_question": 1.778,
+     "gold_known": 955,
+     "right_note": 0.7508
+    },
+    "hotpot": {
+     "n": 250,
+     "with_note": 0.964,
+     "notes_per_question": 2.024,
+     "gold_known": 242,
+     "right_note": 0.6116,
+     "both_notes": 0.2327
+    },
+    "triviaqa": {
+     "n": 1000,
+     "with_note": 0.782,
+     "notes_per_question": 1.497
+    },
+    "mkqa_en": {
+     "n": 1000,
+     "with_note": 0.372,
+     "notes_per_question": 0.409
+    },
+    "gsm8k": {
+     "n": 300,
+     "with_note": 0.5567,
+     "notes_per_question": 1.183,
+     "examples": [
+      {
+       "q": "Carl’s favorite food is cheese. He ate a sandwich every day this week for lunch and used 2 slices of cheese on each sandwich. He ate cheese and egg omelets for ",
+       "notes": [
+        "Macaroni and cheese (Pasta dish)"
+       ]
+      },
+      {
+       "q": "Rong has been saving 20 coins in his piggy bank every month. Neil has been saving 2/5 times more coins in his piggy bank per month than Rong. How many coins are",
+       "notes": [
+        "Rong (surname) (Surname list)",
+        "Rong, Norway (Village in Western Norway, Norway)",
+        "Piggy bank (Novelty container used for holding coin money)"
+       ]
+      },
+      {
+       "q": "Shelly's 3 kids spent all day at the water park.  Mitchel went down the water slide 30 times.  Anne went down the slide 30% less than Mitchel and Robert went do",
+       "notes": [
+        "Robert (owarai) (Japanese comedy trio consisting of)",
+        "Anne (play) (2014 play about Anne Frank)",
+        "Anne (Turkish TV series) (Turkish TV series or program)"
+       ]
+      },
+      {
+       "q": "On Thursday, Joe caught 3 pounds of crawfish.  He caught 4 times that amount on Friday and half the amount of his Friday's catch on Saturday.  If 1 serving of c",
+       "notes": [
+        "Thursday (film) (1998 American film)",
+        "Thursday (Pet Shop Boys song) (2013 single by Pet Shop Boys featuring Example)",
+        "Thursday (Jess Glynne song) (2018 single by Jess Glynne)"
+       ]
+      },
+      {
+       "q": "David has $12.48 and wants to buy 16 bolts from a bin at the hardware store. Each bolt costs $0.03. How much money does David have left after paying for the bol",
+       "notes": [
+        "David (The Lost Boys) (Fictional character)",
+        "David (David Hasselhoff album) (1991 studio album by David Hasselhoff)"
+       ]
+      }
+     ]
+    }
+   },
+   "choice": {
+    "ambiguous_names": 810,
+    "gold_among_candidates": 570,
+    "first_choice_right": 0.6035,
+    "gold_absent": 240,
+    "says_none_when_absent": 0.2583,
+    "baseline_most_developed": 0.3877
+   }
+  },
+  "questions_and_other_prompts": {
+   "shown": {
+    "popqa": {
+     "n": 1000,
+     "with_note": 0.925,
+     "notes_per_question": 1.778,
+     "gold_known": 955,
+     "right_note": 0.7393
+    },
+    "hotpot": {
+     "n": 250,
+     "with_note": 0.948,
+     "notes_per_question": 1.956,
+     "gold_known": 242,
+     "right_note": 0.6157,
+     "both_notes": 0.2327
+    },
+    "triviaqa": {
+     "n": 1000,
+     "with_note": 0.778,
+     "notes_per_question": 1.483
+    },
+    "mkqa_en": {
+     "n": 1000,
+     "with_note": 0.372,
+     "notes_per_question": 0.409
+    },
+    "gsm8k": {
+     "n": 300,
+     "with_note": 0.3433,
+     "notes_per_question": 0.5,
+     "examples": [
+      {
+       "q": "Carl’s favorite food is cheese. He ate a sandwich every day this week for lunch and used 2 slices of cheese on each sandwich. He ate cheese and egg omelets for ",
+       "notes": [
+        "Macaroni and cheese (Pasta dish)"
+       ]
+      },
+      {
+       "q": "Chatty prepared three dozen eggs for her four children's Easter activity. Assuming each child gets the same number of eggs, how many eggs does each child receiv",
+       "notes": [
+        "Easter, 1916 (1916 poem by W. B. Yeats)"
+       ]
+      },
+      {
+       "q": "Rong has been saving 20 coins in his piggy bank every month. Neil has been saving 2/5 times more coins in his piggy bank per month than Rong. How many coins are",
+       "notes": [
+        "Piggy bank (Novelty container used for holding coin money)"
+       ]
+      },
+      {
+       "q": "Shelly's 3 kids spent all day at the water park.  Mitchel went down the water slide 30 times.  Anne went down the slide 30% less than Mitchel and Robert went do",
+       "notes": [
+        "Water slide (Type of slide designed for recreational use in swimming pools or water parks)"
+       ]
+      },
+      {
+       "q": "On Thursday, Joe caught 3 pounds of crawfish.  He caught 4 times that amount on Friday and half the amount of his Friday's catch on Saturday.  If 1 serving of c",
+       "notes": [
+        "Thursday (film) (1998 American film)"
+       ]
+      }
+     ]
+    }
+   },
+   "choice": {
+    "ambiguous_names": 810,
+    "gold_among_candidates": 570,
+    "first_choice_right": 0.5965,
+    "gold_absent": 240,
+    "says_none_when_absent": 0.2917,
+    "baseline_most_developed": 0.3877
+   }
+  }
+ },
+ "exported": "questions",
+ "files": {
+  "head_questions.safetensors": 4728040,
+  "head.safetensors": 4728040,
+  "head_questions_and_other_prompts.safetensors": 4728056
+ },
+ "preview": {
+  "n": 200,
+  "what": "first PopQA test questions, greedy, a preview and not a measurement",
+  "memory": 0.54,
+  "no_memory": 0.12
+ },
+ "timing": {
+  "load_s": 19,
+  "data_s": 0,
+  "states_s": 100,
+  "fit_s": 13,
+  "eval_s": 30,
+  "preview_s": 17,
+  "total_s": 179
+ },
+ "cap": 0,
+ "light": false
+}

@@ -16,23 +16,35 @@ def norm(s):
     return re.sub(r"[^\w]+", " ", s.lower()).strip()
 
 
+def _ends_sentence(word):
+    """'day.' and 'why?' end a sentence; an initial or an abbreviation does not ('M.', 'St.', 'D.C.', 'Dr.')."""
+    if word[-1:] in "!?":
+        return True
+    if word[-1:] != ".":
+        return False
+    core = word[:-1]
+    return not (len(core) <= 1 or "." in core or (len(core) <= 4 and core[:1].isupper()))
+
+
 def question_spans(q, max_len=6, general=False):
     """Eligible spans (i, j, surface): contain a capitalised or numeric word that is not the first word.
 
     general=True is for any prompt, not only a one-sentence question: a capital says nothing on the first word
     of a sentence or of a line, a number alone is not a name, function words ('I', 'The') do not count, and a
-    name does not run across two sentences."""
+    name does not run across two lines."""
     words = q.split()
     cleaned = [norm(w) for w in words]
     if general:
-        starts, pos = [], 0
+        starts, lines, pos = [], [], 0
         for k, w in enumerate(words):
             at = q.index(w, pos)
-            starts.append(k == 0 or "\n" in q[pos:at] or words[k - 1][-1:] in ".!?:;")
+            line = k == 0 or "\n" in q[pos:at]
+            lines.append(line)
+            starts.append(line or _ends_sentence(words[k - 1]))
             pos = at + len(w)
         signal = [not starts[k] and words[k][:1].isupper() and cleaned[k] not in CAP_STOP and cleaned[k] not in FR_STOP for k in range(len(words))]
     else:
-        starts = [False] * len(words)
+        lines = [False] * len(words)
         signal = [k > 0 and (words[k][:1].isupper() or words[k][:1].isdigit()) for k in range(len(words))]
     spans = []
     for i in range(len(words)):
@@ -40,7 +52,7 @@ def question_spans(q, max_len=6, general=False):
             parts = [c for c in cleaned[i:j] if c]
             if not parts:
                 continue
-            if not any(signal[i:j]) or any(starts[i + 1 : j]):  # (general) a name does not run across two sentences
+            if not any(signal[i:j]) or any(lines[i + 1 : j]):  # (general) a name does not run across two lines
                 continue
             if j - i == 1 and cleaned[i] in STOP:
                 continue

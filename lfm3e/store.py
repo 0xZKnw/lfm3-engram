@@ -133,6 +133,7 @@ class Store:
         if self._qid_order is None:
             self._qid_order = np.argsort(self.qid, kind="stable")
             self._qid_sorted = self.qid[self._qid_order]
+        qid = self._qid_sorted.dtype.type(qid)  # same type as the array: otherwise numpy converts the whole array at each call
         a, b = np.searchsorted(self._qid_sorted, qid, "left"), np.searchsorted(self._qid_sorted, qid, "right")
         ids = [int(self._qid_order[k]) for k in range(a, b) if int(self.lang[self._qid_order[k]]) == LANGS[lang]]
         return max(ids, key=lambda i: int(self.size[i])) if ids else None
