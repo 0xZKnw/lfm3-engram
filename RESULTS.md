@@ -6,7 +6,8 @@
 
 - **L'Engram classique est écarté pour ce modèle gelé.** Un vecteur ajouté au flux interne, même optimisé exprès, corrige 5 % des réponses fausses (contrôle : 3 %).
 - **Une mémoire lue par l'attention fonctionne sans aucun entraînement.** Le début de l'article de l'entité, rendu visible aux 6 couches d'attention globale, corrige 73,5 % des réponses fausses sur PopQA, contre 74,5 % quand on colle le texte dans le prompt.
-- **De bout en bout, sans entraînement, PopQA passe de 15,2 % à 54,7 %** quand le système trouve seul l'entité (plafond avec la bonne entité fournie : 72,5 %).
+- **Meilleur système à ce jour (D14, sans LoRA, tête de choix entraînée) : PopQA 14,4 % → 59,5 %, TriviaQA 31,5 % → 43,1 %, MKQA anglais 23,3 % → 28,9 %, HotpotQA 14,0 % → 24,0 %.** Le LoRA de lecture testé en D14 est rejeté.
+- **Premier résultat de bout en bout (D5, ancienne source), PopQA 15,2 % → 54,7 %** quand le système trouve seul l'entité (plafond avec la bonne entité fournie : 72,5 %).
 - **Ce qui reste ouvert : les homonymes et la robustesse.** Le système fait 83 % quand le nom est unique et 37 % quand il a 5 candidats ou plus. Un passage hors sujet casse encore environ 20 % des réponses justes dans le test dur.
 
 ## 2. Résultats
@@ -313,6 +314,36 @@ Réflexion activée, tirage à température 0,6, note montrée par la mémoire. 
 Aucun effet démontré. La fiche est à +1 à +2 points sur les trois jeux, dans le bruit : sur BIG-Bench Hard, deux passages sans note diffèrent déjà de 43 et 47 réponses dans chaque sens. Les exemples résolus font un peu moins bien que rien. La mémoire aide quand il manque un fait, pas quand il manque une méthode.
 
 **Pénalité de répétition et maths.** Sans note, avec la pénalité par défaut du modèle (1,1) : 58,1 % sur MATH contre 64,8 % sans pénalité (9 corrigées, 23 cassées). Sur BIG-Bench Hard et GSM8K, pas d'écart. La pénalité coûte donc environ 7 points sur les maths de niveau concours.
+
+### D14. LoRA de lecture : rejeté selon le critère fixé d'avance
+
+Détail du protocole et du critère dans [D14.md](D14.md). Corrections intégrées : pénalité de répétition hors des notes, homonymes à virgule, bonne entité par identifiant Wikidata, réponses validées par mots entiers, positions identiques à l'entraînement et à la génération (écart des sorties 0,0 avec la correction, 4,5 sans). Tête de choix entraînée sur PopQA et HotpotQA (17 500 exemples), LoRA sur 6 570 exemples, 3 passes, 18 millions de tokens, perte 0,87 → 0,28.
+
+**Le système sans LoRA, avec toutes les corrections** (meilleur résultat à ce jour, sans réflexion)
+
+| Jeu | Sans mémoire | Mémoire | Corrigées / cassées | Bonnes notes fournies |
+|---|---|---|---|---|
+| PopQA (1 000) | 14,4 % | 59,5 % | 470 / 19 | 83,0 % |
+| TriviaQA (1 000) | 31,5 % | 43,1 % | 170 / 54 | |
+| MKQA anglais (1 000) | 23,3 % | 28,9 % | 73 / 17 | |
+| HotpotQA (250) | 14,0 % | 24,0 % | 32 / 7 | 45,2 % |
+
+**Avec le LoRA**
+
+| Jeu | Justes : mémoire → LoRA | Gagnées / perdues | p (McNemar) | Abstentions | Fausses : mémoire → LoRA |
+|---|---|---|---|---|---|
+| PopQA | 59,5 % → 54,1 % | 35 / 89 | < 0,001 | 0,1 % → 19,0 % | 40,4 % → 26,9 % |
+| TriviaQA | 43,1 % → 32,0 % | 16 / 127 | < 0,001 | 0 % → 50,6 % | 56,9 % → 17,4 % |
+| MKQA anglais | 28,9 % → 21,0 % | 2 / 81 | < 0,001 | 1,6 % → 29,2 % | 69,5 % → 49,8 % |
+| HotpotQA | 24,0 % → 19,2 % | 7 / 19 | 0,029 | 1,2 % → 54,8 % | 74,8 % → 26,0 % |
+
+Contrôles sur PopQA : avec les bonnes notes, 83,0 % → 77,5 % (21 gagnées, 76 perdues, 10,3 % d'abstentions). Avec des homonymes seuls, 16,1 % → 15,0 % de justes, abstentions 0,5 % → 42,9 %, fausses 83,4 % → 42,1 %.
+
+Style : sur 5 demandes de texte long avec une note, 2 réponses s'effondrent avec le LoRA (166 → 36 mots, 151 → 27 mots).
+
+**Verdict.** Le critère 1 échoue sur les quatre jeux : les bonnes réponses baissent de façon significative. Le critère 3 échoue aussi : la hausse des abstentions ne vient pas seulement des réponses fausses. Le LoRA a surtout appris à s'abstenir. Il divise les réponses fausses par 1,5 à 3, mais en sacrifiant des réponses justes, y compris quand la bonne note est présente. Il n'est pas retenu.
+
+**Cause probable.** La cible « I don't know. » dès que la réponse ne figure dans aucune note. Le modèle ne sait pas distinguer « je connais la réponse sans la note » de « je ne la connais pas », donc il généralise en « la note ne répond pas, je m'abstiens ».
 
 ## 3. L'architecture retenue
 
