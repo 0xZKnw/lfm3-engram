@@ -237,6 +237,24 @@ Part des questions dont une réponse acceptée figure dans le texte, selon ce qu
 - Ajouter la fiche de faits au résumé vaut autant que 1 000 tokens de corps d'article, pour environ 130 tokens.
 - L'article entier double la couverture sur TriviaQA et MKQA, à condition de savoir y choisir le bon passage.
 
+### D12. Audit de notre propre chaîne (PopQA, 600 questions, bon article fourni, sans réflexion)
+
+**Pénalité de répétition.** Le modèle est livré avec une pénalité de répétition de 1,1 dans ses réglages par défaut. Tous les runs précédents l'ont appliquée sans le vouloir. Elle abaisse la probabilité des tokens déjà présents dans le contexte, donc de ceux de la note.
+
+| Réglage | Sans mémoire | Avec la bonne note |
+|---|---|---|
+| Pénalité partout (tous les runs jusqu'ici) | 13,0 % | 76,7 % |
+| Aucune pénalité | 12,3 % | 78,8 % |
+| Pénalité partout sauf sur la note | 13,0 % | 81,0 % |
+
+Exclure la note de la pénalité rapporte 4,3 points avec la bonne note, sans rien changer au reste.
+
+**Traitement par lots et mise en page** (200 questions). Le score est le même pour une question traitée seule (13,0 %), dans un lot (12,5 %) et avec la mise en page à vide (13,0 %). En revanche le texte généré n'est identique que dans 64,5 % des cas entre « seule » et « en lot ». Les réponses changent donc de formulation pour des raisons numériques sans que la justesse bouge. Conséquence : les mesures de D5 du type « réponses justes conservées » sont biaisées vers le bas, puisqu'une part des changements est du bruit.
+
+**Longueur des réponses.** Sans mémoire, 58,7 % des réponses atteignent la limite de 40 tokens, contre 11,5 % avec la note. Mais le score ne change presque pas à 96 tokens : 13,0 % → 13,5 % sans mémoire, 76,7 % → 77,7 % avec. La coupure ne fausse pas la comparaison.
+
+**Défaut trouvé à la relecture du code.** Le dictionnaire reconstruit pour D6 ne proposait plus comme homonymes les titres à virgule (« Norfolk, Connecticut » pour « Norfolk »). Corrigé dans le code ; D6, D7, D9 et D11 ont tourné avec ce défaut.
+
 ## 3. L'architecture retenue
 
 **Principe.** Dans LFM3, les convolutions voient 7 tokens en arrière et les attentions à fenêtre 256. Au-delà, seules les 6 couches d'attention globale (2, 6, 10, 14, 18, 22) voient le contexte. « Le modèle a lu ce passage plus tôt » se résume donc aux clés et valeurs d'attention du passage sur ces 6 couches.

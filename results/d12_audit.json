@@ -1,0 +1,44 @@
+{
+ "n": 600,
+ "generation_config": {
+  "do_sample": true,
+  "temperature": 0.1,
+  "top_k": 50,
+  "repetition_penalty": 1.1
+ },
+ "repetition_penalty": {
+  "default": {
+   "no_memory": 0.13,
+   "right_note": 0.7667
+  },
+  "none": {
+   "no_memory": 0.1233,
+   "right_note": 0.7883
+  },
+  "outside_memory": {
+   "no_memory": 0.13,
+   "right_note": 0.81
+  }
+ },
+ "batching": {
+  "n": 200,
+  "one_at_a_time_accuracy": 0.13,
+  "batched_accuracy": 0.125,
+  "empty_layout_accuracy": 0.13,
+  "batched_identical_to_single": 0.645,
+  "empty_layout_identical_to_batched": 0.72
+ },
+ "answer_length": {
+  "no_memory": {
+   "cut_at_40_tokens": 0.5867,
+   "accuracy_40": 0.13,
+   "accuracy_96": 0.135
+  },
+  "right_note": {
+   "cut_at_40_tokens": 0.115,
+   "accuracy_40": 0.7667,
+   "accuracy_96": 0.7767
+  }
+ },
+ "seconds_total": 383
+}
