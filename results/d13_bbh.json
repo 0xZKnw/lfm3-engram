@@ -1,0 +1,138 @@
+{
+ "bench": "bbh",
+ "n": 420,
+ "thinking_budget": 768,
+ "conditions": {
+  "no_note": {
+   "accuracy": 0.731,
+   "thinking_cut_at_budget": 0.7571,
+   "mean_tokens": 716
+  },
+  "no_note_default_penalty": {
+   "accuracy": 0.7214,
+   "thinking_cut_at_budget": 0.7476,
+   "mean_tokens": 725,
+   "fixed": 43,
+   "broken": 47
+  },
+  "card": {
+   "accuracy": 0.7548,
+   "thinking_cut_at_budget": 0.7548,
+   "mean_tokens": 721,
+   "fixed": 52,
+   "broken": 42
+  },
+  "exemplars": {
+   "accuracy": 0.7071,
+   "thinking_cut_at_budget": 0.7143,
+   "mean_tokens": 713,
+   "fixed": 47,
+   "broken": 57
+  }
+ },
+ "by_type": {
+  "boolean_expressions": {
+   "n": 30,
+   "no_note": 0.867,
+   "no_note_default_penalty": 0.867,
+   "card": 0.833,
+   "exemplars": 0.933
+  },
+  "causal_judgement": {
+   "n": 30,
+   "no_note": 0.633,
+   "no_note_default_penalty": 0.767,
+   "card": 0.767,
+   "exemplars": 0.433
+  },
+  "date_understanding": {
+   "n": 30,
+   "no_note": 0.8,
+   "no_note_default_penalty": 0.767,
+   "card": 0.833,
+   "exemplars": 0.8
+  },
+  "formal_fallacies": {
+   "n": 30,
+   "no_note": 0.767,
+   "no_note_default_penalty": 0.8,
+   "card": 0.667,
+   "exemplars": 0.633
+  },
+  "logical_deduction_five_objects": {
+   "n": 30,
+   "no_note": 0.633,
+   "no_note_default_penalty": 0.6,
+   "card": 0.5,
+   "exemplars": 0.567
+  },
+  "multistep_arithmetic_two": {
+   "n": 30,
+   "no_note": 0.667,
+   "no_note_default_penalty": 0.667,
+   "card": 0.8,
+   "exemplars": 0.733
+  },
+  "navigate": {
+   "n": 30,
+   "no_note": 0.867,
+   "no_note_default_penalty": 0.833,
+   "card": 0.8,
+   "exemplars": 0.767
+  },
+  "object_counting": {
+   "n": 30,
+   "no_note": 0.967,
+   "no_note_default_penalty": 0.933,
+   "card": 0.933,
+   "exemplars": 0.933
+  },
+  "penguins_in_a_table": {
+   "n": 30,
+   "no_note": 0.6,
+   "no_note_default_penalty": 0.6,
+   "card": 0.667,
+   "exemplars": 0.733
+  },
+  "reasoning_about_colored_objects": {
+   "n": 30,
+   "no_note": 0.9,
+   "no_note_default_penalty": 0.867,
+   "card": 0.9,
+   "exemplars": 0.9
+  },
+  "temporal_sequences": {
+   "n": 30,
+   "no_note": 0.933,
+   "no_note_default_penalty": 0.867,
+   "card": 1.0,
+   "exemplars": 0.8
+  },
+  "tracking_shuffled_objects_five_objects": {
+   "n": 30,
+   "no_note": 0.8,
+   "no_note_default_penalty": 0.667,
+   "card": 0.833,
+   "exemplars": 0.8
+  },
+  "web_of_lies": {
+   "n": 30,
+   "no_note": 0.7,
+   "no_note_default_penalty": 0.767,
+   "card": 0.767,
+   "exemplars": 0.7
+  },
+  "word_sorting": {
+   "n": 30,
+   "no_note": 0.1,
+   "no_note_default_penalty": 0.1,
+   "card": 0.267,
+   "exemplars": 0.167
+  }
+ },
+ "note_tokens": {
+  "card_mean": 91,
+  "exemplars_mean": 499
+ },
+ "seconds_total": 550
+}

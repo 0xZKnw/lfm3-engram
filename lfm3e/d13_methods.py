@@ -160,7 +160,7 @@ def run(bench: str, n_per_type: int = 40, budget_scale: float = 1.0, seed: int =
             out = model.generate(input_ids=ids.to(dev), attention_mask=att.to(dev), max_new_tokens=max_new, **kw, **extra)
         return [out[r, width:].tolist() for r in range(len(seqs))]
 
-    def solve(condition, batch=280):
+    def solve(condition, batch=140):
         torch.manual_seed(seed)
         kw = {"do_sample": True, "temperature": 0.6, "top_p": 0.95, "top_k": 0, "repetition_penalty": 1.1 if condition == "no_note_default_penalty" else 1.0}
         st = []

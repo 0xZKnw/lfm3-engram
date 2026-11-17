@@ -188,8 +188,8 @@ def d0(h100: bool = False, compiled: bool = False):
 
 
 @app.local_entrypoint()
-def prep(tag: str = "full", n_test: int = 3_000_000, n_train: int = 200_000_000):
-    args = [(name, tag, n_test, n_train) for name in CORPUS_NAMES]
+def prep(tag: str = "full", n_test: int = 3_000_000, n_train: int = 200_000_000, corpora: str = ""):
+    args = [(name, tag, n_test, n_train) for name in (corpora.split(",") if corpora else CORPUS_NAMES)]
     _save(f"d1_prep_{tag}", list(prep_corpus.starmap(args)))
 
 
@@ -355,3 +355,55 @@ def d13(benches: str = "bbh,math,gsm8k", n_per_type: int = 40, budget_scale: flo
     calls = {b: d13_run.spawn(b, n_per_type, budget_scale) for b in benches.split(",")}
     for b, call in calls.items():
         _save(f"{name}_{b}", call.get())
+
+
+@app.function(image=image, cpu=4, memory=16 * 1024, timeout=30 * 60, volumes={VOL: vol}, secrets=[modal.Secret.from_name("hf-token")])
+def light_data():
+    """Question sets only (no Wikipedia scan): PopQA, and the HotpotQA / GSM8K / GPQA samples used since D6."""
+    import os
+    import random
+
+    from datasets import load_dataset
+
+    from lfm3e import d6_reason
+
+    os.makedirs(f"{VOL}/popqa", exist_ok=True)
+    os.makedirs(f"{VOL}/d6", exist_ok=True)
+    qa = [dict(r) for r in load_dataset("akariasai/PopQA", split="test")]
+    with open(f"{VOL}/popqa/popqa.json", "w") as f:
+        json.dump(qa, f)
+    rng = random.Random(0)
+    hp = load_dataset("hotpotqa/hotpot_qa", "distractor", split="validation")
+    idx = rng.sample(range(len(hp)), 500)
+    hotpot = [{"q": hp[i]["question"], "answer": hp[i]["answer"], "type": hp[i]["type"], "titles": sorted(set(hp[i]["supporting_facts"]["title"]))} for i in idx]
+    gs = load_dataset("openai/gsm8k", "main", split="test")
+    idx = rng.sample(range(len(gs)), 300)
+    gsm = [{"q": gs[i]["question"], "answer": gs[i]["answer"].split("####")[-1].strip().replace(",", "")} for i in idx]
+    gpqa = d6_reason.fetch_gpqa()
+    with open(f"{VOL}/d6/benchmarks.json", "w") as f:
+        json.dump({"hotpot": hotpot, "gsm8k": gsm, "gpqa": gpqa}, f)
+    vol.commit()
+    return {"popqa": len(qa), "hotpot": len(hotpot), "gsm8k": len(gsm), "gpqa": len(gpqa)}
+
+
+@app.local_entrypoint()
+def lightdata():
+    _save("light_data", light_data.remote())
+
+
+@app.function(image=image, gpu="H100", memory=64 * 1024, timeout=120 * 60, volumes={VOL: vol})
+def d14_run(n_train: int, n_eval: int, n_hotpot_eval: int, epochs: int, tag: str):
+    import os
+
+    from lfm3e import d14_lora
+
+    os.makedirs(f"{VOL}/d14", exist_ok=True)
+    out = d14_lora.run(f"{VOL}/d6", f"{VOL}/popqa", f"{data_dir('full')}/web/train_tokens.npy", save_path=f"{VOL}/d14/{tag}.pt",
+                       n_train=n_train, n_eval=n_eval, n_hotpot_eval=n_hotpot_eval, epochs=epochs)
+    vol.commit()
+    return _plain(out)
+
+
+@app.local_entrypoint()
+def d14(n_train: int = 2500, n_eval: int = 1000, n_hotpot_eval: int = 250, epochs: int = 3, name: str = "d14"):
+    _save(name, d14_run.remote(n_train, n_eval, n_hotpot_eval, epochs, name))
