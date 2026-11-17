@@ -439,30 +439,59 @@ Aperçu de bout en bout, 200 premières questions PopQA à travers `generate` : 
 
 **Ce qui est repris d'ailleurs.** Les caches d'attention précalculés existent (TurboRAG), les mémoires d'entités lues par l'attention aussi (TOME, KBLaM), mais elles demandent un entraînement ou un moteur de recherche. Ce qui est propre ici : l'adressage exact par nom, aucun entraînement, et le stockage limité à 6 couches que permet l'architecture de LFM3.
 
-## 4. Réserves : où on en est
+## 4. Problèmes ouverts et solutions envisagées (analyse du 17 novembre 2026)
 
-| Réserve | État | Preuve ou correction |
+Mesures locales, sans le modèle, sur les jeux figés (955 questions PopQA et 242 HotpotQA dont le bon article est connu, 300 problèmes GSM8K).
+
+### Où partent les points sur PopQA
+
+| Étape | Questions qui passent | Perdu à cette étape |
 |---|---|---|
-| Un vecteur porte trop peu d'information | Fermée | D3 l'a confirmé, d'où le passage à un texte complet |
-| Le modèle gelé ne sait pas lire le signal | Fermée | D4 : 73,5 % contre 74,5 % pour le texte dans le prompt |
-| Budget d'entraînement | Fermée | Aucun entraînement |
-| Stockage | Fermée | Texte au lieu des clés et valeurs, cache pour les entités fréquentes |
-| Tient-il avec la réflexion ? | Fermée | D4 : 0,8 % → 59,2 %, et moins de réponses inachevées |
-| Moteur local | Fermée | POC : on modifie MLXL3 ou on écrit un moteur |
-| Dérive de style du modèle instruct | Sans objet | On n'entraîne rien sur du texte brut |
-| **Un passage hors sujet fait des dégâts** | **Réduite, pas fermée** | D5 : 71 % → 79 % de réponses justes conservées avec en-tête et consigne ; de bout en bout, 91 % |
-| **Choisir la bonne entité automatiquement** | **Ouverte sur les homonymes** | D5 : 83 % de bonnes réponses quand le nom est unique, 37 % quand il a 5 candidats ou plus |
-| La consigne système perturbe le modèle sans mémoire | Ouverte | D5 : 84 % des réponses justes conservées avec la consigne seule |
-| La mise en page du test perturbe le modèle | À comprendre | D5 : 88 % conservées avec une mémoire rendue invisible |
-| Couverture du passage | À améliorer | 83 % à 64 tokens, 90 % à 128 |
-| Bon passage qui casse 4,7 % des réponses justes | À comprendre | Non analysé |
-| Raisonnement en plusieurs sauts | Non testé | Demande le déclenchement en cours de génération |
+| Le bon article est parmi les 12 candidats | 85,2 % | 14,8 % |
+| dont : bon article au-delà du 12e candidat | | 7,6 % |
+| dont : nom écarté exprès par la règle (nombre, mot-outil, minuscules) | | 3,5 % |
+| dont : nom de la question absent de l'index (autre nom de l'article) | | 2,9 % |
+| dont : un nom plus long a été préféré | | 0,7 % |
+| La tête montre la bonne note | 75,1 % | 10,1 % |
+| Le modèle répond juste avec la bonne note seule (D14) | 83,0 % de ces cas | 17 % |
 
-Limites qu'aucune mémoire ne lève :
+Avec plus de candidats par nom, classés par taille d'article : 89,8 % à 24, 91,7 % à 48, 92,9 % à 300.
 
-- Le raisonnement pur (logique, calcul).
-- Les questions sans nom à quoi se raccrocher, tant que le modèle n'a pas écrit un candidat.
-- Les faits absents de la mémoire.
+Sur HotpotQA le problème est ailleurs : le bon article est parmi les candidats pour 65,3 % des questions, et quand il y est, il est premier 94 fois sur 100. Pour 26,4 % des questions, aucun nom de la question ne mène à l'article : c'est le deuxième saut, que la question ne nomme pas. Et même avec les deux bonnes notes, le modèle ne répond juste qu'à 45,2 % (D14).
+
+### D'où viennent les notes hors sujet (GSM8K)
+
+| Source | Problèmes touchés | Ce qu'elle rapporte ailleurs |
+|---|---|---|
+| Règle des noms (jours, mois, prénoms : « Monday », « John », « April ») | 56,3 % ont un nom à candidats | C'est le chemin principal sur PopQA |
+| Règle des termes techniques (« piggy bank », « ice cream », « watermelon ») | 19,7 % | Seul accès au bon article pour 0,2 % de PopQA et 2,1 % de HotpotQA |
+| Titres exacts de noms (« Los Angeles », « Cookie Monster ») | environ 6 % | Compte dans les 75,1 % |
+
+Durcir le seuil de rareté de la règle des termes ne suffit pas : à un seuil vingt fois plus strict, elle touche encore 9 % des problèmes.
+
+### Problèmes et solutions
+
+| Problème | Cause identifiée | Solution retenue | Ce qui reste à vérifier |
+|---|---|---|---|
+| Notes hors sujet sur les prompts qui ne sont pas des questions de culture générale | L'option « aucune note » de la tête est une constante : elle ne peut pas dire « ce prompt n'a besoin de rien ». Et deux chemins sur trois ne passent pas par la tête | « Aucune note » devient une fonction de la question. Toutes les notes passent par la tête. Exemples négatifs variés : calcul, consignes, texte fourni avec sa question | Que la tête n'apprenne pas « ressemble à un quiz » : exemples positifs sous forme de consigne, et taux de notes mesuré sur des prompts d'un genre absent de l'entraînement |
+| Bon article hors des 12 candidats (7,6 %) | Trop d'homonymes pour 12 places | 48 candidats | La tête choisit-elle aussi bien parmi 48 ? Et le temps de calcul en local, d'où l'essai de clés sans passe du modèle |
+| La tête se trompe d'article (10,1 %) | Deux projections linéaires sur des états gelés | Essai : laisser le modèle choisir, en lui montrant les titres des candidats et en lisant où va son attention | Jamais mesuré. Peut ne rien donner : le modèle se laisse peut-être attirer par le mauvais homonyme |
+| Notes en trop à côté de la bonne | Jusqu'à 3 notes par nom | Mesurer 1, 2 ou 3 notes de bout en bout | |
+| Noms écartés par la règle (3,5 %), questions tout en minuscules (MKQA : 37 % reçoivent une note) | La règle s'appuie sur les majuscules | Les réadmettre une fois que la tête sait refuser | Dépend du premier point |
+| Autres noms d'un même article (2,9 % sur PopQA, une part des 26,4 % de HotpotQA) | L'export utilisé n'a pas les redirections | Les ajouter à l'index depuis les fichiers de Wikipédia (environ 130 Mo) | Gain réel inconnu |
+| Deuxième saut (HotpotQA) | L'article n'est pas nommé dans la question | Chercher les noms cités dans la première note | Plafond bas : 45,2 % avec les deux bonnes notes. Priorité faible |
+| Lecture : 17 % d'échecs avec la bonne note | Réponse hors des 96 et 128 tokens lus, ou mal lue | Lire la note en entier (192 et 256 tokens stockés) quand une seule note est montrée | À mesurer |
+| Raisonnement non amélioré | La mémoire porte des faits, pas des méthodes | Pas de solution prouvée. Piste hors mémoire : la pénalité de répétition par défaut coûte environ 7 points sur MATH (D12) ; en exempter les chiffres | Modifie le modèle sans note : option à activer, à mesurer |
+| Français | Tête entraînée en anglais seulement | Questions françaises fabriquées depuis les gabarits de PopQA et les titres français | Mesure réelle sur MKQA français |
+| Mesures fragiles | J'ai corrigé la règle des noms en regardant les questions de test de PopQA. La règle « moins de 1 point » est plus fine que le bruit (environ 1,4 point sur 955 questions) | Les jeux actuels deviennent des jeux de réglage. Chiffres finals sur des jeux jamais regardés, comparaisons par test apparié | |
+
+### Idée écartée par la mesure
+
+Présélectionner les candidats par les mots qu'ils partagent avec la question : 79,0 % de couverture avec 6 candidats par taille et 6 par recoupement, contre 85,2 % avec 12 par taille. Abandonné.
+
+### Non mesuré à ce jour
+
+Mode réflexion avec le système final, suivi de consignes et appels d'outils avec des notes, coût réel d'une note hors sujet sur un problème de calcul.
 
 ## 5. Prochaines étapes
 
