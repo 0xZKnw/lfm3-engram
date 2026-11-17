@@ -1,0 +1,552 @@
+{
+ "sizes": {
+  "train_texts": 1021,
+  "examples": 1818,
+  "examples_by_kind": {
+   "name": 1387,
+   "title": 307,
+   "concept": 124
+  },
+  "none_labels": 0.5902,
+  "keys": 5010,
+  "quiz_examples_v1": 830,
+  "prepared": {
+   "with_own_text": 4466,
+   "rewriting": 20678,
+   "code": 20014,
+   "maths": 1180,
+   "creative": 2421,
+   "train": {
+    "french": 79,
+    "gsm8k_train": 143,
+    "hotpot": 320,
+    "instruction": 40,
+    "popqa": 320,
+    "rewriting": 156,
+    "with_own_text": 140
+   },
+   "dev": {
+    "popqa": 40,
+    "popqa_fr": 20,
+    "hotpot": 40,
+    "gsm8k": 40,
+    "triviaqa": 40,
+    "mkqa_en": 40,
+    "mkqa_fr": 40,
+    "code": 40,
+    "maths": 40,
+    "creative": 40
+   },
+   "final": {
+    "popqa": 40,
+    "popqa_fr": 24,
+    "triviaqa": 40,
+    "mkqa_en": 40,
+    "mkqa_fr": 40,
+    "hotpot": 40,
+    "gsm8k": 40
+   }
+  }
+ },
+ "heads": {
+  "no_head": {
+   "popqa": {
+    "n": 40,
+    "with_note": 1.0,
+    "notes_per_prompt": 1.1,
+    "gold_known": 37,
+    "right_note": 0.4324
+   },
+   "popqa_fr": {
+    "n": 20,
+    "with_note": 0.9,
+    "notes_per_prompt": 0.9,
+    "gold_known": 20,
+    "right_note": 0.7
+   },
+   "hotpot": {
+    "n": 40,
+    "with_note": 0.975,
+    "notes_per_prompt": 1.95,
+    "gold_known": 40,
+    "right_note": 0.65,
+    "both_notes": 0.25
+   },
+   "gsm8k": {
+    "n": 40,
+    "with_note": 0.625,
+    "notes_per_prompt": 0.975
+   },
+   "triviaqa": {
+    "n": 40,
+    "with_note": 0.85,
+    "notes_per_prompt": 1.375
+   },
+   "mkqa_en": {
+    "n": 40,
+    "with_note": 0.3,
+    "notes_per_prompt": 0.35
+   },
+   "mkqa_fr": {
+    "n": 40,
+    "with_note": 0.275,
+    "notes_per_prompt": 0.3
+   },
+   "code": {
+    "n": 40,
+    "with_note": 0.75,
+    "notes_per_prompt": 1.0
+   },
+   "maths": {
+    "n": 40,
+    "with_note": 0.2,
+    "notes_per_prompt": 0.3
+   },
+   "creative": {
+    "n": 40,
+    "with_note": 0.5,
+    "notes_per_prompt": 0.725
+   }
+  },
+  "v1": {
+   "popqa": {
+    "n": 40,
+    "with_note": 1.0,
+    "notes_per_prompt": 2.325,
+    "gold_known": 37,
+    "right_note": 0.6486
+   },
+   "popqa_fr": {
+    "n": 20,
+    "with_note": 0.75,
+    "notes_per_prompt": 1.15,
+    "gold_known": 20,
+    "right_note": 0.45
+   },
+   "hotpot": {
+    "n": 40,
+    "with_note": 0.975,
+    "notes_per_prompt": 2.225,
+    "gold_known": 40,
+    "right_note": 0.675,
+    "both_notes": 0.275
+   },
+   "gsm8k": {
+    "n": 40,
+    "with_note": 0.625,
+    "notes_per_prompt": 1.575
+   },
+   "triviaqa": {
+    "n": 40,
+    "with_note": 0.8,
+    "notes_per_prompt": 1.8
+   },
+   "mkqa_en": {
+    "n": 40,
+    "with_note": 0.3,
+    "notes_per_prompt": 0.35
+   },
+   "mkqa_fr": {
+    "n": 40,
+    "with_note": 0.275,
+    "notes_per_prompt": 0.55
+   },
+   "code": {
+    "n": 40,
+    "with_note": 0.725,
+    "notes_per_prompt": 1.45
+   },
+   "maths": {
+    "n": 40,
+    "with_note": 0.2,
+    "notes_per_prompt": 0.475
+   },
+   "creative": {
+    "n": 40,
+    "with_note": 0.5,
+    "notes_per_prompt": 0.95
+   }
+  },
+  "v2": {
+   "popqa": {
+    "n": 40,
+    "with_note": 1.0,
+    "notes_per_prompt": 2.425,
+    "gold_known": 37,
+    "right_note": 0.7027
+   },
+   "popqa_fr": {
+    "n": 20,
+    "with_note": 0.9,
+    "notes_per_prompt": 1.8,
+    "gold_known": 20,
+    "right_note": 0.9
+   },
+   "hotpot": {
+    "n": 40,
+    "with_note": 0.825,
+    "notes_per_prompt": 1.875,
+    "gold_known": 40,
+    "right_note": 0.525,
+    "both_notes": 0.225
+   },
+   "gsm8k": {
+    "n": 40,
+    "with_note": 0.0,
+    "notes_per_prompt": 0.0
+   },
+   "triviaqa": {
+    "n": 40,
+    "with_note": 0.725,
+    "notes_per_prompt": 1.725
+   },
+   "mkqa_en": {
+    "n": 40,
+    "with_note": 0.225,
+    "notes_per_prompt": 0.25
+   },
+   "mkqa_fr": {
+    "n": 40,
+    "with_note": 0.275,
+    "notes_per_prompt": 0.6
+   },
+   "code": {
+    "n": 40,
+    "with_note": 0.025,
+    "notes_per_prompt": 0.025
+   },
+   "maths": {
+    "n": 40,
+    "with_note": 0.0,
+    "notes_per_prompt": 0.0
+   },
+   "creative": {
+    "n": 40,
+    "with_note": 0.225,
+    "notes_per_prompt": 0.55
+   }
+  },
+  "v2_static": {
+   "popqa": {
+    "n": 40,
+    "with_note": 0.975,
+    "notes_per_prompt": 2.4,
+    "gold_known": 37,
+    "right_note": 0.7297
+   },
+   "popqa_fr": {
+    "n": 20,
+    "with_note": 0.9,
+    "notes_per_prompt": 1.8,
+    "gold_known": 20,
+    "right_note": 0.75
+   },
+   "hotpot": {
+    "n": 40,
+    "with_note": 0.8,
+    "notes_per_prompt": 1.825,
+    "gold_known": 40,
+    "right_note": 0.475,
+    "both_notes": 0.175
+   },
+   "gsm8k": {
+    "n": 40,
+    "with_note": 0.0,
+    "notes_per_prompt": 0.0
+   },
+   "triviaqa": {
+    "n": 40,
+    "with_note": 0.7,
+    "notes_per_prompt": 1.775
+   },
+   "mkqa_en": {
+    "n": 40,
+    "with_note": 0.275,
+    "notes_per_prompt": 0.325
+   },
+   "mkqa_fr": {
+    "n": 40,
+    "with_note": 0.275,
+    "notes_per_prompt": 0.65
+   },
+   "code": {
+    "n": 40,
+    "with_note": 0.0,
+    "notes_per_prompt": 0.0
+   },
+   "maths": {
+    "n": 40,
+    "with_note": 0.0,
+    "notes_per_prompt": 0.0
+   },
+   "creative": {
+    "n": 40,
+    "with_note": 0.2,
+    "notes_per_prompt": 0.5
+   }
+  },
+  "v2_12_candidates": {
+   "popqa": {
+    "n": 40,
+    "with_note": 1.0,
+    "notes_per_prompt": 2.425,
+    "gold_known": 37,
+    "right_note": 0.7027
+   },
+   "popqa_fr": {
+    "n": 20,
+    "with_note": 0.9,
+    "notes_per_prompt": 1.8,
+    "gold_known": 20,
+    "right_note": 0.9
+   },
+   "hotpot": {
+    "n": 40,
+    "with_note": 0.825,
+    "notes_per_prompt": 1.875,
+    "gold_known": 40,
+    "right_note": 0.525,
+    "both_notes": 0.225
+   },
+   "gsm8k": {
+    "n": 40,
+    "with_note": 0.0,
+    "notes_per_prompt": 0.0
+   },
+   "triviaqa": {
+    "n": 40,
+    "with_note": 0.725,
+    "notes_per_prompt": 1.725
+   },
+   "mkqa_en": {
+    "n": 40,
+    "with_note": 0.225,
+    "notes_per_prompt": 0.25
+   },
+   "mkqa_fr": {
+    "n": 40,
+    "with_note": 0.275,
+    "notes_per_prompt": 0.6
+   },
+   "code": {
+    "n": 40,
+    "with_note": 0.025,
+    "notes_per_prompt": 0.025
+   },
+   "maths": {
+    "n": 40,
+    "with_note": 0.0,
+    "notes_per_prompt": 0.0
+   },
+   "creative": {
+    "n": 40,
+    "with_note": 0.225,
+    "notes_per_prompt": 0.5
+   }
+  },
+  "v2_filter_terms_only": {
+   "popqa": {
+    "n": 40,
+    "with_note": 1.0,
+    "notes_per_prompt": 2.425,
+    "gold_known": 37,
+    "right_note": 0.7027
+   },
+   "popqa_fr": {
+    "n": 20,
+    "with_note": 0.9,
+    "notes_per_prompt": 1.8,
+    "gold_known": 20,
+    "right_note": 0.9
+   },
+   "hotpot": {
+    "n": 40,
+    "with_note": 0.975,
+    "notes_per_prompt": 2.2,
+    "gold_known": 40,
+    "right_note": 0.65,
+    "both_notes": 0.225
+   },
+   "gsm8k": {
+    "n": 40,
+    "with_note": 0.075,
+    "notes_per_prompt": 0.075
+   },
+   "triviaqa": {
+    "n": 40,
+    "with_note": 0.8,
+    "notes_per_prompt": 1.875
+   },
+   "mkqa_en": {
+    "n": 40,
+    "with_note": 0.225,
+    "notes_per_prompt": 0.25
+   },
+   "mkqa_fr": {
+    "n": 40,
+    "with_note": 0.275,
+    "notes_per_prompt": 0.6
+   },
+   "code": {
+    "n": 40,
+    "with_note": 0.1,
+    "notes_per_prompt": 0.1
+   },
+   "maths": {
+    "n": 40,
+    "with_note": 0.0,
+    "notes_per_prompt": 0.0
+   },
+   "creative": {
+    "n": 40,
+    "with_note": 0.275,
+    "notes_per_prompt": 0.625
+   }
+  }
+ },
+ "paired_tests_popqa": {
+  "v2_vs_v1": {
+   "popqa": {
+    "only_v2": 2,
+    "only_v1": 0,
+    "p": 0.5
+   },
+   "hotpot": {
+    "only_v2": 1,
+    "only_v1": 7,
+    "p": 0.0703
+   }
+  },
+  "v2_filter_terms_only_vs_v1": {
+   "popqa": {
+    "only_v2_filter_terms_only": 2,
+    "only_v1": 0,
+    "p": 0.5
+   },
+   "hotpot": {
+    "only_v2_filter_terms_only": 1,
+    "only_v1": 2,
+    "p": 1.0
+   }
+  },
+  "v2_static_vs_v2": {
+   "popqa": {
+    "only_v2_static": 3,
+    "only_v2": 2,
+    "p": 1.0
+   },
+   "hotpot": {
+    "only_v2_static": 3,
+    "only_v2": 5,
+    "p": 0.7266
+   }
+  },
+  "v2_12_candidates_vs_v2": {
+   "popqa": {
+    "only_v2_12_candidates": 1,
+    "only_v2": 1,
+    "p": 1.0
+   },
+   "hotpot": {
+    "only_v2_12_candidates": 0,
+    "only_v2": 0,
+    "p": 1.0
+   }
+  }
+ },
+ "exported": "v2_static",
+ "rule": {
+  "unseen_kinds_used": [
+   "code",
+   "maths"
+  ],
+  "passes": {
+   "v2": true,
+   "v2_filter_terms_only": true
+  },
+  "static_ok": true
+ },
+ "files": {
+  "head_v1.safetensors": 4728072,
+  "head_v2.safetensors": 4736412,
+  "head_v2_static.safetensors": 4736412,
+  "head.safetensors": 4736412,
+  "head_v2_filter_terms_only.safetensors": 4736436
+ },
+ "examples_of_notes_v2": {
+  "gsm8k": [],
+  "code": [
+   {
+    "q": "Describe the concept of static variables in Java.",
+    "notes": [
+     "Java, South Ossetia (Town in South Ossetia, Georgia)"
+    ]
+   }
+  ],
+  "maths": [],
+  "creative": [
+   {
+    "q": "Can you explain how I can analyze Simba logs?",
+    "notes": [
+     "Simba (1955 film) (1955 British film)",
+     "Simba, Gauteng (Place in Gauteng, South Africa)",
+     "Simba (Main character of The Lion King)"
+    ]
+   },
+   {
+    "q": "Which are the top 3 countries I should visit in South East Asia or ASEAN?",
+    "notes": [
+     "South-East, Russian SFSR",
+     "Asia, Tennessee (Unincorporated community in Tennessee, United States)",
+     "Asia, Texas (Unincorporated community in Texas)"
+    ]
+   },
+   {
+    "q": "Best car Brand in the world in Popularity?",
+    "notes": [
+     "Brand (surname) (Surname list)",
+     "Brand (play) (19th-century theater work by Norwegian dramatist Henrik Ibsen)",
+     "Brand (Aachen) (Borough of Aachen in North Rhine-Westphalia, Germany)"
+    ]
+   },
+   {
+    "q": "Do the new shift rules in Major League Baseball make the game more exciting?",
+    "notes": [
+     "Major League Baseball (video game) (Sports video game released in 1988)"
+    ]
+   }
+  ]
+ },
+ "attention": {
+  "which_article": {
+   "n": 29,
+   "most_developed": 0.3103,
+   "attention_total": 0.3103,
+   "attention_learned_weights": 0.4138,
+   "attention_best_single_head": {
+    "layer": 14,
+    "head": 2,
+    "accuracy": 0.4138
+   },
+   "head_v2_first_choice": 0.4483
+  },
+  "any_note": {
+   "quiz_prompts": 29,
+   "maths_prompts": 27,
+   "auc_total_attention": 0.682,
+   "auc_learned_weights": 1.0
+  },
+  "train_examples": 134,
+  "maths_train_examples": 106,
+  "candidates_shown": 12,
+  "lead_tokens_shown": 24
+ },
+ "timing": {
+  "load_s": 25,
+  "states_s": 15,
+  "fit_s": 2,
+  "eval_s": 13,
+  "attention_s": 7,
+  "total_s": 62
+ }
+}

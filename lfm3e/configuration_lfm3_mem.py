@@ -16,7 +16,8 @@ class LFM3MemConfig(PretrainedConfig):
         lead_tokens=96,  # tokens of the summary shown to the model
         facts_tokens=131,  # tokens of the facts block shown ("\nFacts:\n" + 128)
         key_tokens=72,  # tokens of an article read to compute its key for the choice head
-        candidates=12,  # articles considered per name
+        candidates=48,  # articles considered per name
+        gate_strict=True,  # exact-title notes need the head's approval: True (all), "concepts" (technical terms only), False
         top=3,  # notes the head may keep per name
         max_notes=3,  # notes shown per prompt
         max_spans=2,  # names looked up per prompt
@@ -30,6 +31,7 @@ class LFM3MemConfig(PretrainedConfig):
         self.memory_file, self.head_file = memory_file, head_file
         self.gap, self.lead_tokens, self.facts_tokens, self.key_tokens = gap, lead_tokens, facts_tokens, key_tokens
         self.candidates, self.top, self.max_notes, self.max_spans = candidates, top, max_notes, max_spans
+        self.gate_strict = gate_strict
         self.languages = list(languages)
         self.suppress_think_after_empty_block = suppress_think_after_empty_block
         self.backbone_attr, self.final_norm_attr = backbone_attr, final_norm_attr

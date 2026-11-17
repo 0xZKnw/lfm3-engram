@@ -27,11 +27,13 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, LogitsProcessor, L
 
 from .configuration_lfm3_mem import LFM3MemConfig
 from .store import LANGS, Store, open_tensors
-from .triggers import CAP_STOP, FR_STOP, find_triggers, pick_spans
+from .triggers import CAP_STOP, CONNECT, FR_STOP, FUNC, find_triggers, pick_spans
 
 NOTE_PREFIX = "Reference note about"
 NOTE_SUFFIX = ". Use it only if it is relevant, otherwise ignore it.\n"
-_FR_ONLY, _EN_ONLY = FR_STOP - CAP_STOP, CAP_STOP - FR_STOP
+_AMBIGUOUS = {"a", "on", "or", "son", "car", "si", "me", "tu", "but", "an", "fait", "note", "question", "non", "y", "s", "t", "d", "m", "c", "l", "j", "n", "plus", "est"}
+_FR_ONLY = FR_STOP - CAP_STOP - _AMBIGUOUS
+_EN_ONLY = (FUNC - FR_STOP - CONNECT - _AMBIGUOUS) | {"of", "and", "the", "for", "to", "about", "tell", "write", "give", "please", "with", "my"}
 _PROBE = "QZXPROBEXZQ"
 _HUB_KEYS = ("cache_dir", "force_download", "local_files_only", "token", "proxies")
 
@@ -101,8 +103,18 @@ class NoteMemory:
         return self.tok.decode(ids[-8:], skip_special_tokens=False).rstrip().endswith("</think>")
 
     def language(self, text):
-        words = re.findall(r"[^\W\d_]+", text.lower())
-        fr, en = sum(w in _FR_ONLY for w in words), sum(w in _EN_ONLY for w in words)
+        """French or English, from the small words of the message. Capitalised words inside a sentence are names
+        and do not count: 'Tell me about Le Monde' is English."""
+        fr = en = 0
+        start = True
+        for w in re.findall(r"[^\W\d_]+|[.!?\n]", text[:4000]):
+            if w in ".!?\n":
+                start = True
+                continue
+            if w[:1].islower() or start:
+                fr += w.lower() in _FR_ONLY
+                en += w.lower() in _EN_ONLY
+            start = False
         lang = "fr" if fr > en or (fr == en and re.search(r"[éèêàùçœ]", text.lower())) else "en"
         return lang if lang in self.cfg.languages else self.cfg.languages[0]
 
@@ -120,8 +132,14 @@ class NoteMemory:
                     break
             ids = list(dict.fromkeys(i for i, _ in rows))[: self.cfg.candidates]
             exact = next((i for i, e in rows if e), None)
-            self._cand[key] = (ids, exact)
+            titled = {i for i, e in rows if e}
+            self._cand[key] = (ids, exact, [int(i in titled) for i in ids])
         return self._cand[key][0]
+
+    def flags(self, surface, lang):
+        """For each candidate of this name: 1 when its title is exactly the name, 0 when it carries a qualifier."""
+        self.candidates(surface, lang)
+        return self._cand[(surface, lang)][2]
 
     def exact(self, surface, lang):
         """The most developed article whose title is exactly this name, or None."""
@@ -143,17 +161,35 @@ class NoteMemory:
         """Capitalised names of the message that have candidates (homonyms included)."""
         return [s for _, _, s in pick_spans(text[:20000], _Has(lambda s: bool(self.candidates(s, lang))), max_spans=self.cfg.max_spans, general=True)]
 
-    def strict(self, text, lang):
-        """Precision-first lookups: exact titles only. Technical terms need word frequencies, which exist for
-        English only, so other languages get the name rules alone."""
+    def strict_surfaces(self, text, lang):
+        """Precision-first lookups, as (name, kind): exact titles only. Technical terms ('concept') need word
+        frequencies, which exist for English only, so other languages get the name rules alone."""
         out = []
         for surface, kind in find_triggers(text[:20000], lambda s: self.exact(s, lang) is not None, self._freq, lambda w: len(self._word_tokens(w))):
             if kind == "concept" and (lang != "en" or self.token_freq is None):
                 continue
-            i = self.exact(surface, lang)
-            if i is not None and i not in out:
-                out.append(i)
+            if surface not in [x[0] for x in out]:
+                out.append((surface, kind))
         return out[: self.cfg.max_notes]
+
+    def groups(self, text):
+        """Everything the rules find in a message: its language, then one group per name or term, as
+        (name, kind, candidate ids, exact-title flags). 'name' groups hold the homonyms; 'title' and 'concept'
+        groups hold the one article whose title is exactly the name."""
+        lang = self.language(text)
+        out = [(s, "name", self.candidates(s, lang), self.flags(s, lang)) for s in self.spans(text, lang)]
+        seen = {g[0] for g in out}
+        for surface, kind in self.strict_surfaces(text, lang):
+            kind = "concept" if kind == "concept" else "title"
+            if not (self.gated(kind) and surface in seen):  # when gated, the head already weighs that name
+                out.append((surface, kind, [self.exact(surface, lang)], [1]))
+        return lang, out
+
+    def gated(self, kind):
+        """Does a note of this kind need the head's approval? Names with homonyms always do. For exact titles
+        ('title') and technical terms ('concept') it is set by gate_strict: True (both), "concepts", or False."""
+        g = self.cfg.gate_strict
+        return kind == "name" or g is True or g == "all" or (g == "concepts" and kind == "concept")
 
     # ---- notes as tokens
     def note(self, i):
@@ -243,13 +279,21 @@ class MemoryGeneration:
                 out.append((h * m).sum(1) / m.sum(1))
         return torch.cat(out) if out else torch.zeros(0, self.config.hidden_size, device=dev)
 
+    def _mem_key_states(self, seqs):
+        """One vector per article. 'static' heads use the mean of the input embeddings of the note's first tokens:
+        no pass of the model, so many candidates cost nothing. Otherwise the mean state after a pass."""
+        if not self.__dict__.get("_mem_static_keys"):
+            return self._mem_states(seqs, last=False, batch=256)
+        emb = self.get_input_embeddings().weight
+        return torch.stack([emb[torch.tensor(s, device=emb.device)].float().mean(0) for s in seqs]) if seqs else torch.zeros(0, emb.shape[1], device=emb.device)
+
     def _mem_keys(self, ids):
         cache = self.__dict__["_mem_key_cache"]
         todo = [i for i in dict.fromkeys(ids) if i not in cache]
         if todo:
-            for i, v in zip(todo, self._mem_states([self.memory.key(i) for i in todo], last=False).half().cpu()):
+            for i, v in zip(todo, self._mem_key_states([self.memory.key(i) for i in todo]).half().cpu()):
                 cache[i] = v
-            while len(cache) > 50_000:
+            while len(cache) > self.__dict__.get("_mem_key_cache_max", 50_000):
                 cache.popitem(last=False)
         return torch.stack([cache[i] for i in ids]).float().to(self.device)
 
@@ -262,8 +306,8 @@ class MemoryGeneration:
             self.__dict__["_mem_head_dev"] = dev
         return self.__dict__["_mem_head_on"]
 
-    def _mem_choose(self, q_state, cands):
-        """Candidates the head prefers to 'none of them', best first. Without a head: the most developed one."""
+    def _mem_choose(self, q_state, cands, flags):
+        """Candidates the head prefers to 'no note', best first. Without a head: the most developed one."""
         mem, head = self.memory, self._mem_head()
         if not cands:
             return []
@@ -274,24 +318,34 @@ class MemoryGeneration:
         keys = (self._mem_keys(cands) - head["k_mu"]) / head["k_sd"]
         prior = torch.tensor([mem.prior(i) for i in cands], device=q.device)
         s = (F.normalize(q @ head["q"].T, dim=-1) @ F.normalize(keys @ head["k"].T, dim=-1).T)[0] * head["log_t"].exp() + head["w_prior"] * prior
+        null = head["null"]
+        if "w_exact" in head:
+            s = s + head["w_exact"] * torch.tensor(flags, device=q.device, dtype=s.dtype)
+        if "null_w" in head:  # 'no note' depends on the question: a sum does not need a note about Easter
+            null = null + (q @ head["null_w"].T)[0]
         order = s.topk(min(mem.cfg.top, len(cands))).indices.tolist()
-        return [cands[j] for j in order if s[j] > head["null"]]
+        return [cands[j] for j in order if s[j] > null]
 
     def memory_plan(self, prompts):
         """For each prompt (token ids), the article ids of the notes to show."""
-        mem = self.memory
+        mem, head = self.memory, self._mem_head()
         texts = [mem.user_text(p) for p in prompts]
-        langs = [mem.language(t) for t in texts]
-        spans = [[mem.candidates(s, lang) for s in mem.spans(t, lang)] for t, lang in zip(texts, langs)]
-        asked = [k for k, sp in enumerate(spans) if sp]
+        found = [mem.groups(t)[1] for t in texts]
+        gated = [[g for g in gs if mem.gated(g[1])] for gs in found]
+        asked = [k for k, gs in enumerate(gated) if gs]
         q_states = {}
-        if asked and self._mem_head() is not None:
+        if asked and head is not None:
             states = self._mem_states([mem.question_ids(texts[k]) for k in asked], last=True)
             q_states = {k: states[n] for n, k in enumerate(asked)}
-            self._mem_keys([i for k in asked for cands in spans[k] for i in cands])  # one batch for all candidates
+            self._mem_keys([i for k in asked for g in gated[k] for i in g[2]])  # one batch for all candidates
         plans = []
-        for k, (t, lang) in enumerate(zip(texts, langs)):
-            chosen = [i for cands in spans[k] for i in self._mem_choose(q_states.get(k), cands)] + mem.strict(t, lang)
+        for k, gs in enumerate(found):
+            chosen = []
+            for _, kind, cands, flags in gs:
+                if kind == "name" or (mem.gated(kind) and head is not None):
+                    chosen += self._mem_choose(q_states.get(k), cands, flags)
+                else:
+                    chosen += cands
             plan, entities = [], set()
             for i in chosen:
                 qid = int(mem.store.qid[i])
@@ -380,9 +434,9 @@ def attach_memory(model, path, config=None, tokenizer=None, **hub):
         except Exception:
             tokenizer = AutoTokenizer.from_pretrained(config.base_model, trust_remote_code=True)
     head_path = _file(path, config.head_file, optional=True, **hub)
-    head = None
+    head, head_meta = None, {}
     if head_path:
-        tensors, _ = open_tensors(head_path)
+        tensors, head_meta = open_tensors(head_path)
         head = {k: torch.from_numpy(v.copy()) for k, v in tensors.items()}
     token_freq = head.pop("token_freq").numpy() if head and "token_freq" in head else None
     if head is not None and "q" not in head:
@@ -391,7 +445,7 @@ def attach_memory(model, path, config=None, tokenizer=None, **hub):
     model.memory = NoteMemory(Store(_file(path, config.memory_file, **hub)), tokenizer, config, token_freq)
     model.memory_config = config
     model.last_notes = []
-    model.__dict__.update(_mem_head_cpu=head, _mem_key_cache=collections.OrderedDict(), _mem_capture=False)
+    model.__dict__.update(_mem_head_cpu=head, _mem_key_cache=collections.OrderedDict(), _mem_capture=False, _mem_static_keys=head_meta.get("keys") == "static")
 
     def capture(module, args, kwargs):
         if model.__dict__["_mem_capture"]:

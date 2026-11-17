@@ -15,6 +15,17 @@ def export(out_dir: str, store_path: str, head_path: str = "", base_model: str =
     here = os.path.dirname(os.path.abspath(__file__))
     for name in CODE:
         shutil.copy(os.path.join(here, name), os.path.join(out_dir, name))
+    if head_path:  # the head says how it was trained: number of candidates, and whether every note goes through it
+        from .store import open_tensors
+
+        meta = open_tensors(head_path)[1]
+        if "candidates" in meta:
+            config.setdefault("candidates", int(meta["candidates"]))
+        if "gate_strict" in meta:
+            config.setdefault("gate_strict", {"True": True, "False": False}.get(meta["gate_strict"], meta["gate_strict"]))
+        else:
+            config.setdefault("candidates", 12)  # head of I2: 12 candidates, exact-title notes shown without asking it
+            config.setdefault("gate_strict", False)
     cfg = LFM3MemConfig(base_model=base_model, **config)
     cfg.auto_map = {"AutoConfig": "configuration_lfm3_mem.LFM3MemConfig", "AutoModelForCausalLM": "modeling_lfm3_mem.LFM3MemForCausalLM"}
     cfg.save_pretrained(out_dir)

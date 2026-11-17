@@ -512,3 +512,56 @@ def i2(cap: int = 0, n_preview: int = 200, name: str = "i2_head", prep: bool = F
         print(i2_prep.remote(cap))
     else:
         _save(name, i2_run.remote(cap, n_preview))
+
+
+@app.function(image=image, cpu=8, memory=32 * 1024, timeout=40 * 60, volumes={VOL: vol})
+def i3_prep(cap: int):
+    """CPU: development sets, final sets and training prompts of the choice head v2. No model needed."""
+    import shutil
+    import time
+
+    import numpy as np
+
+    from lfm3e import i3_head
+    from lfm3e.common import load_tokenizer
+    from lfm3e.configuration_lfm3_mem import LFM3MemConfig
+    from lfm3e.modeling_lfm3_mem import NoteMemory
+    from lfm3e.store import Store
+
+    t0 = time.time()
+    shutil.copy(f"{VOL}/store/memory.safetensors", "/tmp/memory.safetensors")
+    tok = load_tokenizer()
+    web = np.load(f"{data_dir('full')}/web/train_tokens.npy")
+    freq = (np.bincount(web, minlength=len(tok)).astype(np.float64) * (1e6 / len(web))).astype(np.float32)
+    mem = NoteMemory(Store("/tmp/memory.safetensors"), tok, LFM3MemConfig(), freq)
+    data, final = i3_head.prepare(mem, f"{VOL}/popqa", f"{VOL}/d6", cap=cap)
+    tag = "_smoke" if cap else ""
+    with open(f"{VOL}/store/i3_prepared{tag}.json", "w") as f:
+        json.dump(data, f)
+    with open(f"{VOL}/store/i3_final{tag}.json", "w") as f:
+        json.dump(final, f)
+    vol.commit()
+    return {"seconds": round(time.time() - t0), **data["info"]}
+
+
+@app.function(image=image, gpu="H100", memory=64 * 1024, timeout=30 * 60, volumes={VOL: vol})
+def i3_run(cap: int):
+    """GPU: choice head v2 trained, compared and exported; attention read-out experiment."""
+    import shutil
+
+    from lfm3e import export_hf, i3_head
+
+    shutil.copy(f"{VOL}/store/memory.safetensors", "/tmp/memory.safetensors")
+    export_hf.export("/tmp/hf", "/tmp/memory.safetensors", link=True)
+    prepared = json.load(open(f"{VOL}/store/i3_prepared{'_smoke' if cap else ''}.json"))
+    out = i3_head.run("/tmp/hf", prepared, web_tokens=f"{data_dir('full')}/web/train_tokens.npy", out_dir=f"{VOL}/store/{'v2_smoke' if cap else 'v2'}", n_att_train=(8 * cap if cap else 3000))
+    vol.commit()
+    return _plain(out)
+
+
+@app.local_entrypoint()
+def i3(cap: int = 0, name: str = "i3_head", prep: bool = False):
+    if prep:
+        print(i3_prep.remote(cap))
+    else:
+        _save(name, i3_run.remote(cap))

@@ -417,6 +417,62 @@ Aperçu de bout en bout, 200 premières questions PopQA à travers `generate` : 
 - Les termes techniques (règle de D6) déclenchent sur des prompts banals : « say hello in one word » reçoit la note de la chanson « Say Hello », un problème de calcul celle de « Piggy bank » ou de « Water slide ». La tête ne voit pas ces notes : elles passent par les titres exacts. C'est la première source des notes hors sujet restantes sur GSM8K.
 - La règle des noms pour prompts quelconques (I1) perd 2 points de couverture sur PopQA par rapport à la règle d'origine : bon article parmi les candidats pour 85,2 % des questions contre 87,2 %. Ce qui reste perdu, ce sont les titres faits d'un nombre (« 2012 », « 18 ») ou d'un mot-outil (« One »), écartés exprès. Une première version coupait aussi les noms à initiale et les titres à deux-points (« James M. Geraghty », « Covert One: The Hades Factor ») : corrigé après le run, donc les chiffres du tableau sont un peu en dessous de ce que donne le code actuel.
 
+### I3. Tête de choix v2 et essai de lecture par l'attention (17 novembre 2026)
+
+Code : [lfm3e/i3_head.py](lfm3e/i3_head.py). Résultats bruts : [results/i3_head.json](results/i3_head.json).
+
+Ce qui change par rapport à I2 :
+- « aucune note » n'est plus une constante mais une fonction de la question ;
+- 48 candidats par nom au lieu de 12, et un indicateur « le titre est exactement le nom » ;
+- les notes trouvées par les titres exacts peuvent passer par la tête ;
+- l'entraînement ne contient plus seulement des questions de quiz : 19 156 PopQA, 15 000 HotpotQA, 5 287 questions françaises fabriquées depuis les gabarits de PopQA, 3 000 consignes sur un nom (« Tell me about X »), et 6 413 prompts où aucune note n'est voulue (problèmes de calcul, questions fournies avec leur texte, réécritures).
+
+Les jeux figés de D14 servent désormais de jeux de réglage. Des jeux finals ont été préparés à part (PopQA, TriviaQA, MKQA, HotpotQA, GSM8K), disjoints de l'entraînement et jamais regardés.
+
+**Bonne note montrée (jeux de réglage)**
+
+| Tête | PopQA (955) | PopQA en français (493) | HotpotQA, au moins une (242) |
+|---|---|---|---|
+| Sans tête | 51,6 % | 65,7 % | 64,0 % |
+| v1 : celle de I2, avec 48 candidats | 81,4 % | 55,0 % | 63,2 % |
+| v2, toutes les notes filtrées | 80,0 % | 80,9 % | 52,9 % |
+| **v2, seuls les termes techniques filtrés (exportée)** | **80,3 %** | **81,5 %** | **61,6 %** |
+| v2 avec 12 candidats | 77,3 % | 80,7 % | 52,9 % |
+| v2 avec clés sans passe du modèle | 77,9 % | 78,3 % | 48,4 % |
+
+**Prompts qui reçoivent une note**
+
+| Tête | GSM8K | Code | Maths | Écriture libre | TriviaQA | MKQA anglais | MKQA français |
+|---|---|---|---|---|---|---|---|
+| Sans tête | 63,0 % | 54,0 % | 18,0 % | 42,0 % | 85,2 % | 37,2 % | 25,7 % |
+| v1 | 56,3 % | 46,7 % | 15,0 % | 36,0 % | 79,2 % | 37,2 % | 17,7 % |
+| v2, toutes filtrées | 0,0 % | 0,3 % | 1,0 % | 18,0 % | 56,8 % | 20,1 % | 21,9 % |
+| **v2, termes seuls (exportée)** | **7,3 %** | **4,0 %** | **3,3 %** | 26,0 % | 72,0 % | 20,1 % | 24,0 % |
+
+Le code et les maths sont des genres absents de l'entraînement : la tête a bien appris « ce prompt n'a besoin de rien », pas « ce prompt vient de GSM8K ».
+
+Lecture :
+- **Notes hors sujet : problème en grande partie réglé.** De 56 % à 7 % sur les problèmes de calcul, de 47 % à 4 % sur le code.
+- **48 candidats : +2,7 points** de bonnes notes sur PopQA (77,3 % → 80,0 %, test apparié p < 0,001). La tête de I2 passe de 75,1 % à 81,4 % avec ce seul changement.
+- **Français : 55,0 % → 81,5 %.** Mais ce jeu est fabriqué avec les mêmes gabarits que l'entraînement : chiffre optimiste, à confirmer sur MKQA français de bout en bout.
+- **Filtrer toutes les notes coûte sur HotpotQA** : 63,2 % → 52,9 % (27 questions perdues, 2 gagnées, p < 0,001). Selon la règle fixée avant le run, c'est donc la variante « termes techniques seuls » qui est exportée : elle ne perd significativement ni sur PopQA (p = 0,21) ni sur HotpotQA (p = 0,29).
+- **Clés sans passe du modèle : -2,1 points** sur PopQA (p = 0,054) et -4,5 sur HotpotQA. Non retenues par défaut ; elles restent une option pour un usage local où le temps compte.
+
+**Risque ouvert de la tête exportée.** Sur MKQA anglais, elle ne montre plus une note que pour 20,1 % des questions, contre 37,2 % avant. Ces questions sont en minuscules, et leurs notes venaient surtout de la règle des termes, que la tête refuse désormais souvent. D14 gagnait 5,6 points sur ce jeu : ce gain peut avoir fondu. Même question sur TriviaQA (79,2 % → 72,0 %). Seule une mesure de bout en bout tranchera ; la tête v1 à 48 candidats est conservée pour la comparaison.
+
+**Essai : laisser le modèle choisir par son attention.** On montre au modèle les premières lignes des 12 candidats d'un nom et on lit, dans les six couches d'attention globale, lequel le dernier token du prompt regarde le plus. 572 noms à plusieurs articles :
+
+| Méthode | Premier choix juste |
+|---|---|
+| Article le plus développé | 39,0 % |
+| Attention totale | 30,6 % |
+| Attention, poids appris par tête d'attention | 49,5 % |
+| Tête de choix v2 | **64,0 %** |
+
+Abandonné : l'attention brute fait moins bien que le hasard informé, et même avec des poids appris elle reste 14 points sous la tête. Elle sépare parfaitement les questions de quiz des problèmes de calcul (aire sous la courbe 1,00 avec poids appris), mais la tête le fait déjà.
+
+Essais à la main en local avec la tête exportée : plus aucune note sur « Tom has 3 apples… at Easter », « say hello in one word », « Write a Python function… » ; note correcte et en anglais pour « Tell me about Le Monde ». Deux échecs restent visibles : « capital of Norfolk » reçoit trois notes (le comté anglais en premier) et la réponse reste fausse ; « who sang hallelujah first » reçoit la note de l'interjection religieuse.
+
 ## 3. L'architecture retenue
 
 **Principe.** Dans LFM3, les convolutions voient 7 tokens en arrière et les attentions à fenêtre 256. Au-delà, seules les 6 couches d'attention globale (2, 6, 10, 14, 18, 22) voient le contexte. « Le modèle a lu ce passage plus tôt » se résume donc aux clés et valeurs d'attention du passage sur ces 6 couches.
@@ -440,6 +496,8 @@ Aperçu de bout en bout, 200 premières questions PopQA à travers `generate` : 
 **Ce qui est repris d'ailleurs.** Les caches d'attention précalculés existent (TurboRAG), les mémoires d'entités lues par l'attention aussi (TOME, KBLaM), mais elles demandent un entraînement ou un moteur de recherche. Ce qui est propre ici : l'adressage exact par nom, aucun entraînement, et le stockage limité à 6 couches que permet l'architecture de LFM3.
 
 ## 4. Problèmes ouverts et solutions envisagées (analyse du 17 novembre 2026)
+
+Depuis cette analyse, I3 a traité trois lignes du tableau : notes hors sujet (réglé en grande partie), 48 candidats (+2,7 points), choix par l'attention (essayé, abandonné). Le français a une tête entraînée, à confirmer.
 
 Mesures locales, sans le modèle, sur les jeux figés (955 questions PopQA et 242 HotpotQA dont le bon article est connu, 300 problèmes GSM8K).
 
@@ -495,11 +553,11 @@ Mode réflexion avec le système final, suivi de consignes et appels d'outils av
 
 ## 5. Prochaines étapes
 
-1. ~~Tête de choix dans le format final~~ : fait (I2).
-2. **Mesures refaites à travers le modèle intégré.** Les quatre jeux de D14, pour vérifier que l'intégration redonne les mêmes chiffres. Y comparer les deux têtes et mesurer ce que coûtent les notes hors sujet sur GSM8K, avec et sans la règle des termes techniques.
-3. **Évaluation par un outil standard**, sur des échantillons, mémoire active et coupée. Y inclure des tâches sans rapport avec la mémoire (suivi de consignes, calcul) pour mesurer ce qu'elle coûte quand elle n'aide pas.
-4. **Choix des candidats.** 59,5 % sur PopQA pour un plafond de 83 % quand le bon article est montré. Piste : les redirections de Wikipédia, absentes de l'export utilisé, pour couvrir les autres noms d'un même article.
-5. **Portage MLX**, **fiches de méthode** (D13) à pousser, mode réflexion à mesurer.
+1. **Mesure de bout en bout sur les jeux de réglage**, à travers le modèle intégré : tête v1 à 48 candidats contre tête v2 exportée, sur PopQA, TriviaQA, MKQA anglais et français, HotpotQA, GSM8K. C'est elle qui dira si le filtrage des termes coûte sur MKQA et TriviaQA. Mêmes passes pour régler le nombre de notes par nom (1, 2 ou 3) et la longueur de note lue.
+2. **Mesure finale, une seule fois**, sur les jeux jamais regardés.
+3. **Redirections de Wikipédia** dans l'index, pour les autres noms d'un même article.
+4. **Questions en minuscules** (MKQA) : la règle des noms s'appuie sur les majuscules.
+5. **Portage MLX**, mode réflexion à mesurer, suivi de consignes et appels d'outils avec des notes.
 
 ## 6. Limites de ces mesures
 
