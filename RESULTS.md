@@ -345,6 +345,48 @@ Style : sur 5 demandes de texte long avec une note, 2 réponses s'effondrent ave
 
 **Cause probable.** La cible « I don't know. » dès que la réponse ne figure dans aucune note. Le modèle ne sait pas distinguer « je connais la réponse sans la note » de « je ne la connais pas », donc il généralise en « la note ne répond pas, je m'abstiens ».
 
+### I1. Intégration : le magasin de notes et le modèle en un seul objet (17 novembre 2026)
+
+Aucune mesure de qualité ici : c'est la mise en forme du système de D14 (« mémoire », sans LoRA) pour qu'il se charge avec `from_pretrained` et s'utilise avec `generate`, sans code autour.
+
+**Magasin de notes** ([lfm3e/store.py](lfm3e/store.py), construction dans [lfm3e/store_build.py](lfm3e/store_build.py)) : un seul fichier safetensors, lu par projection en mémoire.
+
+| | |
+|---|---|
+| Articles | 8 269 417 (6 056 292 en anglais, 2 213 125 en français) |
+| Noms indexés | 8 622 392 |
+| Taille du fichier | 2,31 Go (notes 2,08 Go, index 0,23 Go) |
+| Par article | 279 octets, pour 203 tokens en moyenne (titre 13, résumé 85, faits 106) |
+| Par token | 1,23 octet |
+| Lecture d'une note | 0,18 ms |
+| Vérification | 600 articles tirés au hasard relus token pour token par l'index des noms : 0 écart |
+
+Ce qui rend le fichier compact : les notes sont stockées en tokens ; chaque token est écrit par son rang de fréquence en longueur variable, puis la note est compressée avec zlib amorcé par un dictionnaire de notes typiques, un par langue ; les noms sont des empreintes de 64 bits triées. L'ancien format (sqlite, texte) pesait 6,56 Go pour l'anglais seul.
+
+L'export Wikimedia contient plusieurs versions de certains articles : 519 845 doublons ont été écartés (on garde la version la plus développée). Les 6,5 millions d'articles anglais annoncés jusqu'ici en comptaient donc environ 0,45 million en double.
+
+Le fichier stocke jusqu'à 192 tokens de résumé et 256 de faits ; le modèle n'en lit aujourd'hui que 96 et 128. Seuls 3 % des résumés et 8 % des blocs de faits atteignent le plafond stocké : allonger encore ne rapporterait presque rien. Il reste environ 1 Go sous la limite fixée de 3 à 3,5 Go.
+
+**Modèle intégré** ([lfm3e/modeling_lfm3_mem.py](lfm3e/modeling_lfm3_mem.py), [lfm3e/configuration_lfm3_mem.py](lfm3e/configuration_lfm3_mem.py), assemblage du dossier par [lfm3e/export_hf.py](lfm3e/export_hf.py)). `AutoModelForCausalLM.from_pretrained(dossier, trust_remote_code=True)` rend le modèle LFM3 d'origine, chargé depuis le dépôt de Liquid, avec la mémoire attachée. `generate` lit le dernier message de l'utilisateur, choisit les notes, les place devant le prompt, génère, puis rend les séquences comme si les notes n'avaient jamais été là.
+
+Test local sur CPU, avec les vrais poids ([tests/test_integrated.py](tests/test_integrated.py)) :
+
+| Vérification | Résultat |
+|---|---|
+| Prompt sans note | Sortie identique au modèle d'origine, token pour token |
+| Prompt avec note | Sortie identique à la mise en page construite à la main et passée au `generate` d'origine |
+| Lot mêlant prompts avec et sans note, réglages par défaut | Notes aux bonnes lignes, prompts rendus intacts |
+| `return_dict_in_generate`, plusieurs séquences par prompt, flux (`streamer`) | Fonctionnent |
+| Réflexion activée, prompt en français | Fonctionnent |
+| Recherche des notes | 3 à 13 ms par prompt sur le Mac |
+
+Ce que ce test ne dit pas :
+- **La tête de choix n'est pas encore branchée.** Elle doit être réentraînée dans le format final des notes. En attendant, l'article le plus développé est pris : « What is the capital of Norfolk? » reçoit la note de Norfolk en Virginie et la réponse devient fausse, alors que le modèle seul répondait Norwich.
+- **Les termes techniques ne déclenchent pas encore** (« pyridinium chlorochromate ») : la table de fréquence des mots voyage avec le fichier de la tête.
+- **Aucun chiffre de qualité** n'a été refait à travers le modèle intégré. Les exemples essayés à la main (Kiss and Tell, Victor Hugo, Tosca : faux sans note, justes avec) ne sont pas une mesure.
+
+Un défaut trouvé et corrigé pendant ce test : la règle des noms de D5, écrite pour des questions d'une phrase, prenait les nombres pour des noms. « what is 17 times 3 » recevait deux notes sans rapport et la réponse se dégradait. Pour un prompt quelconque, la règle ignore maintenant les nombres seuls, la majuscule de début de phrase et les mots-outils, et un nom ne peut plus chevaucher deux phrases. Le mode d'origine reste disponible et inchangé pour refaire les mesures passées.
+
 ## 3. L'architecture retenue
 
 **Principe.** Dans LFM3, les convolutions voient 7 tokens en arrière et les attentions à fenêtre 256. Au-delà, seules les 6 couches d'attention globale (2, 6, 10, 14, 18, 22) voient le contexte. « Le modèle a lu ce passage plus tôt » se résume donc aux clés et valeurs d'attention du passage sur ces 6 couches.
@@ -394,9 +436,11 @@ Limites qu'aucune mémoire ne lève :
 
 ## 5. Prochaines étapes
 
-1. **D5, précision du déclenchement.** Liste réelle des homonymes (titres Wikipédia partageant un nom), choix du candidat par popularité et par proximité avec le contexte, mesure de bout en bout sur PopQA sans donner la bonne entité. Tester aussi un en-tête qui présente le passage comme une note de référence.
-2. **D6, plusieurs sauts.** Déclenchement pendant la réflexion, sur des questions à deux sauts.
-3. **Portage MLX.** Ajout des clés et valeurs aux 6 couches globales dans le cache, pour tourner en local.
+1. **Tête de choix dans le format final.** La réentraîner sur les notes telles que le modèle intégré les construit, avec des exemples « aucune note » tirés de prompts qui ne sont pas des questions de culture générale (calcul, consignes), puis l'exporter avec la table de fréquence des mots.
+2. **Mesures refaites à travers le modèle intégré.** Les quatre jeux de D14, pour vérifier que l'intégration redonne les mêmes chiffres.
+3. **Évaluation par un outil standard**, sur des échantillons, mémoire active et coupée. Y inclure des tâches sans rapport avec la mémoire (suivi de consignes, calcul) pour mesurer ce qu'elle coûte quand elle n'aide pas.
+4. **Choix des candidats.** 59,5 % sur PopQA pour un plafond de 83 % quand le bon article est montré. Piste : les redirections de Wikipédia, absentes de l'export utilisé, pour couvrir les autres noms d'un même article.
+5. **Portage MLX**, **fiches de méthode** (D13) à pousser, mode réflexion à mesurer.
 
 ## 6. Limites de ces mesures
 

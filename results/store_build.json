@@ -1,0 +1,80 @@
+{
+ "articles": 8269417,
+ "duplicates_dropped": 519845,
+ "by_lang": {
+  "en": 6056292,
+  "fr": 2213125
+ },
+ "names": 8622392,
+ "gb": 2.306,
+ "notes_gb": 2.077,
+ "notes_gb_by_lang": {
+  "en": 1.543,
+  "fr": 0.534
+ },
+ "bytes_per_token": 1.234,
+ "bytes_per_article": 278.8,
+ "tokens": 1682630965,
+ "tokens_per_article": {
+  "head": 12.6,
+  "lead": 85.0,
+  "facts": 105.8
+ },
+ "share_lead_at_cap": 0.031,
+ "share_facts_at_cap": 0.079,
+ "share_with_facts": 0.796,
+ "build_s": 377,
+ "checked": 600,
+ "mismatches": 0,
+ "examples": [
+  {
+   "lang": "en",
+   "name": "kush",
+   "candidates": 9,
+   "head": " Kush (song) (2010 single by Dr. Dre featuring Snoop Dogg and Akon)",
+   "lead": "\"Kush\" is a single by American rapper Dr. Dre, featuring vocals by Snoop Dogg and Akon. It was released via digital download on November 18, 2010. The song was produced by DJ Khalil and mixed by Dr. D",
+   "facts": "\nFacts:\nInfobox song\n\"Kush\"\nSingle by Dr. Dre featuring Snoop Dogg and Akon\nfrom the album Detox (shelved)\nReleased: November 18, 2010\nRecorded: 2010\nGenre: Hip hop\nLength: 3: 55\nLabel\nSongwriter(s)\nP"
+  },
+  {
+   "lang": "en",
+   "name": "a12 road",
+   "candidates": 5,
+   "head": " A12 road (England) (Road in England)",
+   "lead": "The A12 is a major road in Eastern England. It runs north-east/south-west between London and the coastal town of Lowestoft in the north-eastern corner of Suffolk, following a similar route to the Grea",
+   "facts": "\nFacts:\nInfobox road\nA12\nThe A12 at Wrentham, heading toward Ipswich\nRoute information\nPart of E30\nLength: 118.8 mi (191.2 km)\nMajor junctions\nSouth-West end: A102 / A13 in Poplar, London\nA11 near Str"
+  },
+  {
+   "lang": "en",
+   "name": "caerwys f c",
+   "candidates": 1,
+   "head": " Caerwys F.C. (Association football club in Wales)",
+   "lead": "Caerwys F.C. is a football club representing the Flintshire town of Caerwys in Wales, and they play their home games at Lon yr Ysgol at Caerwys. They last played in the North East Wales Premier Divisi",
+   "facts": "\nFacts:\nInfobox football club\nFull name: Caerwys Football Club\nFounded: 1900c. as Caerwys Town\nGround: Lon yr Ysgol, Caerwys\nCapacity: 500\nChairman: Chris Doyle\nManager: Daniel Sands\nLeague: North Eas"
+  },
+  {
+   "lang": "en",
+   "name": "edward scofield",
+   "candidates": 1,
+   "head": " Edward Scofield (American politician (1842-1925))",
+   "lead": "Edward Scofield was an American lumberman and Republican politician. He was the 19th governor of Wisconsin (1897–1901) and served in the Wisconsin State Senate, representing Door, Marinette, and Ocont",
+   "facts": "\nFacts:\nInfobox officeholder\nEdward Scofield\n19th Governor of Wisconsin\nIn office January 4, 1897 – January 7, 1901\nLieutenant: Emil Baensch Jesse Stone\nPreceded by: William H. Upham\nSucceeded by: Rob"
+  },
+  {
+   "lang": "en",
+   "name": "brett pitman",
+   "candidates": 1,
+   "head": " Brett Pitman (Footballer (born 1988))",
+   "lead": "Brett Douglas Pitman is a Jèrriais footballer who plays as a forward for Baffins Milton Rovers. He has spent most of his career at AFC Bournemouth in two separate spells, totalling 102 goals in 301 ga",
+   "facts": "\nFacts:\nInfobox football biography\nBrett Pitman\nPitman playing for Bristol City in 2011\nPersonal information\nFull name: Brett Douglas Pitman\nDate of birth: 31 January 1988\nPlace of birth: Saint Helier"
+  },
+  {
+   "lang": "en",
+   "name": "portugal national football team",
+   "candidates": 1,
+   "head": " Portugal national football team (Men's association football team)",
+   "lead": "The Portugal national football team has represented Portugal in men's international football competitions since 1921. The national team is controlled by the Portuguese Football Federation (FPF), the g",
+   "facts": "\nFacts:\npp-semi-indef\nPortugal\nNickname(s): A Seleção das Quinas (The Team of the Escutcheons) Lusos (Lusitanians)\nAssociation: Portuguese Football Federation (Federação Portuguesa de Futebol, FPF)\nCo"
+  }
+ ],
+ "read_ms": 0.178
+}

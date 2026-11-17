@@ -16,27 +16,43 @@ def norm(s):
     return re.sub(r"[^\w]+", " ", s.lower()).strip()
 
 
-def question_spans(q, max_len=6):
-    """Eligible spans (i, j, surface): contain a capitalised or numeric word that is not the first word."""
+def question_spans(q, max_len=6, general=False):
+    """Eligible spans (i, j, surface): contain a capitalised or numeric word that is not the first word.
+
+    general=True is for any prompt, not only a one-sentence question: a capital says nothing on the first word
+    of a sentence or of a line, a number alone is not a name, function words ('I', 'The') do not count, and a
+    name does not run across two sentences."""
     words = q.split()
     cleaned = [norm(w) for w in words]
+    if general:
+        starts, pos = [], 0
+        for k, w in enumerate(words):
+            at = q.index(w, pos)
+            starts.append(k == 0 or "\n" in q[pos:at] or words[k - 1][-1:] in ".!?:;")
+            pos = at + len(w)
+        signal = [not starts[k] and words[k][:1].isupper() and cleaned[k] not in CAP_STOP and cleaned[k] not in FR_STOP for k in range(len(words))]
+    else:
+        starts = [False] * len(words)
+        signal = [k > 0 and (words[k][:1].isupper() or words[k][:1].isdigit()) for k in range(len(words))]
     spans = []
     for i in range(len(words)):
         for j in range(i + 1, min(i + max_len, len(words)) + 1):
             parts = [c for c in cleaned[i:j] if c]
             if not parts:
                 continue
-            if not any(k > 0 and (words[k][:1].isupper() or words[k][:1].isdigit()) for k in range(i, j)):
+            if not any(signal[i:j]) or any(starts[i + 1 : j]):  # (general) a name does not run across two sentences
                 continue
             if j - i == 1 and cleaned[i] in STOP:
+                continue
+            if general and j - i == 1 and (len(cleaned[i]) < 3 or cleaned[i] in CAP_STOP or cleaned[i] in FR_STOP):
                 continue
             spans.append((i, j, " ".join(parts)))
     return spans
 
 
-def pick_spans(q, cands, max_spans=2):
+def pick_spans(q, cands, max_spans=2, general=False):
     """Longest non-overlapping eligible spans that have candidates."""
-    found = sorted((s for s in question_spans(q) if s[2] in cands), key=lambda s: (s[0] - s[1], s[0]))
+    found = sorted((s for s in question_spans(q, general=general) if s[2] in cands), key=lambda s: (s[0] - s[1], s[0]))
     chosen, used = [], set()
     for i, j, surface in found:
         if used.isdisjoint(range(i, j)):
