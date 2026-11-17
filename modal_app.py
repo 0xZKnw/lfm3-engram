@@ -392,18 +392,18 @@ def lightdata():
 
 
 @app.function(image=image, gpu="H100", memory=64 * 1024, timeout=120 * 60, volumes={VOL: vol})
-def d14_run(n_train: int, n_eval: int, n_hotpot_eval: int, epochs: int, tag: str):
+def d14_run(n_train: int, n_eval: int, n_hotpot_eval: int, epochs: int, tag: str, head_cap: int = 0):
     import os
 
     from lfm3e import d14_lora
 
     os.makedirs(f"{VOL}/d14", exist_ok=True)
     out = d14_lora.run(f"{VOL}/d6", f"{VOL}/popqa", f"{data_dir('full')}/web/train_tokens.npy", save_path=f"{VOL}/d14/{tag}.pt",
-                       n_train=n_train, n_eval=n_eval, n_hotpot_eval=n_hotpot_eval, epochs=epochs)
+                       n_train=n_train, n_eval=n_eval, n_hotpot_eval=n_hotpot_eval, epochs=epochs, head_cap=head_cap)
     vol.commit()
     return _plain(out)
 
 
 @app.local_entrypoint()
-def d14(n_train: int = 2500, n_eval: int = 1000, n_hotpot_eval: int = 250, epochs: int = 3, name: str = "d14"):
-    _save(name, d14_run.remote(n_train, n_eval, n_hotpot_eval, epochs, name))
+def d14(n_train: int = 2500, n_eval: int = 1000, n_hotpot_eval: int = 250, epochs: int = 3, head_cap: int = 0, name: str = "d14"):
+    _save(name, d14_run.remote(n_train, n_eval, n_hotpot_eval, epochs, name, head_cap))

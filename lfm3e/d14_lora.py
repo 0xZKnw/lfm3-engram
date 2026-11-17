@@ -28,7 +28,7 @@ IDK = "I don't know."
 ABSTAIN_WORDS = ("i don't know", "i do not know", "not sure", "no information", "cannot determine", "can't determine", "i'm not aware", "unable to")
 
 
-def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_train=2500, n_eval=1000, n_hotpot_eval=250, epochs=3, rank=16, lr=2e-4, seed=0):
+def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", head_cap: int = 0, n_train=2500, n_eval=1000, n_hotpot_eval=250, epochs=3, rank=16, lr=2e-4, seed=0):
     import shutil
 
     import torch
@@ -133,7 +133,8 @@ def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_t
 
     # ------------------------------------------------------------ the head, trained on PopQA and HotpotQA
     t0 = time.time()
-    head_items = by_src["popqa"][: max(len(by_src["popqa"]) - n_train, 0)] + by_src["hotpot"][: max(len(by_src["hotpot"]) - n_train, 0)]
+    head_pop, head_hp = by_src["popqa"][: max(len(by_src["popqa"]) - n_train, 0)], by_src["hotpot"][: max(len(by_src["hotpot"]) - n_train, 0)]
+    head_items = (head_pop[:head_cap] + head_hp[:head_cap]) if head_cap else (head_pop + head_hp)  # head_cap only shortens test runs
     ex_q, ex_c, ex_y = [], [], []
     for qi, it in enumerate(head_items):
         gold = {r[0] for r in it["gold_rows"]}
@@ -206,6 +207,15 @@ def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_t
             kind += "_no_answer_in_notes"
         examples.append({"rows": rows, "q": it["q"], "target": target})
         kinds[kind] = kinds.get(kind, 0) + 1
+    # "I don't know." must not dominate the targets: keep it at 30 % of the examples at most
+    idk = [e for e in examples if e["target"] == IDK]
+    rest = [e for e in examples if e["target"] != IDK]
+    max_idk = int(0.30 / 0.70 * len(rest))
+    idk_dropped = max(len(idk) - max_idk, 0)
+    if idk_dropped:
+        rng.shuffle(idk)
+        examples = rest + idk[:max_idk]
+        rng.shuffle(examples)
     timing["examples_s"] = round(time.time() - t0)
     targets_idk = sum(e["target"] == IDK for e in examples)
 
@@ -282,7 +292,7 @@ def run(data_dir: str, popqa_dir: str, web_tokens: str, save_path: str = "", n_t
     result = {
         "training": {
             "pool": {s: len(v) for s, v in by_src.items()}, "head_examples": len(ex_y), "examples": len(examples), "kinds": kinds,
-            "targets_i_dont_know": round(targets_idk / max(len(examples), 1), 4), "tokens": train_tokens, "steps": total,
+            "targets_i_dont_know": round(targets_idk / max(len(examples), 1), 4), "i_dont_know_examples_dropped": idk_dropped, "tokens": train_tokens, "steps": total,
             "loss_first_last": [round(sum(losses[:20]) / max(len(losses[:20]), 1), 3), round(sum(losses[-20:]) / max(len(losses[-20:]), 1), 3)],
             "lora_parameters": sum(p.numel() for p in params), "rank": rank, "attention_modules": names,
             "positions_check": positions_check,

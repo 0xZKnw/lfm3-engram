@@ -1,0 +1,323 @@
+{
+ "training": {
+  "pool": {
+   "popqa": 13532,
+   "hotpot": 120,
+   "triviaqa": 106
+  },
+  "head_examples": 449,
+  "examples": 111,
+  "kinds": {
+   "homonyms_only_no_answer_in_notes": 23,
+   "system": 18,
+   "right_alone": 23,
+   "system_no_answer_in_notes": 18,
+   "right_with_homonyms": 16,
+   "right_alone_no_answer_in_notes": 4,
+   "right_with_homonyms_no_answer_in_notes": 6,
+   "homonyms_only": 3
+  },
+  "targets_i_dont_know": 0.3874,
+  "tokens": 103351,
+  "steps": 10,
+  "loss_first_last": [
+   0.973,
+   0.973
+  ],
+  "lora_parameters": 1476096,
+  "rank": 16,
+  "attention_modules": [
+   "q_proj",
+   "k_proj",
+   "v_proj",
+   "o_proj",
+   "q_norm",
+   "k_norm",
+   "gate_proj"
+  ],
+  "positions_check": {
+   "max_abs_diff_forward_vs_generate": 0.0,
+   "same_first_token_forward_vs_generate": 1.0,
+   "max_abs_diff_without_position_fix": 3.7812,
+   "logit_scale": 21.25
+  }
+ },
+ "tests": {
+  "popqa": {
+   "n": 40,
+   "no_memory": {
+    "correct": 0.125,
+    "abstains": 0.025,
+    "wrong": 0.85
+   },
+   "memory": {
+    "correct": 0.475,
+    "abstains": 0.0,
+    "wrong": 0.525,
+    "fixed": 14,
+    "broken": 0,
+    "note_shown": 1.0,
+    "right_article_shown": 0.65
+   },
+   "memory_lora": {
+    "correct": 0.425,
+    "abstains": 0.0,
+    "wrong": 0.575,
+    "fixed": 12,
+    "broken": 0,
+    "note_shown": 1.0,
+    "right_article_shown": 0.65
+   },
+   "right_notes": {
+    "correct": 0.7,
+    "abstains": 0.0,
+    "wrong": 0.3,
+    "fixed": 23,
+    "broken": 0,
+    "note_shown": 0.875,
+    "right_article_shown": 0.875
+   },
+   "right_notes_lora": {
+    "correct": 0.675,
+    "abstains": 0.025,
+    "wrong": 0.3,
+    "fixed": 22,
+    "broken": 0,
+    "note_shown": 0.875,
+    "right_article_shown": 0.875
+   },
+   "homonyms_only": {
+    "correct": 0.175,
+    "abstains": 0.025,
+    "wrong": 0.8,
+    "fixed": 3,
+    "broken": 1,
+    "note_shown": 0.75,
+    "right_article_shown": 0.0
+   },
+   "homonyms_only_lora": {
+    "correct": 0.175,
+    "abstains": 0.025,
+    "wrong": 0.8,
+    "fixed": 2,
+    "broken": 0,
+    "note_shown": 0.75,
+    "right_article_shown": 0.0
+   },
+   "memory_lora_vs_memory": {
+    "gained": 1,
+    "lost": 3,
+    "mcnemar_p": 0.625
+   },
+   "right_notes_lora_vs_right_notes": {
+    "gained": 2,
+    "lost": 3,
+    "mcnemar_p": 1.0
+   },
+   "homonyms_only_lora_vs_homonyms_only": {
+    "gained": 1,
+    "lost": 1,
+    "mcnemar_p": 1.0
+   }
+  },
+  "hotpot": {
+   "n": 20,
+   "no_memory": {
+    "correct": 0.25,
+    "abstains": 0.0,
+    "wrong": 0.75
+   },
+   "memory": {
+    "correct": 0.2,
+    "abstains": 0.0,
+    "wrong": 0.8,
+    "fixed": 0,
+    "broken": 1,
+    "note_shown": 0.95,
+    "right_article_shown": 0.7
+   },
+   "memory_lora": {
+    "correct": 0.2,
+    "abstains": 0.1,
+    "wrong": 0.7,
+    "fixed": 0,
+    "broken": 1,
+    "note_shown": 0.95,
+    "right_article_shown": 0.7
+   },
+   "right_notes": {
+    "correct": 0.3,
+    "abstains": 0.0,
+    "wrong": 0.7,
+    "fixed": 2,
+    "broken": 1,
+    "note_shown": 1.0,
+    "right_article_shown": 1.0
+   },
+   "right_notes_lora": {
+    "correct": 0.2,
+    "abstains": 0.05,
+    "wrong": 0.75,
+    "fixed": 1,
+    "broken": 2,
+    "note_shown": 1.0,
+    "right_article_shown": 1.0
+   },
+   "homonyms_only": {
+    "correct": 0.25,
+    "abstains": 0.0,
+    "wrong": 0.75,
+    "fixed": 0,
+    "broken": 0,
+    "note_shown": 0.55,
+    "right_article_shown": 0.0
+   },
+   "homonyms_only_lora": {
+    "correct": 0.25,
+    "abstains": 0.05,
+    "wrong": 0.7,
+    "fixed": 0,
+    "broken": 0,
+    "note_shown": 0.55,
+    "right_article_shown": 0.0
+   },
+   "memory_lora_vs_memory": {
+    "gained": 0,
+    "lost": 0,
+    "mcnemar_p": 1.0
+   },
+   "right_notes_lora_vs_right_notes": {
+    "gained": 0,
+    "lost": 2,
+    "mcnemar_p": 0.5
+   },
+   "homonyms_only_lora_vs_homonyms_only": {
+    "gained": 0,
+    "lost": 0,
+    "mcnemar_p": 1.0
+   }
+  },
+  "triviaqa": {
+   "n": 40,
+   "no_memory": {
+    "correct": 0.225,
+    "abstains": 0.0,
+    "wrong": 0.775
+   },
+   "memory": {
+    "correct": 0.275,
+    "abstains": 0.0,
+    "wrong": 0.725,
+    "fixed": 3,
+    "broken": 1,
+    "note_shown": 0.8
+   },
+   "memory_lora": {
+    "correct": 0.25,
+    "abstains": 0.05,
+    "wrong": 0.7,
+    "fixed": 2,
+    "broken": 1,
+    "note_shown": 0.8
+   },
+   "memory_lora_vs_memory": {
+    "gained": 0,
+    "lost": 1,
+    "mcnemar_p": 1.0
+   }
+  },
+  "mkqa_en": {
+   "n": 40,
+   "no_memory": {
+    "correct": 0.175,
+    "abstains": 0.025,
+    "wrong": 0.8
+   },
+   "memory": {
+    "correct": 0.225,
+    "abstains": 0.025,
+    "wrong": 0.75,
+    "fixed": 3,
+    "broken": 1,
+    "note_shown": 0.3
+   },
+   "memory_lora": {
+    "correct": 0.225,
+    "abstains": 0.05,
+    "wrong": 0.725,
+    "fixed": 3,
+    "broken": 1,
+    "note_shown": 0.3
+   },
+   "memory_lora_vs_memory": {
+    "gained": 0,
+    "lost": 0,
+    "mcnemar_p": 1.0
+   }
+  }
+ },
+ "style_check": [
+  {
+   "prompt": "Explain in detail who Marie Curie was and why her work mattered.",
+   "without_lora": {
+    "words": 152,
+    "text": "**Marie Curie – A Detailed Overview**\n\n---\n\n### 1. Who Was Marie Curie?\n\n- **Full name:** Maria Skłodowska‑Curie (later known as Marie Curie)  \n- **Born:** 7 November 1867, Warsaw, Congress Poland (then part of the Russian Empire).  \n- **Education:** Attended the Warsaw Female Normal School; later earned a degree in physics and mathematics at the University of Paris (Sorbonne), where she met Pierre Curie.  \n- **Nationality & Citizenship:** French naturalized citizen in 1906 after moving to Paris"
+   },
+   "with_lora": {
+    "words": 146,
+    "text": "**Marie Curie – A Detailed Overview**\n\n---\n\n### 1. Who Was Marie Curie?\n\n- **Full name:** Maria Skłodowska‑Curie (later known as Marie Curie)  \n- **Born:** 7 November 1867, Warsaw, Congress Poland (then part of the Russian Empire).  \n- **Education:** Attended the *Flying University* (a clandestine Polish school for women), then transferred to the Sorbonne (University of Paris) where she earned a degree in physics and mathematics. She later completed a doctorate under Pierre Curie at the Universi"
+   }
+  },
+  {
+   "prompt": "Explain in detail how photosynthesis works, step by step.",
+   "without_lora": {
+    "words": 113,
+    "text": "**Photosynthesis – A Step‑by‑Step Overview**\n\nPhotosynthesis is the biochemical process by which photo‑autotrophic organisms (most plants, algae, and cyanobacteria) convert light energy from the sun into chemical energy stored in organic molecules such as glucose. The overall reaction can be summarized as:\n\n\\[\n6 \\text{CO}_2 + 6 \\text{H}_2\\text{O} + \\text{light energy} \\;\\xrightarrow{\\text{chlorophyll & other pigments}}\\; \\text{C}_6\\text{H}_{12}\\text{O}_6 \\;+\\; 6 \\text{O}_2\n\\]\n\nThe process occurs"
+   },
+   "with_lora": {
+    "words": 116,
+    "text": "**Photosynthesis – A Step‑by‑Step Overview**\n\nPhotosynthesis is the process by which photo‑autotrophic organisms (most plants, algae, and cyanobacteria) convert light energy from the sun into chemical energy stored in organic molecules such as glucose. The overall reaction can be summarized as:\n\n\\[\n6 \\text{CO}_2 + 6 \\text{H}_2\\text{O} + \\text{light energy} \\;\\xrightarrow{\\text{chlorophyll & other pigments}}\\; \\text{C}_6\\text{H}_{12}\\text{O}_6 \\;+\\; 6 \\text{O}_2\n\\]\n\nThe process occurs in two majo"
+   }
+  },
+  {
+   "prompt": "Write three paragraphs about the causes of the French Revolution.",
+   "without_lora": {
+    "words": 166,
+    "text": "The French Revolution was driven by a complex interplay of social, political, and economic factors that had been building for decades. One major cause was the financial crisis of France, exacerbated by costly wars such as the American War of Independence and extravagant royal spending. The monarchy's inability to raise sufficient revenue led to severe debt, which was partly financed through the sale of church lands and the imposition of new taxes on the Third Estate—comprising the common people,"
+   },
+   "with_lora": {
+    "words": 174,
+    "text": "The French Revolution was sparked by a complex mix of social, political, and economic factors that had been building for decades. One major cause was the financial crisis of France, which resulted from costly wars (such as the American War of Independence) and an inefficient tax system that burdened the Third Estate while exempting the nobility and clergy. Additionally, Enlightenment ideas promoting liberty, equality, and popular sovereignty challenged the absolute monarchy and traditional privi"
+   }
+  },
+  {
+   "prompt": "Describe in detail what makes Python popular and give an example program.",
+   "without_lora": {
+    "words": 116,
+    "text": "**Why Python is Popular**\n\n| Aspect | What Makes It Attractive |\n|--------|--------------------------|\n| **Readability & Simplicity** | • Clean, English‑like syntax.<br>• Indentation defines blocks (no braces or semicolons).<br>• Fewer keywords → less boilerplate code. |\n| **Ease of Learning** | • Low barrier to entry for beginners.<br>• Large amount of high‑quality tutorials, interactive notebooks, and community resources. |\n| **Versatility / Multi‑paradigm** | • Supports procedural, object‑ori"
+   },
+   "with_lora": {
+    "words": 136,
+    "text": "**Why Python is Popular**\n\n| Aspect | What Makes It Attractive |\n|--------|--------------------------|\n| **Readability & Simplicity** | The language uses English‑like syntax, indentation instead of braces or keywords for blocks, which lets newcomers write code quickly without fighting the language’s quirks. |\n| **Ease of Learning** | A small core set of constructs (variables, loops, functions, classes) covers most everyday tasks; you can start coding after a few hours of practice. |\n| **Versatil"
+   }
+  },
+  {
+   "prompt": "Write a short essay about climbing Mount Everest and its dangers.",
+   "without_lora": {
+    "words": 149,
+    "text": "**Climbing Mount Everest: A Perilous Ascent**\n\nMount Everest, standing at 8,848.86 meters (29,031.7 feet) above sea level in the Himalayas, is the world's highest mountain. It has long captivated adventurers and mountaineers with its majestic peaks and challenging terrain. However, the climb to the summit is fraught with perils.\n\nThe journey begins in Nepal or Tibet, where climbers embark on treks through high-altitude valleys and glaciers. The path often involves crossing the Khumbu Icefall, on"
+   },
+   "with_lora": {
+    "words": 155,
+    "text": "**Climbing Mount Everest: A Perilous Ascent**\n\nMount Everest, standing at 8,848.86 meters (29,031.7 feet) above sea level in the Himalayas, is the world's highest mountain. It has long captivated adventurers and mountaineers with its majestic peaks and challenging terrain. However, ascending this formidable peak comes with significant risks.\n\nThe journey to the summit begins from bases such as Nepal or Tibet, where climbers embark on treks that can last several weeks. The path often involves cro"
+   }
+  }
+ ],
+ "timing": {
+  "head_s": 6,
+  "examples_s": 18,
+  "train_s": 9,
+  "eval_s": 108
+ },
+ "seconds_total": 196
+}
